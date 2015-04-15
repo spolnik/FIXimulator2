@@ -8,7 +8,7 @@
  * 
  */
 
-package org.nprogramming.fiximulator2.core;
+package org.nprogramming.fiximulator2.data;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
@@ -24,6 +24,7 @@ import java.util.Random;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.nprogramming.fiximulator2.domain.Instrument;
 import org.nprogramming.fiximulator2.ui.InstrumentTableModel;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;

@@ -1,19 +1,13 @@
-/*
- * File     : ExecutionTableModel.java
- *
- * Author   : Zoltan Feledy
- * 
- * Contents : This class is the TableModel for the Execution Table.
- * 
- */
-
 package org.nprogramming.fiximulator2.ui;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.nprogramming.fiximulator2.core.*;
+import org.nprogramming.fiximulator2.api.ExecutionsApi;
+import org.nprogramming.fiximulator2.api.NotifyApi;
+import org.nprogramming.fiximulator2.domain.Execution;
+import org.nprogramming.fiximulator2.domain.Order;
 
-public class ExecutionTableModel extends AbstractTableModel {
+public class ExecutionTableModel extends AbstractTableModel implements NotifyApi {
 
     private static String[] columns = 
         {"ID", "ClOrdID", "Side", "Symbol", "LastQty", "LastPx", 
@@ -46,7 +40,7 @@ public class ExecutionTableModel extends AbstractTableModel {
     }
         
     public int getRowCount() {
-        return executionsApi.getCount();
+        return executionsApi.size();
     }
 
     public Object getValueAt(int row, int column) {
@@ -67,7 +61,8 @@ public class ExecutionTableModel extends AbstractTableModel {
         if (column == 12) return execution.isDKd();
         return "";
     }
-    
+
+    @Override
     public void update() {
         fireTableDataChanged();
     }

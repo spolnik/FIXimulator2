@@ -20,6 +20,14 @@ import java.util.Random;
 
 import javax.swing.JLabel;
 
+import org.nprogramming.fiximulator2.api.ExecutionsApi;
+import org.nprogramming.fiximulator2.api.IndicationsOfInterestApi;
+import org.nprogramming.fiximulator2.api.OrdersApi;
+import org.nprogramming.fiximulator2.data.InstrumentSet;
+import org.nprogramming.fiximulator2.domain.Execution;
+import org.nprogramming.fiximulator2.domain.IOI;
+import org.nprogramming.fiximulator2.domain.Instrument;
+import org.nprogramming.fiximulator2.domain.Order;
 import quickfix.Application;
 import quickfix.DataDictionary;
 import quickfix.DoNotSend;
@@ -260,18 +268,6 @@ public class FIXimulatorApplication extends MessageCracker
     public boolean getConnectionStatus() {
         return connected;
     }
-
-//    public IOIset getIOIs() {
-//        return iois;
-//    }
-//
-//    public OrderSet getOrders() {
-//        return orders;
-//    }
-//
-//    public ExecutionSet getExecutions() {
-//        return executions;
-//    }
 
     public SessionSettings getSettings() {
         return settings;

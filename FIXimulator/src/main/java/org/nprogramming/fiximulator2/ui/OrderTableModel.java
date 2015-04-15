@@ -1,11 +1,12 @@
 package org.nprogramming.fiximulator2.ui;
 
-import org.nprogramming.fiximulator2.core.Order;
-import org.nprogramming.fiximulator2.core.OrdersApi;
+import org.nprogramming.fiximulator2.api.NotifyApi;
+import org.nprogramming.fiximulator2.domain.Order;
+import org.nprogramming.fiximulator2.api.OrdersApi;
 
 import javax.swing.table.AbstractTableModel;
 
-public class OrderTableModel extends AbstractTableModel {
+public class OrderTableModel extends AbstractTableModel implements NotifyApi {
 
     private static String[] columns =
         {"ID", "Status", "Side", "Quantity", "Symbol", "Type", "Limit", "TIF", 
@@ -38,7 +39,7 @@ public class OrderTableModel extends AbstractTableModel {
     }
         
     public int getRowCount() {
-        return ordersApi.getCount();
+        return ordersApi.size();
     }
 
     public Object getValueAt(int row, int column) {
@@ -58,7 +59,8 @@ public class OrderTableModel extends AbstractTableModel {
         if (column == 12) return order.getOrigClientID();
         return new Object();
     }
-    
+
+    @Override
     public void update() {
         fireTableDataChanged();
     }

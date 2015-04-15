@@ -1,11 +1,12 @@
 package org.nprogramming.fiximulator2.ui;
 
-import org.nprogramming.fiximulator2.core.IOI;
-import org.nprogramming.fiximulator2.core.IndicationsOfInterestApi;
+import org.nprogramming.fiximulator2.api.NotifyApi;
+import org.nprogramming.fiximulator2.domain.IOI;
+import org.nprogramming.fiximulator2.api.IndicationsOfInterestApi;
 
 import javax.swing.table.AbstractTableModel;
 
-public class IOITableModel extends AbstractTableModel {
+public class IOITableModel extends AbstractTableModel implements NotifyApi {
 
     private static String[] columns =
         {"ID", "Type", "Side", "Shares", "Symbol", "Price", 
@@ -36,7 +37,7 @@ public class IOITableModel extends AbstractTableModel {
     }
 
     public int getRowCount() {
-        return indicationsOfInterestApi.getCount();
+        return indicationsOfInterestApi.size();
     }
 
     public Object getValueAt(int row, int column) {
@@ -53,7 +54,8 @@ public class IOITableModel extends AbstractTableModel {
         if (column == 9) return ioi.getRefID();
         return new Object();
     }
-    
+
+    @Override
     public void update() {
         fireTableDataChanged();
     }

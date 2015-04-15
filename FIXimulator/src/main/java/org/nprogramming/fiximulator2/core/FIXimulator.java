@@ -16,6 +16,10 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URL;
 
+import org.nprogramming.fiximulator2.api.ExecutionsApi;
+import org.nprogramming.fiximulator2.api.IndicationsOfInterestApi;
+import org.nprogramming.fiximulator2.api.OrdersApi;
+import org.nprogramming.fiximulator2.data.InstrumentSet;
 import quickfix.Acceptor;
 import quickfix.CompositeLogFactory;
 import quickfix.ConfigError;

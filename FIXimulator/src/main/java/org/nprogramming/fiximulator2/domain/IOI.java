@@ -8,7 +8,7 @@
  * 
  */
 
-package org.nprogramming.fiximulator2.core;
+package org.nprogramming.fiximulator2.domain;
 
 public class IOI implements Cloneable {
     private static int nextID = 1;

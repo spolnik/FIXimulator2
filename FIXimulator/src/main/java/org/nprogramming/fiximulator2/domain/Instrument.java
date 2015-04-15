@@ -8,7 +8,7 @@
  * 
  */
 
-package org.nprogramming.fiximulator2.core;
+package org.nprogramming.fiximulator2.domain;
 
 public class Instrument {
 	

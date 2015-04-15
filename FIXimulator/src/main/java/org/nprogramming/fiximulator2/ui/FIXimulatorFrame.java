@@ -11,7 +11,16 @@
 
 package org.nprogramming.fiximulator2.ui;
 
+import org.nprogramming.fiximulator2.api.ExecutionsApi;
+import org.nprogramming.fiximulator2.api.IndicationsOfInterestApi;
+import org.nprogramming.fiximulator2.api.OrdersApi;
 import org.nprogramming.fiximulator2.core.*;
+import org.nprogramming.fiximulator2.data.ExecutionsRepository;
+import org.nprogramming.fiximulator2.data.IndicationsOfInterestRepository;
+import org.nprogramming.fiximulator2.data.OrderRepository;
+import org.nprogramming.fiximulator2.domain.Execution;
+import org.nprogramming.fiximulator2.domain.IOI;
+import org.nprogramming.fiximulator2.domain.Order;
 
 import java.io.File;
 import javax.swing.UIManager;
@@ -24,10 +33,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
     private IOI dialogIOI = null;
     private Execution dialogExecution = null;
 
-    /** Creates new form FIXimulatorFrame
-     * @param ordersApi
-     * @param executionsApi
-     * @param indicationsOfInterestApi*/
     public FIXimulatorFrame(
             OrdersApi ordersApi,
             ExecutionsApi executionsApi,
@@ -197,11 +202,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         aboutPanel.setPreferredSize(new java.awt.Dimension(200, 100));
 
         okButton.setText("OK");
-        okButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                okButtonActionPerformed(evt);
-            }
-        });
+        okButton.addActionListener(this::okButtonActionPerformed);
 
         aboutDialogLabel.setText("FIXimulator by Zoltan Feledy");
 
@@ -248,18 +249,10 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         ioiDialog.setName("ioiDialog"); // NOI18N
 
         ioiDialogOK.setText("OK");
-        ioiDialogOK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ioiDialogOKActionPerformed(evt);
-            }
-        });
+        ioiDialogOK.addActionListener(evt -> ioiDialogOKActionPerformed(evt));
 
         ioiDialogCancel.setText("Cancel");
-        ioiDialogCancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ioiDialogCancelActionPerformed(evt);
-            }
-        });
+        ioiDialogCancel.addActionListener(evt -> ioiDialogCancelActionPerformed(evt));
 
         ioiIDLabel.setText("IOIid(23):");
 
@@ -320,11 +313,11 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        ioiDialogLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {ioiDialogCancel, ioiDialogOK});
+        ioiDialogLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, ioiDialogCancel, ioiDialogOK);
 
-        ioiDialogLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {ioiIDLabel, ioiIDSourceLabel, ioiNaturalLabel, ioiPriceLabel, ioiSecurityIDLabel, ioiSharesLabel, ioiSideLabel, ioiSymbolLabel});
+        ioiDialogLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, ioiIDLabel, ioiIDSourceLabel, ioiNaturalLabel, ioiPriceLabel, ioiSecurityIDLabel, ioiSharesLabel, ioiSideLabel, ioiSymbolLabel);
 
-        ioiDialogLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {ioiDialogID, ioiDialogIDSource, ioiDialogNatural, ioiDialogPrice, ioiDialogSecurityID, ioiDialogShares, ioiDialogSide, ioiDialogSymbol});
+        ioiDialogLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, ioiDialogID, ioiDialogIDSource, ioiDialogNatural, ioiDialogPrice, ioiDialogSecurityID, ioiDialogShares, ioiDialogSide, ioiDialogSymbol);
 
         ioiDialogLayout.setVerticalGroup(
             ioiDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -372,18 +365,10 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         executionDialog.setName("executionDialog"); // NOI18N
 
         executionDialogOK.setText("OK");
-        executionDialogOK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                executionDialogOKActionPerformed(evt);
-            }
-        });
+        executionDialogOK.addActionListener(this::executionDialogOKActionPerformed);
 
         executionDialogCancel.setText("Cancel");
-        executionDialogCancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                executionDialogCancelActionPerformed(evt);
-            }
-        });
+        executionDialogCancel.addActionListener(this::executionDialogCancelActionPerformed);
 
         executionDialogShares.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
@@ -1548,11 +1533,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         );
 
         showSettingsButton.setText("Show Settings");
-        showSettingsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showSettingsButtonActionPerformed(evt);
-            }
-        });
+        showSettingsButton.addActionListener(FIXimulatorFrame.this::showSettingsButtonActionPerformed);
 
         javax.swing.GroupLayout settingsPanelLayout = new javax.swing.GroupLayout(settingsPanel);
         settingsPanel.setLayout(settingsPanelLayout);
@@ -1572,7 +1553,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        settingsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {saveSettingsButton, showSettingsButton});
+        settingsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, saveSettingsButton, showSettingsButton);
 
         settingsPanelLayout.setVerticalGroup(
             settingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1593,11 +1574,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         fileMenu.setText("File");
 
         exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitMenuItemActionPerformed(evt);
-            }
-        });
+        exitMenuItem.addActionListener(FIXimulatorFrame.this::exitMenuItemActionPerformed);
         fileMenu.add(exitMenuItem);
 
         mainMenuBar.add(fileMenu);
@@ -1605,11 +1582,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         instrumentMenu.setLabel("Instruments");
 
         loadInstrumentMenuItem.setText("Load Instruments...");
-        loadInstrumentMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadInstrumentMenuItemActionPerformed(evt);
-            }
-        });
+        loadInstrumentMenuItem.addActionListener(this::loadInstrumentMenuItemActionPerformed);
         instrumentMenu.add(loadInstrumentMenuItem);
 
         mainMenuBar.add(instrumentMenu);
@@ -1617,11 +1590,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         helpMenu.setLabel("Help");
 
         aboutMenuItem.setText("About...");
-        aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                aboutMenuItemActionPerformed(evt);
-            }
-        });
+        aboutMenuItem.addActionListener(this::aboutMenuItemActionPerformed);
         helpMenu.add(aboutMenuItem);
 
         mainMenuBar.add(helpMenu);
@@ -2169,16 +2138,14 @@ private void cannedQueryRunButtonActionPerformed(java.awt.event.ActionEvent evt)
 }//GEN-LAST:event_cannedQueryRunButtonActionPerformed
 
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                OrdersApi ordersApi = new OrdersApi();
-                ExecutionsApi executionsApi = new ExecutionsApi();
-                IndicationsOfInterestApi indicationsOfInterestApi = new IndicationsOfInterestApi();
+        java.awt.EventQueue.invokeLater(() -> {
+            OrdersApi ordersApi1 = new OrderRepository();
+            ExecutionsApi executionsApi1 = new ExecutionsRepository();
+            IndicationsOfInterestApi indicationsOfInterestApi1 = new IndicationsOfInterestRepository();
 
-                fiximulator = new FIXimulator(ordersApi, executionsApi, indicationsOfInterestApi);
-                fiximulator.start();
-                new FIXimulatorFrame(ordersApi, executionsApi, indicationsOfInterestApi).setVisible(true);
-            }
+            fiximulator = new FIXimulator(ordersApi1, executionsApi1, indicationsOfInterestApi1);
+            fiximulator.start();
+            new FIXimulatorFrame(ordersApi1, executionsApi1, indicationsOfInterestApi1).setVisible(true);
         });
     }
 

@@ -70,7 +70,7 @@ class QueryTableModel extends AbstractTableModel {
         try {
             statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
-            ResultSetMetaData meta = (ResultSetMetaData) rs.getMetaData();
+            ResultSetMetaData meta = rs.getMetaData();
             int fields = meta.getColumnCount();
             columns = new String[fields];
             for ( int i=0; i < fields; i++) {

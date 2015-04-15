@@ -8,8 +8,9 @@
  * 
  */
 
-package org.nprogramming.fiximulator2.core;
+package org.nprogramming.fiximulator2.domain;
 
+import org.nprogramming.fiximulator2.api.OrdersApi;
 import quickfix.FieldNotFound;
 import quickfix.field.ClOrdID;
 import quickfix.field.OrdType;

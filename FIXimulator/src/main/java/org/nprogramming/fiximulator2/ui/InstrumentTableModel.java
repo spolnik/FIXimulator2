@@ -11,8 +11,8 @@ package org.nprogramming.fiximulator2.ui;
 
 import javax.swing.table.AbstractTableModel;
 import org.nprogramming.fiximulator2.core.FIXimulator;
-import org.nprogramming.fiximulator2.core.Instrument;
-import org.nprogramming.fiximulator2.core.InstrumentSet;
+import org.nprogramming.fiximulator2.domain.Instrument;
+import org.nprogramming.fiximulator2.data.InstrumentSet;
 
 public class InstrumentTableModel extends AbstractTableModel {
     private static InstrumentSet instruments = FIXimulator.getInstruments();
