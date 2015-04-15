@@ -4,8 +4,9 @@ mainClassName = 'org.nprogramming.fiximulator2.ui.FIXimulatorFrame'
 
 
 dependencies {
+    runtime libs.mina
+
     compile libs.quickfixj_old,
             libs.quickfixj.fix42,
-            libs.mina,
             libs.jdesktop
 }
