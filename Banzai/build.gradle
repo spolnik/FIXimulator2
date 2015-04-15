@@ -4,5 +4,6 @@ apply plugin: 'application'
 
 dependencies {
     compile libs.quickfixj_old,
+            libs.quickfixj.fix42,
             libs.mina
 }

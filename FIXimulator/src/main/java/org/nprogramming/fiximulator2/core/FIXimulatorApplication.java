@@ -103,14 +103,14 @@ public class FIXimulatorApplication extends MessageCracker
         dictionary = Session.lookupSession(currentSession).getDataDictionary();
         if (connectedStatus != null)
             connectedStatus.setIcon(new javax.swing.ImageIcon(getClass()
-            .getResource("img/green.gif")));
+            .getResource("/img/green.gif")));
     }
 
     public void onLogout( SessionID sessionID ) {
     	connected = false;
     	currentSession = null;
         connectedStatus.setIcon(new javax.swing.ImageIcon(getClass()
-                .getResource("img/red.gif")));
+                .getResource("/img/red.gif")));
     }
 
     // IndicationofInterest handling
@@ -710,7 +710,7 @@ public class FIXimulatorApplication extends MessageCracker
         } catch (Exception e) {e.printStackTrace();}
         if (connected && ioiSenderStarted)
             ioiSenderStatus.setIcon(new javax.swing.ImageIcon(getClass()
-            .getResource("img/green.gif")));
+            .getResource("/img/green.gif")));
     }    
     
     public void stopIOIsender(){
@@ -720,7 +720,7 @@ public class FIXimulatorApplication extends MessageCracker
             ioiSenderThread.join();
         } catch (InterruptedException e) {e.printStackTrace();}
         ioiSenderStatus.setIcon(new javax.swing.ImageIcon(getClass()
-            .getResource("img/red.gif")));
+            .getResource("/img/red.gif")));
     }
      
     public void setNewDelay(Integer delay) { 		
@@ -850,7 +850,7 @@ public class FIXimulatorApplication extends MessageCracker
         } catch (Exception e) {e.printStackTrace();}
         if (connected && executorStarted)
             executorStatus.setIcon(new javax.swing.ImageIcon(getClass()
-            .getResource("img/green.gif")));
+            .getResource("/img/green.gif")));
     }
 
     public void stopExecutor(){
@@ -860,7 +860,7 @@ public class FIXimulatorApplication extends MessageCracker
             executorThread.join();
         } catch (InterruptedException e) {e.printStackTrace();}
         executorStatus.setIcon(new javax.swing.ImageIcon(getClass()
-            .getResource("img/red.gif")));
+            .getResource("/img/red.gif")));
     }
 
     public void setNewExecutorDelay( Integer delay ) {
