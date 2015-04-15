@@ -1,0 +1,29 @@
+apply from: "$rootDir/libraries.gradle"
+
+subprojects {
+    repositories {
+        mavenCentral()
+
+        maven {
+            url "http://repo.marketcetera.org/maven"
+        }
+    }
+
+    apply plugin: 'java'
+
+    sourceCompatibility = 1.6
+    version = '1.0'
+
+    dependencies {
+        compile libs.slf4j_api,
+                libs.log4j,
+                libs.slf4j_log4j12
+
+        testCompile libs.test.junit
+    }
+}
+
+
+
+
+

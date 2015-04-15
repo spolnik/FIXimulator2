@@ -1,0 +1,8 @@
+apply plugin: 'application'
+
+    mainClassName = 'quickfix.banzai.Banzai'
+
+dependencies {
+    compile libs.quickfixj_old,
+            libs.mina
+}

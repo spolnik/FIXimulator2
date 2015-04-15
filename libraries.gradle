@@ -1,0 +1,40 @@
+ext {
+    fixmlVersion = '1.3.1'
+
+    libs = libsMap(
+            slf4j_api: 'org.slf4j:slf4j-api:1.7.10',
+            log4j: 'log4j:log4j:1.2.17',
+            slf4j_log4j12: 'org.slf4j:slf4j-log4j12:1.7.10',
+            mina: 'org.apache.mina:mina-core:1.1.0',
+            jdesktop: 'org.jdesktop:beansbinding:1.2.1',
+            quickfixj_old: 'org.apache.servicemix.bundles:org.apache.servicemix.bundles.quickfix:1.5.0_1',
+            quickfixj: [
+                core: "quickfixj:quickfixj-core:$fixmlVersion",
+                fix40: "quickfixj:quickfixj-msg-fix40:$fixmlVersion",
+                fix41: "quickfixj:quickfixj-msg-fix41:$fixmlVersion",
+                fix42: "quickfixj:quickfixj-msg-fix42:$fixmlVersion",
+                fix43: "quickfixj:quickfixj-msg-fix43:$fixmlVersion",
+                fix44: "quickfixj:quickfixj-msg-fix44:$fixmlVersion"
+            ],
+            test: [
+                    junit: 'junit:junit:4.11',
+                    assertj: 'org.assertj:assertj-core:1.7.1'
+            ]
+    )
+}
+
+def libsMap(Map<String, ?> map) {
+    def processMap
+    processMap = { innerMap ->
+        innerMap.each {
+            if (it.value instanceof Map) {
+                innerMap[it.key] = processMap(it.value)
+            }
+        }
+        innerMap.asImmutable().withDefault {
+            throw new Exception(
+                    "No entry '$it' in dependency map (candidates: ${innerMap.keySet().sort().join(", ")})" )
+        }
+    }
+    processMap(map)
+}
