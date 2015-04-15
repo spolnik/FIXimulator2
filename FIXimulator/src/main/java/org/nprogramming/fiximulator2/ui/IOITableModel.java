@@ -1,28 +1,22 @@
-/*
- * File     : IOITableModel.java
- *
- * Author   : Zoltan Feledy
- * 
- * Contents : This class is the TableModel for the IOI Table.
- * 
- */
-
 package org.nprogramming.fiximulator2.ui;
 
-import javax.swing.table.AbstractTableModel;
-import org.nprogramming.fiximulator2.core.FIXimulator;
 import org.nprogramming.fiximulator2.core.IOI;
-import org.nprogramming.fiximulator2.core.IOIset;
+import org.nprogramming.fiximulator2.core.IndicationsOfInterestApi;
+
+import javax.swing.table.AbstractTableModel;
 
 public class IOITableModel extends AbstractTableModel {
-    private static IOIset iois = FIXimulator.getApplication().getIOIs();
-    private static String[] columns = 
-        {"ID", "Type", "Side", "Shares", "Symbol", "Price", 
-         "SecurityID", "IDSource", "Natural", "RefID"}; 
-    
 
-    public IOITableModel(){
-        FIXimulator.getApplication().getIOIs().addCallback(this);
+    private static String[] columns =
+        {"ID", "Type", "Side", "Shares", "Symbol", "Price", 
+         "SecurityID", "IDSource", "Natural", "RefID"};
+
+    private final IndicationsOfInterestApi indicationsOfInterestApi;
+
+
+    public IOITableModel(IndicationsOfInterestApi indicationsOfInterestApi){
+        this.indicationsOfInterestApi = indicationsOfInterestApi;
+        indicationsOfInterestApi.addCallback(this);
     }
     
     public int getColumnCount() {
@@ -42,11 +36,11 @@ public class IOITableModel extends AbstractTableModel {
     }
 
     public int getRowCount() {
-        return iois.getCount();
+        return indicationsOfInterestApi.getCount();
     }
 
     public Object getValueAt(int row, int column) {
-        IOI ioi = iois.getIOI(row);
+        IOI ioi = indicationsOfInterestApi.getIOI(row);
         if (column == 0) return ioi.getID();
         if (column == 1) return ioi.getType();
         if (column == 2) return ioi.getSide();

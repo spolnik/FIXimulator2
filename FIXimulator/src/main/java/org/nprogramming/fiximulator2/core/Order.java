@@ -130,7 +130,7 @@ public class Order implements Cloneable {
         System.out.println("IDSource: " + this.getIdSource());
     }
     
-    public Order( quickfix.fix42.OrderCancelRequest message ) {
+    public Order( quickfix.fix42.OrderCancelRequest message, OrdersApi ordersApi ) {
         ID = generateID();
         
         // ClOrdID
@@ -147,8 +147,7 @@ public class Order implements Cloneable {
             this.setOrigClientID(origClOrdID.getValue().toString());
         } catch (FieldNotFound ex) {}
         
-        Order oldOrder = FIXimulator.getApplication()
-                .getOrders().getOrder(origClientID);
+        Order oldOrder = ordersApi.getOrder(origClientID);
         if ( oldOrder != null ) {        
             open = oldOrder.getOpen();
             executed = oldOrder.getExecuted();
@@ -194,7 +193,7 @@ public class Order implements Cloneable {
         } catch (FieldNotFound ex) {} 
     }
     
-    public Order( quickfix.fix42.OrderCancelReplaceRequest message ) {
+    public Order( quickfix.fix42.OrderCancelReplaceRequest message, OrdersApi ordersApi ) {
         ID = generateID();
         
         // ClOrdID
@@ -211,8 +210,7 @@ public class Order implements Cloneable {
             this.setOrigClientID(origClOrdID.getValue().toString());
         } catch (FieldNotFound ex) {}
         
-        Order oldOrder = FIXimulator.getApplication()
-                .getOrders().getOrder(origClientID);
+        Order oldOrder = ordersApi.getOrder(origClientID);
         if ( oldOrder != null ) {        
             open = oldOrder.getOpen();
             executed = oldOrder.getExecuted();

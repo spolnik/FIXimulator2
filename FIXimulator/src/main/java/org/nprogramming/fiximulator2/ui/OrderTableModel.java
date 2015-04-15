@@ -1,28 +1,21 @@
-/*
- * File     : OrderTableModel.java
- *
- * Author   : Zoltan Feledy
- * 
- * Contents : This class is the TableModel for the Order Table.
- * 
- */
-
 package org.nprogramming.fiximulator2.ui;
 
-import javax.swing.table.AbstractTableModel;
-import org.nprogramming.fiximulator2.core.FIXimulator;
 import org.nprogramming.fiximulator2.core.Order;
-import org.nprogramming.fiximulator2.core.OrderSet;
+import org.nprogramming.fiximulator2.core.OrdersApi;
+
+import javax.swing.table.AbstractTableModel;
 
 public class OrderTableModel extends AbstractTableModel {
-    private static OrderSet orders = FIXimulator.getApplication().getOrders();
-    private static String[] columns = 
-        {"ID", "Status", "Side", "Quantity", "Symbol", "Type", "Limit", "TIF", 
-         "Executed", "Open", "AvgPx", "ClOrdID", "OrigClOrdID"}; 
-    
 
-    public OrderTableModel(){
-        FIXimulator.getApplication().getOrders().addCallback(this);
+    private static String[] columns =
+        {"ID", "Status", "Side", "Quantity", "Symbol", "Type", "Limit", "TIF", 
+         "Executed", "Open", "AvgPx", "ClOrdID", "OrigClOrdID"};
+    private final OrdersApi ordersApi;
+
+
+    public OrderTableModel(OrdersApi ordersApi){
+        this.ordersApi = ordersApi;
+        ordersApi.addCallback(this);
     }
     
     public int getColumnCount() {
@@ -45,11 +38,11 @@ public class OrderTableModel extends AbstractTableModel {
     }
         
     public int getRowCount() {
-        return orders.getCount();
+        return ordersApi.getCount();
     }
 
     public Object getValueAt(int row, int column) {
-        Order order = orders.getOrder(row);
+        Order order = ordersApi.getOrder(row);
         if (column == 0) return order.getID();        
         if (column == 1) return order.getStatus();
         if (column == 2) return order.getSide();

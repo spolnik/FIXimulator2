@@ -38,7 +38,11 @@ public class FIXimulator {
     private static InstrumentSet instruments = null;
     private static LogMessageSet messages = null;
 
-    public FIXimulator() {
+    public FIXimulator(
+            OrdersApi ordersApi,
+            ExecutionsApi executionsApi,
+            IndicationsOfInterestApi indicationsOfInterestApi
+    ) {
         InputStream inputStream = null;
         ClassLoader classLoader = FIXimulator.class.getClassLoader();
 
@@ -46,9 +50,9 @@ public class FIXimulator {
 
             URL configUrl = classLoader.getResource("config/FIXimulator.cfg");
 
-            inputStream = new BufferedInputStream( 
-                            new FileInputStream( 
-                            new File( configUrl.getPath())));
+            inputStream = new BufferedInputStream(
+                    new FileInputStream(
+                            new File(configUrl.getPath())));
         } catch (FileNotFoundException exception) {
             exception.printStackTrace();
             System.exit(0);
@@ -59,59 +63,60 @@ public class FIXimulator {
         instruments = new InstrumentSet(new File(instrumentsXml.getPath()));
         messages = new LogMessageSet();
         try {
-            SessionSettings settings = new SessionSettings( inputStream );
-            application = new FIXimulatorApplication( settings, messages );
-            MessageStoreFactory messageStoreFactory = 
-                    new FileStoreFactory( settings );
+            SessionSettings settings = new SessionSettings(inputStream);
+            application = new FIXimulatorApplication(settings, messages, ordersApi, executionsApi, indicationsOfInterestApi);
+            MessageStoreFactory messageStoreFactory =
+                    new FileStoreFactory(settings);
             boolean logToFile = false;
             boolean logToDB = false;
             LogFactory logFactory;
             try {
                 logToFile = settings.getBool("FIXimulatorLogToFile");
                 logToDB = settings.getBool("FIXimulatorLogToDB");
-            } catch (FieldConvertError ex) {}
-            if ( logToFile && logToDB ) {
+            } catch (FieldConvertError ex) {
+            }
+            if (logToFile && logToDB) {
                 logFactory = new CompositeLogFactory(
-                    new LogFactory[] { new ScreenLogFactory(settings), 
-                                       new FileLogFactory(settings),
-                                       new JdbcLogFactory(settings)});
-            } else if ( logToFile ) {
+                        new LogFactory[]{new ScreenLogFactory(settings),
+                                new FileLogFactory(settings),
+                                new JdbcLogFactory(settings)});
+            } else if (logToFile) {
                 logFactory = new CompositeLogFactory(
-                    new LogFactory[] { new ScreenLogFactory(settings), 
-                                       new FileLogFactory(settings)});
-            } else if ( logToDB ) {
+                        new LogFactory[]{new ScreenLogFactory(settings),
+                                new FileLogFactory(settings)});
+            } else if (logToDB) {
                 logFactory = new CompositeLogFactory(
-                    new LogFactory[] { new ScreenLogFactory(settings), 
-                                       new JdbcLogFactory(settings)});
+                        new LogFactory[]{new ScreenLogFactory(settings),
+                                new JdbcLogFactory(settings)});
             } else {
                 logFactory = new ScreenLogFactory(settings);
             }
             MessageFactory messageFactory = new DefaultMessageFactory();
             acceptor = new SocketAcceptor
-                    ( application, messageStoreFactory, 
-                            settings, logFactory, messageFactory );
+                    (application, messageStoreFactory,
+                            settings, logFactory, messageFactory);
         } catch (ConfigError e) {
             e.printStackTrace();
-        }		
+        }
     }
 
     public static InstrumentSet getInstruments() {
         return instruments;
     }
-    
+
     public static FIXimulatorApplication getApplication() {
         return application;
     }
-	
+
     public static LogMessageSet getMessageSet() {
         return messages;
     }
-    
+
     public void start() {
         try {
             acceptor.start();
-        } catch ( Exception e ) {
-            System.out.println( e );
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 }

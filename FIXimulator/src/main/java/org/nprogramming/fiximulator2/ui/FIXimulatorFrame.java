@@ -11,20 +11,31 @@
 
 package org.nprogramming.fiximulator2.ui;
 
-import org.nprogramming.fiximulator2.core.Execution;
+import org.nprogramming.fiximulator2.core.*;
+
 import java.io.File;
 import javax.swing.UIManager;
-import org.nprogramming.fiximulator2.core.FIXimulator;
-import org.nprogramming.fiximulator2.core.IOI;
-import org.nprogramming.fiximulator2.core.Order;
 
 public class FIXimulatorFrame extends javax.swing.JFrame {
     private static FIXimulator fiximulator;
+    private final OrdersApi ordersApi;
+    private final ExecutionsApi executionsApi;
+    private final IndicationsOfInterestApi indicationsOfInterestApi;
     private IOI dialogIOI = null;
     private Execution dialogExecution = null;
 
-    /** Creates new form FIXimulatorFrame */
-    public FIXimulatorFrame() {
+    /** Creates new form FIXimulatorFrame
+     * @param ordersApi
+     * @param executionsApi
+     * @param indicationsOfInterestApi*/
+    public FIXimulatorFrame(
+            OrdersApi ordersApi,
+            ExecutionsApi executionsApi,
+            IndicationsOfInterestApi indicationsOfInterestApi
+    ) {
+        this.ordersApi = ordersApi;
+        this.executionsApi = executionsApi;
+        this.indicationsOfInterestApi = indicationsOfInterestApi;
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {e.printStackTrace();}
@@ -788,7 +799,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
 
         ioiTable.setDefaultRenderer(Object.class, new IOICellRenderer());
         ioiTable.setAutoCreateRowSorter(true);
-        ioiTable.setModel(new IOITableModel());
+        ioiTable.setModel(new IOITableModel(indicationsOfInterestApi));
         ioiTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         //Set initial column widths
         for (int i = 0; i < ioiTable.getColumnCount(); i++){
@@ -997,7 +1008,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
 
         //ioiTable.setDefaultRenderer(Object.class, new IOICellRenderer());
         orderTable.setAutoCreateRowSorter(true);
-        orderTable.setModel(new OrderTableModel());
+        orderTable.setModel(new OrderTableModel(ordersApi));
         orderTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         //Set initial column widths
         for (int i = 0; i < orderTable.getColumnCount(); i++){
@@ -1098,7 +1109,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
 
         executionTable.setDefaultRenderer(Object.class, new ExecutionCellRenderer());
         executionTable.setAutoCreateRowSorter(true);
-        executionTable.setModel(new ExecutionTableModel());
+        executionTable.setModel(new ExecutionTableModel(executionsApi));
         executionTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         //Set initial column widths
         for (int i = 0; i < executionTable.getColumnCount(); i++){
@@ -1192,11 +1203,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         reportActionPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Reporting"));
 
         customQueryRunButton.setText("Run");
-        customQueryRunButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                customQueryRunButtonActionPerformed(evt);
-            }
-        });
+        customQueryRunButton.addActionListener(evt -> customQueryRunButtonActionPerformed(evt));
 
         queryLabel.setText("Query:");
 
@@ -1207,11 +1214,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         querySymbolLabel.setText("Symbol:");
 
         cannedQueryRunButton.setText("Run");
-        cannedQueryRunButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cannedQueryRunButtonActionPerformed(evt);
-            }
-        });
+        cannedQueryRunButton.addActionListener(evt -> cannedQueryRunButtonActionPerformed(evt));
 
         javax.swing.GroupLayout reportActionPanelLayout = new javax.swing.GroupLayout(reportActionPanel);
         reportActionPanel.setLayout(reportActionPanelLayout);
@@ -1749,7 +1752,7 @@ private void cancelIOIButtonActionPerformed(java.awt.event.ActionEvent evt) {//G
     // if there is a row selected
     if ( row != -1 ) {
         row = ioiTable.convertRowIndexToModel(row);
-        IOI ioi = FIXimulator.getApplication().getIOIs().getIOI(row);
+        IOI ioi = indicationsOfInterestApi.getIOI(row);
         IOI cancelIOI = ioi.clone();
         cancelIOI.setType("CANCEL");
         FIXimulator.getApplication().sendIOI(cancelIOI);
@@ -1762,7 +1765,7 @@ private void replaceIOIButtonActionPerformed(java.awt.event.ActionEvent evt) {//
     if ( row != -1 ) {
         ioiDialog.setTitle("Replace IOI...");
         row = ioiTable.convertRowIndexToModel(row);
-        IOI ioi = FIXimulator.getApplication().getIOIs().getIOI(row);
+        IOI ioi = indicationsOfInterestApi.getIOI(row);
         dialogIOI = ioi.clone();
         dialogIOI.setType("REPLACE");
         
@@ -1795,7 +1798,7 @@ private void acknowledgeButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     // if no rows are selected
     if ( row != -1 ) {
         row = orderTable.convertRowIndexToModel(row);
-        Order order = FIXimulator.getApplication().getOrders().getOrder(row);
+        Order order = ordersApi.getOrder(row);
         if ( order.getStatus().equals("Received") ||
              order.getStatus().equals("Pending New")) {
             FIXimulator.getApplication().acknowledge(order);
@@ -1822,7 +1825,7 @@ private void executionBustButtonActionPerformed(java.awt.event.ActionEvent evt) 
     if ( row != -1 ) {
         row = executionTable.convertRowIndexToModel(row);
         Execution execution = 
-                FIXimulator.getApplication().getExecutions().getExecution(row);
+                executionsApi.getExecution(row);
         if ( execution.getExecType().equals("Fill") ||
              execution.getExecType().equals("Partial fill")) {
             FIXimulator.getApplication().bust(execution);
@@ -1932,7 +1935,7 @@ private void orderRejectButtonActionPerformed(java.awt.event.ActionEvent evt) {/
     // if no rows are selected
     if ( row != -1 ) {
         row = orderTable.convertRowIndexToModel(row);
-        Order order = FIXimulator.getApplication().getOrders().getOrder(row);
+        Order order = ordersApi.getOrder(row);
         if ( order.getStatus().equals("Received") ||
              order.getStatus().equals("Pending New")) {
             FIXimulator.getApplication().reject(order);
@@ -1949,7 +1952,7 @@ private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     // if no rows are selected
     if ( row != -1 ) {
         row = orderTable.convertRowIndexToModel(row);
-        Order order = FIXimulator.getApplication().getOrders().getOrder(row);
+        Order order = ordersApi.getOrder(row);
         FIXimulator.getApplication().cancel(order);
     }
 }//GEN-LAST:event_cancelButtonActionPerformed
@@ -1959,7 +1962,7 @@ private void dfdButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     // if no rows are selected
     if ( row != -1 ) {
         row = orderTable.convertRowIndexToModel(row);
-        Order order = FIXimulator.getApplication().getOrders().getOrder(row);
+        Order order = ordersApi.getOrder(row);
         FIXimulator.getApplication().dfd(order);
     }
 }//GEN-LAST:event_dfdButtonActionPerformed
@@ -1969,7 +1972,7 @@ private void cancelPendingButtonActionPerformed(java.awt.event.ActionEvent evt) 
     // if no rows are selected
     if ( row != -1 ) {
         row = orderTable.convertRowIndexToModel(row);
-        Order order = FIXimulator.getApplication().getOrders().getOrder(row);
+        Order order = ordersApi.getOrder(row);
         if ( order.isReceivedCancel() ) {
             FIXimulator.getApplication().pendingCancel(order);
         } else {
@@ -1984,7 +1987,7 @@ private void cancelAcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {
     // if no rows are selected
     if ( row != -1 ) {
         row = orderTable.convertRowIndexToModel(row);
-        Order order = FIXimulator.getApplication().getOrders().getOrder(row);
+        Order order = ordersApi.getOrder(row);
         FIXimulator.getApplication().cancel(order);
     }
 }//GEN-LAST:event_cancelAcceptButtonActionPerformed
@@ -1994,7 +1997,7 @@ private void replacePendingButtonActionPerformed(java.awt.event.ActionEvent evt)
     // if no rows are selected
     if ( row != -1 ) {
         row = orderTable.convertRowIndexToModel(row);
-        Order order = FIXimulator.getApplication().getOrders().getOrder(row);
+        Order order = ordersApi.getOrder(row);
         if ( order.isReceivedReplace() ) {
             FIXimulator.getApplication().pendingReplace(order);
         } else {
@@ -2009,7 +2012,7 @@ private void replaceAcceptButtonActionPerformed(java.awt.event.ActionEvent evt) 
     // if no rows are selected
     if ( row != -1 ) {
         row = orderTable.convertRowIndexToModel(row);
-        Order order = FIXimulator.getApplication().getOrders().getOrder(row);
+        Order order = ordersApi.getOrder(row);
         if ( order.isReceivedReplace() || 
                 order.getStatus().equals("Pending Replace") ) {
             FIXimulator.getApplication().replace(order);
@@ -2025,7 +2028,7 @@ private void cancelRejectButtonActionPerformed(java.awt.event.ActionEvent evt) {
     // if no rows are selected
     if ( row != -1 ) {
         row = orderTable.convertRowIndexToModel(row);
-        Order order = FIXimulator.getApplication().getOrders().getOrder(row);
+        Order order = ordersApi.getOrder(row);
         if ( order.isReceivedCancel() || 
                 order.getStatus().equals("Pending Cancel") ) {
             FIXimulator.getApplication().rejectCancelReplace(order, true);
@@ -2041,7 +2044,7 @@ private void replaceRejectButtonActionPerformed(java.awt.event.ActionEvent evt) 
     // if no rows are selected
     if ( row != -1 ) {
         row = orderTable.convertRowIndexToModel(row);
-        Order order = FIXimulator.getApplication().getOrders().getOrder(row);
+        Order order = ordersApi.getOrder(row);
         if ( order.isReceivedReplace() || 
                 order.getStatus().equals("Pending Replace") ) {
             FIXimulator.getApplication().rejectCancelReplace(order, false);
@@ -2077,7 +2080,7 @@ private void executeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN
     // if no rows are selected
     if ( row != -1 ) {
         row = orderTable.convertRowIndexToModel(row);
-        Order order = FIXimulator.getApplication().getOrders().getOrder(row);
+        Order order = ordersApi.getOrder(row);
         dialogExecution = new Execution(order);
         executionDialogShares.setValue(0);
         executionDialogPrice.setValue(0.0);
@@ -2093,7 +2096,7 @@ private void executionCorrectButtonActionPerformed(java.awt.event.ActionEvent ev
     if ( row != -1 ) {
         row = executionTable.convertRowIndexToModel(row);
         Execution execution = 
-                FIXimulator.getApplication().getExecutions().getExecution(row);
+                executionsApi.getExecution(row);
         if ( execution.getExecType().equals("Fill") ||
              execution.getExecType().equals("Partial fill")) {
             dialogExecution = execution.clone();
@@ -2168,9 +2171,13 @@ private void cannedQueryRunButtonActionPerformed(java.awt.event.ActionEvent evt)
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                fiximulator = new FIXimulator();
+                OrdersApi ordersApi = new OrdersApi();
+                ExecutionsApi executionsApi = new ExecutionsApi();
+                IndicationsOfInterestApi indicationsOfInterestApi = new IndicationsOfInterestApi();
+
+                fiximulator = new FIXimulator(ordersApi, executionsApi, indicationsOfInterestApi);
                 fiximulator.start();
-                new FIXimulatorFrame().setVisible(true);
+                new FIXimulatorFrame(ordersApi, executionsApi, indicationsOfInterestApi).setVisible(true);
             }
         });
     }

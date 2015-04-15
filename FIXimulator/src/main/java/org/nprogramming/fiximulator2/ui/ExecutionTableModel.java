@@ -10,21 +10,20 @@
 package org.nprogramming.fiximulator2.ui;
 
 import javax.swing.table.AbstractTableModel;
-import org.nprogramming.fiximulator2.core.FIXimulator;
-import org.nprogramming.fiximulator2.core.Execution;
-import org.nprogramming.fiximulator2.core.ExecutionSet;
-import org.nprogramming.fiximulator2.core.Order;
+
+import org.nprogramming.fiximulator2.core.*;
 
 public class ExecutionTableModel extends AbstractTableModel {
-    private static ExecutionSet executions = 
-            FIXimulator.getApplication().getExecutions();
+
     private static String[] columns = 
         {"ID", "ClOrdID", "Side", "Symbol", "LastQty", "LastPx", 
-         "CumQty", "AvgPx", "Open", "ExecType", "ExecTranType", "RefID", "DKd"}; 
-    
+         "CumQty", "AvgPx", "Open", "ExecType", "ExecTranType", "RefID", "DKd"};
+    private final ExecutionsApi executionsApi;
 
-    public ExecutionTableModel(){
-        FIXimulator.getApplication().getExecutions().addCallback(this);
+
+    public ExecutionTableModel(ExecutionsApi executionsApi){
+        this.executionsApi = executionsApi;
+        executionsApi.addCallback(this);
     }
     
     public int getColumnCount() {
@@ -47,11 +46,11 @@ public class ExecutionTableModel extends AbstractTableModel {
     }
         
     public int getRowCount() {
-        return executions.getCount();
+        return executionsApi.getCount();
     }
 
     public Object getValueAt(int row, int column) {
-        Execution execution = executions.getExecution(row);
+        Execution execution = executionsApi.getExecution(row);
         Order order = execution.getOrder();
         if (column == 0) return execution.getID();        
         if (column == 1) return order.getClientID();
