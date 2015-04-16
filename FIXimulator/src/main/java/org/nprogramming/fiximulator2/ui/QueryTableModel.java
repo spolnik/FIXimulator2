@@ -11,7 +11,7 @@
 package org.nprogramming.fiximulator2.ui;
 
 import java.sql.*;
-import org.nprogramming.fiximulator2.core.FIXimulator;
+import org.nprogramming.fiximulator2.fix.FIXimulator;
 import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
 

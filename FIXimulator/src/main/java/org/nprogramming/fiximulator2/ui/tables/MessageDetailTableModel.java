@@ -12,11 +12,12 @@ package org.nprogramming.fiximulator2.ui.tables;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
-import org.nprogramming.fiximulator2.core.FIXimulator;
+import org.nprogramming.fiximulator2.fix.FIXimulator;
 import org.nprogramming.fiximulator2.core.LogMessage;
 import org.nprogramming.fiximulator2.core.LogMessageSet;
 import org.nprogramming.fiximulator2.util.LogField;
@@ -25,7 +26,7 @@ public class MessageDetailTableModel extends AbstractTableModel
         implements ListSelectionListener {
     private static LogMessageSet messages = FIXimulator.getMessageSet();
     private JTable messageTable = null; 
-    private ArrayList<LogField> fields = new ArrayList<LogField>();
+    private ArrayList<LogField> fields = new ArrayList<>();
     private static String[] columns = 
         {"Field", "Tag", "Value", "Value Name", "Required", "Section"};
         
@@ -55,27 +56,34 @@ public class MessageDetailTableModel extends AbstractTableModel
 
     public Object getValueAt( int row, int column ) {
         LogField logField = fields.get( row );
-        if (column == 0) return logField.getFieldName();
-        if (column == 1) return logField.getTag();
-        if (column == 2) return logField.getValue();
-        if (column == 3) return logField.getFieldValueName();
-        if (column == 4) return (logField.isRequired() ? "Yes" : "No");
+        if (column == 0)
+            return logField.getFieldName();
+        if (column == 1)
+            return logField.getTag();
+        if (column == 2)
+            return logField.getValue();
+        if (column == 3)
+            return logField.getFieldValueName();
+        if (column == 4)
+            return (logField.isRequired() ? "Yes" : "No");
         if (column == 5) {
-            if (logField.isHeaderField()) return "Header";
-            if (logField.isTrailerField()) return "Trailer";
+            if (logField.isHeaderField())
+                return "Header";
+            if (logField.isTrailerField())
+                return "Trailer";
             return "Body";
         }
         return null;
     }
 
     public void updateMessageDetailsTable(LogMessage message) {
-        LogMessage logMessage = message;
-        List<LogField> logFields = logMessage.getLogFields();
+
+        List<LogField> logFields = message.getLogFields();
         fields.clear();
 
-        for (LogField logField : logFields) {
-            fields.add(logField);
-        }
+        fields.addAll(
+                logFields.stream()
+                        .collect(Collectors.toList()));
         
         fireTableDataChanged();
     }

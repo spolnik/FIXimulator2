@@ -10,6 +10,8 @@
 package org.nprogramming.fiximulator2.core;
 
 import java.util.ArrayList;
+
+import org.nprogramming.fiximulator2.fix.FIXimulator;
 import org.nprogramming.fiximulator2.ui.tables.MessageTableModel;
 import quickfix.DataDictionary;
 import quickfix.Message;
@@ -35,7 +37,7 @@ public class LogMessageSet {
                 messages.add(msg);
                 int limit = 50;
                 try {
-                    limit = (int)FIXimulator.getApplication().getSettings()
+                    limit = (int) FIXimulator.getApplication().getSettings()
                             .getLong("FIXimulatorCachedObjects");
                 } catch ( Exception e ) {}
                 while ( messages.size() > limit ) {

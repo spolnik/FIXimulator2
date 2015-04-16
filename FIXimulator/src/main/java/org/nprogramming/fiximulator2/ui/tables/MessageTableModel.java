@@ -10,7 +10,7 @@
 package org.nprogramming.fiximulator2.ui.tables;
 
 import javax.swing.table.AbstractTableModel;
-import org.nprogramming.fiximulator2.core.FIXimulator;
+import org.nprogramming.fiximulator2.fix.FIXimulator;
 import org.nprogramming.fiximulator2.core.LogMessage;
 import org.nprogramming.fiximulator2.core.LogMessageSet;
 import quickfix.field.converter.UtcTimestampConverter;

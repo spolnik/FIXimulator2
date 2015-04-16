@@ -1,29 +1,21 @@
-/*
- * File     : FIXimulatorApplication.java
- *
- * Author   : Zoltan Feledy
- * 
- * Contents : This is the application class that contains all the 
- *             logic for message handling.            
- * 
- */
-
-package org.nprogramming.fiximulator2.core;
+package org.nprogramming.fiximulator2.fix;
 
 import org.nprogramming.fiximulator2.api.ExecutionsApi;
 import org.nprogramming.fiximulator2.api.IndicationsOfInterestApi;
 import org.nprogramming.fiximulator2.api.InstrumentsApi;
 import org.nprogramming.fiximulator2.api.OrdersApi;
+import org.nprogramming.fiximulator2.core.LogMessageSet;
+import org.nprogramming.fiximulator2.core.StatusSwitcher;
 import org.nprogramming.fiximulator2.domain.Execution;
 import org.nprogramming.fiximulator2.domain.IOI;
 import org.nprogramming.fiximulator2.domain.Instrument;
 import org.nprogramming.fiximulator2.domain.Order;
-import org.nprogramming.fiximulator2.fix.OrderFixTranslator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import quickfix.*;
 import quickfix.field.*;
 import quickfix.fix42.Message.Header;
 
-import javax.swing.*;
 import java.io.*;
 import java.util.Date;
 import java.util.Random;
@@ -31,10 +23,12 @@ import java.util.Random;
 public class FIXimulatorApplication extends MessageCracker
         implements Application {
 
+    private static final Logger LOG = LoggerFactory.getLogger(FIXimulatorApplication.class);
+
     private boolean connected;
-    private JLabel connectedStatus;
-    private JLabel ioiSenderStatus;
-    private JLabel executorStatus;
+    private StatusSwitcher connectedStatus;
+    private StatusSwitcher ioiSenderStatus;
+    private StatusSwitcher executorStatus;
     private boolean ioiSenderStarted;
     private boolean executorStarted;
     private IOIsender ioiSender;
@@ -73,20 +67,20 @@ public class FIXimulatorApplication extends MessageCracker
     public void onCreate(SessionID sessionID) {
     }
 
+    @Override
     public void onLogon(SessionID sessionID) {
         connected = true;
         currentSession = sessionID;
         dictionary = Session.lookupSession(currentSession).getDataDictionary();
         if (connectedStatus != null)
-            connectedStatus.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/img/green.gif")));
+            connectedStatus.on();
     }
 
+    @Override
     public void onLogout(SessionID sessionID) {
         connected = false;
         currentSession = null;
-        connectedStatus.setIcon(new javax.swing.ImageIcon(getClass()
-                .getResource("/img/red.gif")));
+        connectedStatus.off();
     }
 
     // IndicationofInterest handling
@@ -112,6 +106,7 @@ public class FIXimulatorApplication extends MessageCracker
             try {
                 autoAck = settings.getBool("FIXimulatorAutoAcknowledge");
             } catch (Exception e) {
+                LOG.error("Error: ", e);
             }
             if (autoAck) {
                 acknowledge(order);
@@ -133,7 +128,7 @@ public class FIXimulatorApplication extends MessageCracker
             autoPending = settings.getBool("FIXimulatorAutoPendingCancel");
             autoCancel = settings.getBool("FIXimulatorAutoCancel");
         } catch (Exception e) {
-
+            LOG.error("Error: ", e);
         }
         if (autoPending) {
             pendingCancel(order);
@@ -157,6 +152,7 @@ public class FIXimulatorApplication extends MessageCracker
             autoPending = settings.getBool("FIXimulatorAutoPendingReplace");
             autoCancel = settings.getBool("FIXimulatorAutoReplace");
         } catch (Exception e) {
+            LOG.error("Error: ", e);
         }
         if (autoPending) {
             pendingReplace(order);
@@ -189,10 +185,11 @@ public class FIXimulatorApplication extends MessageCracker
             ExecID execID = new ExecID();
             message.get(execID);
             Execution execution =
-                    executionsApi.getExecution(execID.getValue().toString());
+                    executionsApi.getExecution(execID.getValue());
             execution.setDKd(true);
             executionsApi.update();
         } catch (FieldNotFound ex) {
+            LOG.error("Error: ", ex);
         }
     }
 
@@ -220,8 +217,8 @@ public class FIXimulatorApplication extends MessageCracker
     public void toAdmin(Message message, SessionID sessionID) {
     }
 
-    public void addStatusCallbacks(JLabel connectedStatus,
-                                   JLabel ioiSenderStatus, JLabel executorStatus) {
+    public void addStatusCallbacks(StatusSwitcher connectedStatus,
+                                   StatusSwitcher ioiSenderStatus, StatusSwitcher executorStatus) {
         this.connectedStatus = connectedStatus;
         this.ioiSenderStatus = ioiSenderStatus;
         this.executorStatus = executorStatus;
@@ -486,6 +483,7 @@ public class FIXimulatorApplication extends MessageCracker
             sendoboCompID = settings.getBool("FIXimulatorSendOnBehalfOfCompID");
             sendoboSubID = settings.getBool("FIXimulatorSendOnBehalfOfSubID");
         } catch (Exception e) {
+            LOG.error("Error: ", e);
         }
 
         // Add OnBehalfOfCompID
@@ -544,7 +542,7 @@ public class FIXimulatorApplication extends MessageCracker
 
         // *** Conditionally required fields ***
         // IOIRefID
-        IOIRefID ioiRefID = null;
+        IOIRefID ioiRefID;
         if (ioi.getType().equals("CANCEL") || ioi.getType().equals("REPLACE")) {
             ioiRefID = new IOIRefID(ioi.getRefID());
             fixIOI.set(ioiRefID);
@@ -690,8 +688,7 @@ public class FIXimulatorApplication extends MessageCracker
             e.printStackTrace();
         }
         if (connected && ioiSenderStarted)
-            ioiSenderStatus.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/img/green.gif")));
+            ioiSenderStatus.on();
     }
 
     public void stopIOIsender() {
@@ -702,8 +699,7 @@ public class FIXimulatorApplication extends MessageCracker
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        ioiSenderStatus.setIcon(new javax.swing.ImageIcon(getClass()
-                .getResource("/img/red.gif")));
+        ioiSenderStatus.off();
     }
 
     public void setNewDelay(Integer delay) {
@@ -752,10 +748,10 @@ public class FIXimulatorApplication extends MessageCracker
                 try {
                     Thread.sleep(delay.longValue());
                 } catch (InterruptedException e) {
+                    LOG.error("Error: ", e);
                 }
             }
-            ioiSenderStatus.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/img/red.gif")));
+            ioiSenderStatus.off();
         }
 
         public void sendRandomIOI() {
@@ -779,7 +775,6 @@ public class FIXimulatorApplication extends MessageCracker
             if (symbolValue.equals("Cusip")) value = instrument.getCusip();
             if (value.equals("")) value = "<MISSING>";
             ioi.setSymbol(value);
-            Symbol symbol = new Symbol(ioi.getSymbol());
 
             // *** Optional fields ***
             // SecurityID
@@ -810,6 +805,7 @@ public class FIXimulatorApplication extends MessageCracker
                 pricePrecision =
                         (int) settings.getLong("FIXimulatorPricePrecision");
             } catch (Exception e) {
+                LOG.error("Error: ", e);
             }
             double factor = Math.pow(10, pricePrecision);
             double price = Math.round(
@@ -834,8 +830,7 @@ public class FIXimulatorApplication extends MessageCracker
             e.printStackTrace();
         }
         if (connected && executorStarted)
-            executorStatus.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/img/green.gif")));
+            executorStatus.on();
     }
 
     public void stopExecutor() {
@@ -846,8 +841,7 @@ public class FIXimulatorApplication extends MessageCracker
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        executorStatus.setIcon(new javax.swing.ImageIcon(getClass()
-                .getResource("/img/red.gif")));
+        executorStatus.off();
     }
 
     public void setNewExecutorDelay(Integer delay) {
@@ -879,10 +873,10 @@ public class FIXimulatorApplication extends MessageCracker
                 try {
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {
+                    LOG.error("Error: ", e);
                 }
             }
-            executorStatus.setIcon(new javax.swing.ImageIcon(getClass()
-                    .getResource("/img/red.gif")));
+            executorStatus.off();
         }
 
         public void stopExecutor() {
@@ -912,6 +906,7 @@ public class FIXimulatorApplication extends MessageCracker
                     pricePrecision =
                             (int) settings.getLong("FIXimulatorPricePrecision");
                 } catch (Exception e) {
+                    LOG.error("Error: ", e);
                 }
                 double factor = Math.pow(10, pricePrecision);
                 fillPrice = Math.round(
@@ -939,6 +934,7 @@ public class FIXimulatorApplication extends MessageCracker
                             pricePrecision =
                                     (int) settings.getLong("FIXimulatorPricePrecision");
                         } catch (Exception e) {
+                            LOG.error("Error: ", e);
                         }
                         double factor = Math.pow(10, pricePrecision);
                         fillPrice = Math.round(fillPrice * factor) / factor;
@@ -977,6 +973,7 @@ public class FIXimulatorApplication extends MessageCracker
                             pricePrecision =
                                     (int) settings.getLong("FIXimulatorPricePrecision");
                         } catch (Exception e) {
+                            LOG.error("Error: ", e);
                         }
                         double factor = Math.pow(10, pricePrecision);
                         fillPrice = Math.round(fillPrice * factor) / factor;
@@ -1003,6 +1000,7 @@ public class FIXimulatorApplication extends MessageCracker
                 try {
                     Thread.sleep(delay.longValue());
                 } catch (InterruptedException e) {
+                    LOG.error("Error: ", e);
                 }
             }
         }

@@ -1,4 +1,4 @@
-package org.nprogramming.fiximulator2.core;
+package org.nprogramming.fiximulator2.fix;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -11,8 +11,8 @@ import org.nprogramming.fiximulator2.api.ExecutionsApi;
 import org.nprogramming.fiximulator2.api.IndicationsOfInterestApi;
 import org.nprogramming.fiximulator2.api.InstrumentsApi;
 import org.nprogramming.fiximulator2.api.OrdersApi;
+import org.nprogramming.fiximulator2.core.LogMessageSet;
 import org.nprogramming.fiximulator2.data.InstrumentRepository;
-import org.nprogramming.fiximulator2.fix.OrderFixTranslator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import quickfix.Acceptor;

@@ -2,7 +2,7 @@ package org.nprogramming.fiximulator2.data;
 
 import org.nprogramming.fiximulator2.api.IndicationsOfInterestApi;
 import org.nprogramming.fiximulator2.api.Callback;
-import org.nprogramming.fiximulator2.core.FIXimulator;
+import org.nprogramming.fiximulator2.fix.FIXimulator;
 import org.nprogramming.fiximulator2.domain.IOI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
