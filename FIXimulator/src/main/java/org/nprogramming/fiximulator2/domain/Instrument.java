@@ -1,13 +1,3 @@
-/*
- * File     : Instrument.java
- *
- * Author   : Zoltan Feledy
- * 
- * Contents : This class is a basic Instrument object that is used to 
- *            create and store instrument details.
- * 
- */
-
 package org.nprogramming.fiximulator2.domain;
 
 public class Instrument {

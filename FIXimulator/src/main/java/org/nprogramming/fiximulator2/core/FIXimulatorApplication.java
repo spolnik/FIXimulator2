@@ -28,6 +28,7 @@ import org.nprogramming.fiximulator2.domain.Execution;
 import org.nprogramming.fiximulator2.domain.IOI;
 import org.nprogramming.fiximulator2.domain.Instrument;
 import org.nprogramming.fiximulator2.domain.Order;
+import org.nprogramming.fiximulator2.processing.OrderFixTranslator;
 import quickfix.Application;
 import quickfix.DataDictionary;
 import quickfix.DoNotSend;
@@ -76,6 +77,7 @@ import quickfix.fix42.Message.Header;
 
 public class FIXimulatorApplication extends MessageCracker
         implements Application {
+
     private boolean connected;
     private JLabel connectedStatus;
     private JLabel ioiSenderStatus;
@@ -90,6 +92,7 @@ public class FIXimulatorApplication extends MessageCracker
     private final OrdersApi ordersApi;
     private final ExecutionsApi executionsApi;
     private final IndicationsOfInterestApi indicationsOfInterestApi;
+    private final OrderFixTranslator orderFixTranslator;
     private SessionSettings settings;
     private SessionID currentSession;
     private DataDictionary dictionary;
@@ -100,13 +103,15 @@ public class FIXimulatorApplication extends MessageCracker
             LogMessageSet messages,
             OrdersApi ordersApi,
             ExecutionsApi executionsApi,
-            IndicationsOfInterestApi indicationsOfInterestApi
+            IndicationsOfInterestApi indicationsOfInterestApi,
+            OrderFixTranslator orderFixTranslator
     ) {
         this.settings = settings;
         this.messages = messages;
         this.ordersApi = ordersApi;
         this.executionsApi = executionsApi;
         this.indicationsOfInterestApi = indicationsOfInterestApi;
+        this.orderFixTranslator = orderFixTranslator;
     }
 
     public void onCreate(SessionID sessionID) {
@@ -140,7 +145,7 @@ public class FIXimulatorApplication extends MessageCracker
     public void onMessage(quickfix.fix42.NewOrderSingle message,
                           SessionID sessionID)
             throws FieldNotFound, UnsupportedMessageType, IncorrectTagValue {
-        Order order = new Order(message);
+        Order order = orderFixTranslator.from(message);
         order.setReceivedOrder(true);
         if (executorStarted) {
             ordersApi.addOrderToFill(order);
@@ -163,7 +168,7 @@ public class FIXimulatorApplication extends MessageCracker
     public void onMessage(quickfix.fix42.OrderCancelRequest message,
                           SessionID sessionID)
             throws FieldNotFound, UnsupportedMessageType, IncorrectTagValue {
-        Order order = new Order(message, ordersApi);
+        Order order = orderFixTranslator.from(message);
         order.setReceivedCancel(true);
         ordersApi.addOrder(order);
         boolean autoPending = false;
@@ -186,7 +191,7 @@ public class FIXimulatorApplication extends MessageCracker
     public void onMessage(quickfix.fix42.OrderCancelReplaceRequest message,
                           SessionID sessionID)
             throws FieldNotFound, UnsupportedMessageType, IncorrectTagValue {
-        Order order = new Order(message, ordersApi);
+        Order order = orderFixTranslator.from(message);
         order.setReceivedReplace(true);
         ordersApi.addOrder(order);
         boolean autoPending = false;

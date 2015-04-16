@@ -1,13 +1,3 @@
-/*
- * File     : IOI.java
- *
- * Author   : Zoltan Feledy
- * 
- * Contents : This class is a basic IOI object that is used to create
- *            and store ioi details.
- * 
- */
-
 package org.nprogramming.fiximulator2.domain;
 
 public class IOI implements Cloneable {

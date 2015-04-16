@@ -1,12 +1,3 @@
-/*
- * File     : FIXimulator.java
- *
- * Author   : Zoltan Feledy
- * 
- * Contents : This is the class that initializes the application.
- * 
- */
-
 package org.nprogramming.fiximulator2.core;
 
 import java.io.BufferedInputStream;
@@ -20,6 +11,9 @@ import org.nprogramming.fiximulator2.api.ExecutionsApi;
 import org.nprogramming.fiximulator2.api.IndicationsOfInterestApi;
 import org.nprogramming.fiximulator2.api.OrdersApi;
 import org.nprogramming.fiximulator2.data.InstrumentSet;
+import org.nprogramming.fiximulator2.processing.OrderFixTranslator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import quickfix.Acceptor;
 import quickfix.CompositeLogFactory;
 import quickfix.ConfigError;
@@ -35,8 +29,10 @@ import quickfix.ScreenLogFactory;
 import quickfix.SessionSettings;
 import quickfix.SocketAcceptor;
 
-public class FIXimulator {
-    private static final long serialVersionUID = 1L;
+public final class FIXimulator {
+
+    private static Logger LOG = LoggerFactory.getLogger(FIXimulator.class);
+
     private Acceptor acceptor = null;
     private static FIXimulatorApplication application = null;
     private static InstrumentSet instruments = null;
@@ -68,7 +64,16 @@ public class FIXimulator {
         messages = new LogMessageSet();
         try {
             SessionSettings settings = new SessionSettings(inputStream);
-            application = new FIXimulatorApplication(settings, messages, ordersApi, executionsApi, indicationsOfInterestApi);
+
+            application = new FIXimulatorApplication(
+                    settings,
+                    messages,
+                    ordersApi,
+                    executionsApi,
+                    indicationsOfInterestApi,
+                    new OrderFixTranslator(ordersApi)
+            );
+
             MessageStoreFactory messageStoreFactory =
                     new FileStoreFactory(settings);
             boolean logToFile = false;
@@ -78,6 +83,7 @@ public class FIXimulator {
                 logToFile = settings.getBool("FIXimulatorLogToFile");
                 logToDB = settings.getBool("FIXimulatorLogToDB");
             } catch (FieldConvertError ex) {
+                LOG.error("Error: ", ex);
             }
             if (logToFile && logToDB) {
                 logFactory = new CompositeLogFactory(
@@ -120,7 +126,7 @@ public class FIXimulator {
         try {
             acceptor.start();
         } catch (Exception e) {
-            System.out.println(e);
+            LOG.error("Error: ", e);
         }
     }
 }
