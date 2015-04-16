@@ -8,7 +8,7 @@ public interface IndicationsOfInterestApi {
 
     IOI getIOI(int id);
 
-    void addCallback(NotifyApi notifyApi);
+    void addCallback(Callback callback);
 
     int size();
 

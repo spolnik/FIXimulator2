@@ -7,20 +7,22 @@
  * 
  */
 
-package org.nprogramming.fiximulator2.ui;
+package org.nprogramming.fiximulator2.ui.tables;
 
 import javax.swing.table.AbstractTableModel;
-import org.nprogramming.fiximulator2.core.FIXimulator;
+
+import org.nprogramming.fiximulator2.api.InstrumentsApi;
+import org.nprogramming.fiximulator2.api.Callback;
 import org.nprogramming.fiximulator2.domain.Instrument;
-import org.nprogramming.fiximulator2.data.InstrumentSet;
 
-public class InstrumentTableModel extends AbstractTableModel {
-    private static InstrumentSet instruments = FIXimulator.getInstruments();
-    private static String[] columns = 
-        {"Ticker", "Name", "Sedol", "RIC", "Cusip", "Price"}; 
+public class InstrumentTableModel extends AbstractTableModel implements Callback {
+    private static String[] columns =
+        {"Ticker", "Name", "Sedol", "RIC", "Cusip", "Price"};
+    private final InstrumentsApi instrumentsApi;
 
-    public InstrumentTableModel(){
-        FIXimulator.getInstruments().addCallback(this);
+    public InstrumentTableModel(InstrumentsApi instrumentsApi){
+        this.instrumentsApi = instrumentsApi;
+        instrumentsApi.addCallback(this);
     }
     
     public int getColumnCount() {
@@ -39,11 +41,11 @@ public class InstrumentTableModel extends AbstractTableModel {
     }
         
     public int getRowCount() {
-        return instruments.getCount();
+        return instrumentsApi.size();
     }
 
     public Object getValueAt(int row, int column) {
-        Instrument instrument = instruments.getInstrument(row);
+        Instrument instrument = instrumentsApi.getInstrument(row);
         if (column == 0) return instrument.getTicker();
         if (column == 1) return instrument.getName();
         if (column == 2) return instrument.getSedol();

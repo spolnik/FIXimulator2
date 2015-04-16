@@ -12,7 +12,7 @@ public interface ExecutionsApi {
 
     Execution getExecution(int id);
 
-    void addCallback(NotifyApi notifyApi);
+    void addCallback(Callback callback);
 
     int size();
 }

@@ -10,7 +10,7 @@
 package org.nprogramming.fiximulator2.core;
 
 import java.util.ArrayList;
-import org.nprogramming.fiximulator2.ui.MessageTableModel;
+import org.nprogramming.fiximulator2.ui.tables.MessageTableModel;
 import quickfix.DataDictionary;
 import quickfix.Message;
 import quickfix.SessionID;
@@ -23,7 +23,7 @@ public class LogMessageSet {
 	private int messageIndex = 0;
 	
 	public LogMessageSet() {
-		messages = new ArrayList<LogMessage>();
+		messages = new ArrayList<>();
 	}
 	
 	public void add(Message message, boolean incoming, 
@@ -41,7 +41,7 @@ public class LogMessageSet {
                 while ( messages.size() > limit ) {
                     messages.remove(0);
                 }
-		//call back to the model to update
+
 		model.update();		
 	}
 	

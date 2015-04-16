@@ -10,70 +10,23 @@
 
 package org.nprogramming.fiximulator2.core;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.util.Date;
-import java.util.Random;
-
-import javax.swing.JLabel;
-
 import org.nprogramming.fiximulator2.api.ExecutionsApi;
 import org.nprogramming.fiximulator2.api.IndicationsOfInterestApi;
+import org.nprogramming.fiximulator2.api.InstrumentsApi;
 import org.nprogramming.fiximulator2.api.OrdersApi;
-import org.nprogramming.fiximulator2.data.InstrumentSet;
 import org.nprogramming.fiximulator2.domain.Execution;
 import org.nprogramming.fiximulator2.domain.IOI;
 import org.nprogramming.fiximulator2.domain.Instrument;
 import org.nprogramming.fiximulator2.domain.Order;
-import org.nprogramming.fiximulator2.processing.OrderFixTranslator;
-import quickfix.Application;
-import quickfix.DataDictionary;
-import quickfix.DoNotSend;
-import quickfix.FieldNotFound;
-import quickfix.IncorrectDataFormat;
-import quickfix.IncorrectTagValue;
-import quickfix.Message;
-import quickfix.MessageCracker;
-import quickfix.RejectLogon;
-import quickfix.Session;
-import quickfix.SessionID;
-import quickfix.SessionNotFound;
-import quickfix.SessionSettings;
-import quickfix.UnsupportedMessageType;
-import quickfix.field.AvgPx;
-import quickfix.field.ClOrdID;
-import quickfix.field.CumQty;
-import quickfix.field.Currency;
-import quickfix.field.CxlRejResponseTo;
-import quickfix.field.ExecID;
-import quickfix.field.ExecRefID;
-import quickfix.field.ExecTransType;
-import quickfix.field.ExecType;
-import quickfix.field.IDSource;
-import quickfix.field.IOINaturalFlag;
-import quickfix.field.IOIRefID;
-import quickfix.field.IOIShares;
-import quickfix.field.IOITransType;
-import quickfix.field.IOIid;
-import quickfix.field.LastPx;
-import quickfix.field.LastShares;
-import quickfix.field.LeavesQty;
-import quickfix.field.OnBehalfOfCompID;
-import quickfix.field.OnBehalfOfSubID;
-import quickfix.field.OrdStatus;
-import quickfix.field.OrderID;
-import quickfix.field.OrderQty;
-import quickfix.field.OrigClOrdID;
-import quickfix.field.Price;
-import quickfix.field.SecurityDesc;
-import quickfix.field.SecurityID;
-import quickfix.field.Side;
-import quickfix.field.Symbol;
-import quickfix.field.ValidUntilTime;
+import org.nprogramming.fiximulator2.fix.OrderFixTranslator;
+import quickfix.*;
+import quickfix.field.*;
 import quickfix.fix42.Message.Header;
+
+import javax.swing.*;
+import java.io.*;
+import java.util.Date;
+import java.util.Random;
 
 public class FIXimulatorApplication extends MessageCracker
         implements Application {
@@ -92,6 +45,7 @@ public class FIXimulatorApplication extends MessageCracker
     private final OrdersApi ordersApi;
     private final ExecutionsApi executionsApi;
     private final IndicationsOfInterestApi indicationsOfInterestApi;
+    private final InstrumentsApi instrumentsApi;
     private final OrderFixTranslator orderFixTranslator;
     private SessionSettings settings;
     private SessionID currentSession;
@@ -104,6 +58,7 @@ public class FIXimulatorApplication extends MessageCracker
             OrdersApi ordersApi,
             ExecutionsApi executionsApi,
             IndicationsOfInterestApi indicationsOfInterestApi,
+            InstrumentsApi instrumentsApi,
             OrderFixTranslator orderFixTranslator
     ) {
         this.settings = settings;
@@ -111,6 +66,7 @@ public class FIXimulatorApplication extends MessageCracker
         this.ordersApi = ordersApi;
         this.executionsApi = executionsApi;
         this.indicationsOfInterestApi = indicationsOfInterestApi;
+        this.instrumentsApi = instrumentsApi;
         this.orderFixTranslator = orderFixTranslator;
     }
 
@@ -177,6 +133,7 @@ public class FIXimulatorApplication extends MessageCracker
             autoPending = settings.getBool("FIXimulatorAutoPendingCancel");
             autoCancel = settings.getBool("FIXimulatorAutoCancel");
         } catch (Exception e) {
+
         }
         if (autoPending) {
             pendingCancel(order);
@@ -626,7 +583,7 @@ public class FIXimulatorApplication extends MessageCracker
 
         // SecurityDesc
         Instrument instrument =
-                FIXimulator.getInstruments().getInstrument(ioi.getSymbol());
+                instrumentsApi.getInstrument(ioi.getSymbol());
         String name = "Unknown security";
         if (instrument != null) name = instrument.getName();
         SecurityDesc desc = new SecurityDesc(name);
@@ -762,13 +719,11 @@ public class FIXimulatorApplication extends MessageCracker
     }
 
     public class IOIsender implements Runnable {
-        InstrumentSet instruments;
         private Integer delay;
         private String symbolValue = "";
         private String securityIDvalue = "";
 
         public IOIsender(Integer delay, String symbol, String securityID) {
-            instruments = FIXimulator.getInstruments();
             ioiSenderStarted = true;
             this.delay = delay;
             symbolValue = symbol;
@@ -804,7 +759,7 @@ public class FIXimulatorApplication extends MessageCracker
         }
 
         public void sendRandomIOI() {
-            Instrument instrument = instruments.randomInstrument();
+            Instrument instrument = instrumentsApi.randomInstrument();
             IOI ioi = new IOI();
             ioi.setType("NEW");
 
@@ -813,7 +768,7 @@ public class FIXimulatorApplication extends MessageCracker
             if (random.nextBoolean()) ioi.setSide("SELL");
 
             // IOIShares
-            Integer quantity = new Integer(random.nextInt(1000) * 100 + 100);
+            Integer quantity = random.nextInt(1000) * 100 + 100;
             ioi.setQuantity(quantity);
 
             // Symbol
@@ -904,12 +859,10 @@ public class FIXimulatorApplication extends MessageCracker
     }
 
     public class Executor implements Runnable {
-        InstrumentSet instruments;
         private Integer delay;
         private Integer partials;
 
         public Executor(Integer delay, Integer partials) {
-            instruments = FIXimulator.getInstruments();
             executorStarted = true;
             this.partials = partials;
             this.delay = delay;
@@ -949,7 +902,7 @@ public class FIXimulatorApplication extends MessageCracker
             double fillPrice = 0.0;
             // try to look the price up from the instruments
             Instrument instrument =
-                    instruments.getInstrument(order.getSymbol());
+                    instrumentsApi.getInstrument(order.getSymbol());
             if (instrument != null) {
                 fillPrice = Double.valueOf(instrument.getPrice());
                 // use a random price

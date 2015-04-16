@@ -13,16 +13,20 @@ package org.nprogramming.fiximulator2.ui;
 
 import org.nprogramming.fiximulator2.api.ExecutionsApi;
 import org.nprogramming.fiximulator2.api.IndicationsOfInterestApi;
+import org.nprogramming.fiximulator2.api.InstrumentsApi;
 import org.nprogramming.fiximulator2.api.OrdersApi;
 import org.nprogramming.fiximulator2.core.*;
 import org.nprogramming.fiximulator2.data.ExecutionsRepository;
 import org.nprogramming.fiximulator2.data.IndicationsOfInterestRepository;
+import org.nprogramming.fiximulator2.data.InstrumentRepository;
 import org.nprogramming.fiximulator2.data.OrderRepository;
 import org.nprogramming.fiximulator2.domain.Execution;
 import org.nprogramming.fiximulator2.domain.IOI;
 import org.nprogramming.fiximulator2.domain.Order;
+import org.nprogramming.fiximulator2.ui.tables.*;
 
 import java.io.File;
+import java.net.URL;
 import javax.swing.UIManager;
 
 public class FIXimulatorFrame extends javax.swing.JFrame {
@@ -30,17 +34,20 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
     private final OrdersApi ordersApi;
     private final ExecutionsApi executionsApi;
     private final IndicationsOfInterestApi indicationsOfInterestApi;
+    private final InstrumentsApi instrumentsApi;
     private IOI dialogIOI = null;
     private Execution dialogExecution = null;
 
     public FIXimulatorFrame(
             OrdersApi ordersApi,
             ExecutionsApi executionsApi,
-            IndicationsOfInterestApi indicationsOfInterestApi
+            IndicationsOfInterestApi indicationsOfInterestApi,
+            InstrumentsApi instrumentsApi
     ) {
         this.ordersApi = ordersApi;
         this.executionsApi = executionsApi;
         this.indicationsOfInterestApi = indicationsOfInterestApi;
+        this.instrumentsApi = instrumentsApi;
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {e.printStackTrace();}
@@ -1156,7 +1163,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         mainTabbedPane.addTab("Executions", executionPanel);
 
         instrumentTable.setAutoCreateRowSorter(true);
-        instrumentTable.setModel(new InstrumentTableModel());
+        instrumentTable.setModel(new InstrumentTableModel(instrumentsApi));
         instrumentTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         //Set initial column widths
         for (int i = 0; i < instrumentTable.getColumnCount(); i++){
@@ -1860,7 +1867,7 @@ private void loadInstrumentMenuItemActionPerformed(java.awt.event.ActionEvent ev
 int result = instrumentFileChooser.showOpenDialog(this);
     if (result == instrumentFileChooser.APPROVE_OPTION) {
         File file = instrumentFileChooser.getSelectedFile();
-        FIXimulator.getInstruments().reloadInstrumentSet(file);
+        instrumentsApi.reloadInstrumentSet(file);
     } else {
         System.out.println("User cancelled loading file...");
     }
@@ -2139,13 +2146,17 @@ private void cannedQueryRunButtonActionPerformed(java.awt.event.ActionEvent evt)
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
-            OrdersApi ordersApi1 = new OrderRepository();
-            ExecutionsApi executionsApi1 = new ExecutionsRepository();
-            IndicationsOfInterestApi indicationsOfInterestApi1 = new IndicationsOfInterestRepository();
+            OrdersApi ordersApi = new OrderRepository();
+            ExecutionsApi executionsApi = new ExecutionsRepository();
+            IndicationsOfInterestApi indicationsOfInterestApi = new IndicationsOfInterestRepository();
 
-            fiximulator = new FIXimulator(ordersApi1, executionsApi1, indicationsOfInterestApi1);
+            URL instrumentsXml = FIXimulatorFrame.class.getClassLoader().getResource("config/instruments.xml");
+
+            InstrumentsApi instrumentsApi = new InstrumentRepository(new File(instrumentsXml.getPath()));
+
+            fiximulator = new FIXimulator(ordersApi, executionsApi, indicationsOfInterestApi, instrumentsApi);
             fiximulator.start();
-            new FIXimulatorFrame(ordersApi1, executionsApi1, indicationsOfInterestApi1).setVisible(true);
+            new FIXimulatorFrame(ordersApi, executionsApi, indicationsOfInterestApi, instrumentsApi).setVisible(true);
         });
     }
 

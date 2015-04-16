@@ -1,7 +1,7 @@
 package org.nprogramming.fiximulator2.data;
 
 import org.nprogramming.fiximulator2.api.IndicationsOfInterestApi;
-import org.nprogramming.fiximulator2.api.NotifyApi;
+import org.nprogramming.fiximulator2.api.Callback;
 import org.nprogramming.fiximulator2.core.FIXimulator;
 import org.nprogramming.fiximulator2.domain.IOI;
 import org.slf4j.Logger;
@@ -13,7 +13,7 @@ import java.util.List;
 public final class IndicationsOfInterestRepository implements IndicationsOfInterestApi {
 
     private final List<IOI> iois = new ArrayList<>();
-    private NotifyApi notifyApi = null;
+    private Callback callback = null;
 
     private static final Logger LOG = LoggerFactory.getLogger(IndicationsOfInterestRepository.class);
 
@@ -30,12 +30,12 @@ public final class IndicationsOfInterestRepository implements IndicationsOfInter
         while (iois.size() > limit) {
             iois.remove(0);
         }
-        notifyApi.update();
+        callback.update();
     }
 
     @Override
-    public void addCallback(NotifyApi notifyApi) {
-        this.notifyApi = notifyApi;
+    public void addCallback(Callback callback) {
+        this.callback = callback;
     }
 
     @Override

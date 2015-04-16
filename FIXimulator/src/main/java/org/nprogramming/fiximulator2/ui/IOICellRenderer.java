@@ -10,6 +10,8 @@
 
 package org.nprogramming.fiximulator2.ui;
 
+import org.nprogramming.fiximulator2.ui.tables.IOITableModel;
+
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JTable;

@@ -1,5 +1,5 @@
 package org.nprogramming.fiximulator2.api;
 
-public interface NotifyApi {
+public interface Callback {
     void update();
 }

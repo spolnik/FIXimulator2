@@ -8,7 +8,7 @@
  * 
  */
 
-package org.nprogramming.fiximulator2.ui;
+package org.nprogramming.fiximulator2.ui.tables;
 
 import java.util.ArrayList;
 import java.util.List;

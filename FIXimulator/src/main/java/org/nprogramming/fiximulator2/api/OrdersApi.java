@@ -18,7 +18,7 @@ public interface OrdersApi {
 
     Order getOrder(String origClientID);
 
-    void addCallback(NotifyApi notifyApi);
+    void addCallback(Callback callback);
 
     int size();
 }

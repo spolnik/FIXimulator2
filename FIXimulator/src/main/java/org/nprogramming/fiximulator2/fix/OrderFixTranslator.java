@@ -1,4 +1,4 @@
-package org.nprogramming.fiximulator2.processing;
+package org.nprogramming.fiximulator2.fix;
 
 import org.nprogramming.fiximulator2.api.OrdersApi;
 import org.nprogramming.fiximulator2.domain.Order;
@@ -21,14 +21,14 @@ public final class OrderFixTranslator {
         try {
             ClOrdID clOrdID = new ClOrdID();
             message.get(clOrdID);
-            order.setClientID(clOrdID.getValue().toString());
+            order.setClientID(clOrdID.getValue());
         } catch (FieldNotFound ex) {}
 
         // OrigClOrdID
         try {
             OrigClOrdID origClOrdID = new OrigClOrdID();
             message.get(origClOrdID);
-            order.setOrigClientID(origClOrdID.getValue().toString());
+            order.setOrigClientID(origClOrdID.getValue());
         } catch (FieldNotFound ex) {}
 
          Order oldOrder = ordersApi.getOrder(order.getOrigClientID());
@@ -105,14 +105,14 @@ public final class OrderFixTranslator {
         try {
             ClOrdID clOrdID = new ClOrdID();
             message.get(clOrdID);
-            order.setClientID(clOrdID.getValue().toString());
+            order.setClientID(clOrdID.getValue());
         } catch (FieldNotFound ex) {}
 
         // OrigClOrdID
         try {
             OrigClOrdID origClOrdID = new OrigClOrdID();
             message.get(origClOrdID);
-            order.setOrigClientID(origClOrdID.getValue().toString());
+            order.setOrigClientID(origClOrdID.getValue());
         } catch (FieldNotFound ex) {}
 
         Order oldOrder = ordersApi.getOrder(order.getOrigClientID());
@@ -171,7 +171,7 @@ public final class OrderFixTranslator {
         try {
             ClOrdID clOrdID = new ClOrdID();
             message.get(clOrdID);
-            order.setClientID(clOrdID.getValue().toString());
+            order.setClientID(clOrdID.getValue());
         } catch (FieldNotFound ex) {}
 
         // Side

@@ -1,12 +1,12 @@
-package org.nprogramming.fiximulator2.ui;
+package org.nprogramming.fiximulator2.ui.tables;
 
-import org.nprogramming.fiximulator2.api.NotifyApi;
+import org.nprogramming.fiximulator2.api.Callback;
 import org.nprogramming.fiximulator2.domain.IOI;
 import org.nprogramming.fiximulator2.api.IndicationsOfInterestApi;
 
 import javax.swing.table.AbstractTableModel;
 
-public class IOITableModel extends AbstractTableModel implements NotifyApi {
+public class IOITableModel extends AbstractTableModel implements Callback {
 
     private static String[] columns =
         {"ID", "Type", "Side", "Shares", "Symbol", "Price", 

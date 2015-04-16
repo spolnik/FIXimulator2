@@ -1,13 +1,13 @@
-package org.nprogramming.fiximulator2.ui;
+package org.nprogramming.fiximulator2.ui.tables;
 
 import javax.swing.table.AbstractTableModel;
 
 import org.nprogramming.fiximulator2.api.ExecutionsApi;
-import org.nprogramming.fiximulator2.api.NotifyApi;
+import org.nprogramming.fiximulator2.api.Callback;
 import org.nprogramming.fiximulator2.domain.Execution;
 import org.nprogramming.fiximulator2.domain.Order;
 
-public class ExecutionTableModel extends AbstractTableModel implements NotifyApi {
+public class ExecutionTableModel extends AbstractTableModel implements Callback {
 
     private static String[] columns = 
         {"ID", "ClOrdID", "Side", "Symbol", "LastQty", "LastPx", 

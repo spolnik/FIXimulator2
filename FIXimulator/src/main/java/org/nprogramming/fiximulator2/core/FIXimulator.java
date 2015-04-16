@@ -9,9 +9,10 @@ import java.net.URL;
 
 import org.nprogramming.fiximulator2.api.ExecutionsApi;
 import org.nprogramming.fiximulator2.api.IndicationsOfInterestApi;
+import org.nprogramming.fiximulator2.api.InstrumentsApi;
 import org.nprogramming.fiximulator2.api.OrdersApi;
-import org.nprogramming.fiximulator2.data.InstrumentSet;
-import org.nprogramming.fiximulator2.processing.OrderFixTranslator;
+import org.nprogramming.fiximulator2.data.InstrumentRepository;
+import org.nprogramming.fiximulator2.fix.OrderFixTranslator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import quickfix.Acceptor;
@@ -35,13 +36,14 @@ public final class FIXimulator {
 
     private Acceptor acceptor = null;
     private static FIXimulatorApplication application = null;
-    private static InstrumentSet instruments = null;
+    private static InstrumentRepository instruments = null;
     private static LogMessageSet messages = null;
 
     public FIXimulator(
             OrdersApi ordersApi,
             ExecutionsApi executionsApi,
-            IndicationsOfInterestApi indicationsOfInterestApi
+            IndicationsOfInterestApi indicationsOfInterestApi,
+            InstrumentsApi instrumentsApi
     ) {
         InputStream inputStream = null;
         ClassLoader classLoader = FIXimulator.class.getClassLoader();
@@ -58,9 +60,6 @@ public final class FIXimulator {
             System.exit(0);
         }
 
-        URL instrumentsXml = classLoader.getResource("config/instruments.xml");
-
-        instruments = new InstrumentSet(new File(instrumentsXml.getPath()));
         messages = new LogMessageSet();
         try {
             SessionSettings settings = new SessionSettings(inputStream);
@@ -71,6 +70,7 @@ public final class FIXimulator {
                     ordersApi,
                     executionsApi,
                     indicationsOfInterestApi,
+                    instrumentsApi,
                     new OrderFixTranslator(ordersApi)
             );
 
@@ -106,12 +106,8 @@ public final class FIXimulator {
                     (application, messageStoreFactory,
                             settings, logFactory, messageFactory);
         } catch (ConfigError e) {
-            e.printStackTrace();
+            LOG.error("ConfigError: ", e);
         }
-    }
-
-    public static InstrumentSet getInstruments() {
-        return instruments;
     }
 
     public static FIXimulatorApplication getApplication() {

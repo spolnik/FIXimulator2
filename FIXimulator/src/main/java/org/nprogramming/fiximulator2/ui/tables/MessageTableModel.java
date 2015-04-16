@@ -7,7 +7,7 @@
  * 
  */
 
-package org.nprogramming.fiximulator2.ui;
+package org.nprogramming.fiximulator2.ui.tables;
 
 import javax.swing.table.AbstractTableModel;
 import org.nprogramming.fiximulator2.core.FIXimulator;

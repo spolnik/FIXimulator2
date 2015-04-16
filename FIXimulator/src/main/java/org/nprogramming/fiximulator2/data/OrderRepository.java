@@ -1,6 +1,6 @@
 package org.nprogramming.fiximulator2.data;
 
-import org.nprogramming.fiximulator2.api.NotifyApi;
+import org.nprogramming.fiximulator2.api.Callback;
 import org.nprogramming.fiximulator2.api.OrdersApi;
 import org.nprogramming.fiximulator2.core.FIXimulator;
 import org.nprogramming.fiximulator2.domain.Order;
@@ -14,7 +14,7 @@ public final class OrderRepository implements OrdersApi {
 
     private final List<Order> orders = new ArrayList<>();
     private final List<Order> ordersToFill = new ArrayList<>();
-    private NotifyApi notifyApi = null;
+    private Callback callback = null;
 
     private static final Logger LOG = LoggerFactory.getLogger(OrderRepository.class);
 
@@ -41,17 +41,17 @@ public final class OrderRepository implements OrdersApi {
         while (orders.size() > limit) {
             orders.remove(0);
         }
-        notifyApi.update();
+        callback.update();
     }
 
     @Override
     public void update() {
-        notifyApi.update();
+        callback.update();
     }
 
     @Override
-    public void addCallback(NotifyApi notifyApi) {
-        this.notifyApi = notifyApi;
+    public void addCallback(Callback callback) {
+        this.callback = callback;
     }
 
     @Override
