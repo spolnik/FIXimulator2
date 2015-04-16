@@ -899,7 +899,7 @@ public class FIXimulatorApplication extends MessageCracker
 
         public void fill(Order order) {
             double fillQty = Math.floor(order.getQuantity() / partials);
-            double fillPrice = 0.0;
+            double fillPrice;
             // try to look the price up from the instruments
             Instrument instrument =
                     instrumentsApi.getInstrument(order.getSymbol());

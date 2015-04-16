@@ -125,7 +125,6 @@ public final class OrderFixTranslator {
     public Order from(quickfix.fix42.OrderCancelRequest message) {
         Order order = new Order();
 
-        // ClOrdID
         try {
             ClOrdID clOrdID = new ClOrdID();
             message.get(clOrdID);
@@ -134,7 +133,6 @@ public final class OrderFixTranslator {
             LOG.debug("Field Not Found: {}", ex.field);
         }
 
-        // OrigClOrdID
         try {
             OrigClOrdID origClOrdID = new OrigClOrdID();
             message.get(origClOrdID);
@@ -152,7 +150,6 @@ public final class OrderFixTranslator {
             order.setStatus(oldOrder.getFIXStatus());
         }
 
-        // Side
         try {
             Side msgSide = new Side();
             message.get(msgSide);
@@ -161,7 +158,6 @@ public final class OrderFixTranslator {
             LOG.debug("Field Not Found: {}", ex.field);
         }
 
-        // Symbol
         try {
             Symbol msgSymbol = new Symbol();
             message.get(msgSymbol);
@@ -170,7 +166,6 @@ public final class OrderFixTranslator {
             LOG.debug("Field Not Found: {}", ex.field);
         }
 
-        // OrderQty
         try {
             OrderQty msgQty = new OrderQty();
             message.get(msgQty);
@@ -180,7 +175,6 @@ public final class OrderFixTranslator {
             LOG.debug("Field Not Found: {}", ex.field);
         }
 
-        // SecurityID
         try {
             SecurityID secID = new SecurityID();
             message.get(secID);
@@ -189,7 +183,6 @@ public final class OrderFixTranslator {
             LOG.debug("Field Not Found: {}", ex.field);
         }
 
-        // IDSource
         try {
             IDSource idSrc = new IDSource();
             message.get(idSrc);
