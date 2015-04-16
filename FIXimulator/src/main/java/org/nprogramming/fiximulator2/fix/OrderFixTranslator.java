@@ -21,7 +21,6 @@ public final class OrderFixTranslator {
     public Order from(quickfix.fix42.OrderCancelReplaceRequest message) {
         Order order = new Order();
 
-        // ClOrdID
         try {
             ClOrdID clOrdID = new ClOrdID();
             message.get(clOrdID);
@@ -30,7 +29,6 @@ public final class OrderFixTranslator {
             LOG.debug("Field Not Found: {}", ex.field);
         }
 
-        // OrigClOrdID
         try {
             OrigClOrdID origClOrdID = new OrigClOrdID();
             message.get(origClOrdID);
@@ -46,7 +44,7 @@ public final class OrderFixTranslator {
             order.setAvgPx(oldOrder.getAvgPx());
             order.setStatus(oldOrder.getFIXStatus());
         }
-        // Side
+
         try {
             Side msgSide = new Side();
             message.get(msgSide);
@@ -55,7 +53,6 @@ public final class OrderFixTranslator {
             LOG.debug("Field Not Found: {}", ex.field);
         }
 
-        // Symbol
         try {
             Symbol msgSymbol = new Symbol();
             message.get(msgSymbol);
@@ -64,7 +61,6 @@ public final class OrderFixTranslator {
             LOG.debug("Field Not Found: {}", ex.field);
         }
 
-        // Type
         try {
             OrdType msgType = new OrdType();
             message.get(msgType);
@@ -73,7 +69,6 @@ public final class OrderFixTranslator {
             LOG.debug("Field Not Found: {}", ex.field);
         }
 
-        // OrderQty
         try {
             OrderQty msgQty = new OrderQty();
             message.get(msgQty);
@@ -83,7 +78,6 @@ public final class OrderFixTranslator {
             LOG.debug("Field Not Found: {}", ex.field);
         }
 
-        // TimeInForce
         try {
             TimeInForce msgTIF = new TimeInForce();
             message.get(msgTIF);
@@ -92,7 +86,6 @@ public final class OrderFixTranslator {
             LOG.debug("Field Not Found: {}", ex.field);
         }
 
-        // Price
         try {
             Price price = new Price();
             message.get(price);
@@ -101,7 +94,6 @@ public final class OrderFixTranslator {
             LOG.debug("Field Not Found: {}", ex.field);
         }
 
-        // SecurityID
         try {
             SecurityID secID = new SecurityID();
             message.get(secID);
@@ -110,7 +102,6 @@ public final class OrderFixTranslator {
             LOG.debug("Field Not Found: {}", ex.field);
         }
 
-        // IDSource
         try {
             IDSource idSrc = new IDSource();
             message.get(idSrc);

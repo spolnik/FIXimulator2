@@ -54,7 +54,6 @@ public class OrderFixTranslator_ForOrderSingle {
 
     @Test
     public void consumesProperlyOrderTypeField() throws Exception {
-        NewOrderSingle newOrderSingle = newOrderSingle();
 
         Order order = orderFixTranslator.from(newOrderSingle);
 
