@@ -7,11 +7,11 @@ public class Order implements Cloneable {
     private boolean receivedReplace = false;
     private boolean rejectedCancelReplace = false;
     private char side;
-    private char type;
-    private char tif = '0';     // Day order if omitted
+    private char orderType;
+    private char timeInForce = '0';     // Day order if omitted
     private char status;
     private String ID = null;
-    private String clientID = null;
+    private String clientOrderID = null;
     private String origClientID = null;
     private String symbol = null;
     private String securityID = null;
@@ -19,7 +19,7 @@ public class Order implements Cloneable {
     private double quantity = 0.0;
     private double open = 0.0;
     private double executed = 0.0;
-    private double limit = 0.0;
+    private double priceLimit = 0.0;
     private double avgPx = 0.0;
 
     @Override
@@ -50,12 +50,12 @@ public class Order implements Cloneable {
         this.ID = ID;
     }
 
-    public String getClientID() {
-        return clientID;
+    public String getClientOrderID() {
+        return clientOrderID;
     }
 
-    public void setClientID(String clientID) {
-        this.clientID = clientID;
+    public void setClientOrderID(String clientOrderID) {
+        this.clientOrderID = clientOrderID;
     }
 
     public String getOrigClientID() {
@@ -66,12 +66,12 @@ public class Order implements Cloneable {
         this.origClientID = origClientID;
     }
 
-    public double getLimit() {
-        return limit;
+    public double getPriceLimit() {
+        return priceLimit;
     }
 
-    public void setLimit(double limit) {
-        this.limit = limit;
+    public void setPriceLimit(double priceLimit) {
+        this.priceLimit = priceLimit;
     }
 
     public double getAvgPx() {
@@ -174,23 +174,23 @@ public class Order implements Cloneable {
         this.symbol = symbol;
     }
 
-    public String getTif() {
-        if (tif == '0') return "Day";
-        if (tif == '1') return "GTC";
-        if (tif == '2') return "OPG";
-        if (tif == '3') return "IOC";
-        if (tif == '4') return "FOK";
-        if (tif == '5') return "GTX";
-        if (tif == '6') return "GTD";
+    public String getTimeInForce() {
+        if (timeInForce == '0') return "Day";
+        if (timeInForce == '1') return "GTC";
+        if (timeInForce == '2') return "OPG";
+        if (timeInForce == '3') return "IOC";
+        if (timeInForce == '4') return "FOK";
+        if (timeInForce == '5') return "GTX";
+        if (timeInForce == '6') return "GTD";
         return "<UNKNOWN>";
     }
     
-    public char getFIXTif() {
-        return tif;
+    public char getFIXTimeInForce() {
+        return timeInForce;
     }
     
-    public void setTif(char tif) {
-        this.tif = tif;
+    public void setTimeInForce(char timeInForce) {
+        this.timeInForce = timeInForce;
     }
 
     public String getIdSource() {
@@ -209,35 +209,35 @@ public class Order implements Cloneable {
         this.securityID = securityID;
     }
 
-    public String getType() {
-        if (type == '1') return "Market";
-        if (type == '2') return "Limit";
-        if (type == '3') return "Stop";
-        if (type == '4') return "Stop limit";
-        if (type == '5') return "Market on close";
-        if (type == '6') return "With or without";
-        if (type == '7') return "Limit or better";
-        if (type == '8') return "Limit with or without";
-        if (type == '9') return "On basis";
-        if (type == 'A') return "On close";
-        if (type == 'B') return "Limit on close";
-        if (type == 'C') return "Forex - Market";
-        if (type == 'D') return "Previously quoted";
-        if (type == 'E') return "Previously indicated";
-        if (type == 'F') return "Forex - Limit";
-        if (type == 'G') return "Forex - Swap";
-        if (type == 'H') return "Forex - Previously Quoted";
-        if (type == 'I') return "Funari";
-        if (type == 'P') return "Pegged";
+    public String getOrderType() {
+        if (orderType == '1') return "Market";
+        if (orderType == '2') return "Limit";
+        if (orderType == '3') return "Stop";
+        if (orderType == '4') return "Stop limit";
+        if (orderType == '5') return "Market on close";
+        if (orderType == '6') return "With or without";
+        if (orderType == '7') return "Limit or better";
+        if (orderType == '8') return "Limit with or without";
+        if (orderType == '9') return "On basis";
+        if (orderType == 'A') return "On close";
+        if (orderType == 'B') return "Limit on close";
+        if (orderType == 'C') return "Forex - Market";
+        if (orderType == 'D') return "Previously quoted";
+        if (orderType == 'E') return "Previously indicated";
+        if (orderType == 'F') return "Forex - Limit";
+        if (orderType == 'G') return "Forex - Swap";
+        if (orderType == 'H') return "Forex - Previously Quoted";
+        if (orderType == 'I') return "Funari";
+        if (orderType == 'P') return "Pegged";
         return "<UNKNOWN>";
     }
     
-    public char getFIXType() {
-        return type;
+    public char getFIXOrderType() {
+        return orderType;
     }
 
-    public void setType(char type) {
-        this.type = type;
+    public void setOrderType(char orderType) {
+        this.orderType = orderType;
     }
 
     public boolean isReceivedCancel() {

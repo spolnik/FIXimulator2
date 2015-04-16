@@ -67,7 +67,7 @@ public final class OrderRepository implements OrdersApi {
     @Override
     public Order getOrder(String id) {
         for (Order order : orders) {
-            if (order.getID().equals(id) || order.getClientID().equals(id))
+            if (order.getID().equals(id) || order.getClientOrderID().equals(id))
                 return order;
         }
         return null;

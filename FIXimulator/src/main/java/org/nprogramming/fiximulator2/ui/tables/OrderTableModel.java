@@ -49,13 +49,13 @@ public class OrderTableModel extends AbstractTableModel implements Callback {
         if (column == 2) return order.getSide();
         if (column == 3) return order.getQuantity();
         if (column == 4) return order.getSymbol();
-        if (column == 5) return order.getType();
-        if (column == 6) return order.getLimit();
-        if (column == 7) return order.getTif();
+        if (column == 5) return order.getOrderType();
+        if (column == 6) return order.getPriceLimit();
+        if (column == 7) return order.getTimeInForce();
         if (column == 8) return order.getExecuted();
         if (column == 9) return order.getOpen();
         if (column == 10) return order.getAvgPx();
-        if (column == 11) return order.getClientID();
+        if (column == 11) return order.getClientOrderID();
         if (column == 12) return order.getOrigClientID();
         return new Object();
     }

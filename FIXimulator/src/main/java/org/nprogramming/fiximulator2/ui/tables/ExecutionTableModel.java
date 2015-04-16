@@ -47,7 +47,7 @@ public class ExecutionTableModel extends AbstractTableModel implements Callback 
         Execution execution = executionsApi.getExecution(row);
         Order order = execution.getOrder();
         if (column == 0) return execution.getID();        
-        if (column == 1) return order.getClientID();
+        if (column == 1) return order.getClientOrderID();
         if (column == 2) return order.getSide();
         if (column == 3) return order.getSymbol();
         if (column == 4) return execution.getLastShares();

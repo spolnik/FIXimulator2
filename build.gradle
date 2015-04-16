@@ -19,7 +19,8 @@ subprojects {
                 libs.log4j,
                 libs.slf4j_log4j12
 
-        testCompile libs.test.junit
+        testCompile libs.test.junit,
+                libs.test.assertj
     }
 }
 

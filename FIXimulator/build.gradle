@@ -9,4 +9,6 @@ dependencies {
     compile libs.quickfixj_old,
             libs.quickfixj.fix42,
             libs.jdesktop
+
+    testCompile libs.test.mockito
 }

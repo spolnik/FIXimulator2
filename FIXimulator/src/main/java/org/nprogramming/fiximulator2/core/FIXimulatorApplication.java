@@ -315,7 +315,7 @@ public class FIXimulatorApplication extends MessageCracker
         // OrderID (37)
         OrderID orderID = new OrderID(order.getID());
 
-        ClOrdID clientID = new ClOrdID(order.getClientID());
+        ClOrdID clientID = new ClOrdID(order.getClientOrderID());
 
         OrigClOrdID origClientID = new OrigClOrdID(order.getOrigClientID());
 
@@ -662,7 +662,7 @@ public class FIXimulatorApplication extends MessageCracker
         }
 
         // *** Optional fields ***
-        executionReport.set(new ClOrdID(execution.getOrder().getClientID()));
+        executionReport.set(new ClOrdID(execution.getOrder().getClientOrderID()));
         executionReport.set(new OrderQty(execution.getOrder().getQuantity()));
         executionReport.set(new LastShares(execution.getLastShares()));
         executionReport.set(new LastPx(execution.getLastPx()));
