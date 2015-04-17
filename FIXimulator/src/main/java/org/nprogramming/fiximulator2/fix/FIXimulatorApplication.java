@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import quickfix.*;
 import quickfix.field.*;
 import quickfix.fix42.Message.Header;
+import quickfix.fix42.OrderCancelReject;
 
 import java.io.*;
 import java.util.Date;
@@ -306,6 +307,14 @@ public class FIXimulatorApplication extends MessageCracker
     }
 
     public void rejectCancelReplace(Order order, boolean cancel) {
+        quickfix.fix42.OrderCancelReject rejectMessage = rejectCancelReplaceOrder(order, cancel);
+
+        // *** Send message ***
+        sendMessage(rejectMessage);
+        ordersApi.update();
+    }
+
+    private OrderCancelReject rejectCancelReplaceOrder(Order order, boolean cancel) {
         order.setReceivedCancel(false);
         order.setReceivedReplace(false);
         // *** Required fields ***
@@ -329,17 +338,12 @@ public class FIXimulatorApplication extends MessageCracker
         }
 
         // Construct OrderCancelReject message from required fields
-        quickfix.fix42.OrderCancelReject rejectMessage =
-                new quickfix.fix42.OrderCancelReject(
-                        orderID,
-                        clientID,
-                        origClientID,
-                        ordStatus,
-                        responseTo);
-
-        // *** Send message ***
-        sendMessage(rejectMessage);
-        ordersApi.update();
+        return new OrderCancelReject(
+                orderID,
+                clientID,
+                origClientID,
+                ordStatus,
+                responseTo);
     }
 
     public void pendingReplace(Order order) {

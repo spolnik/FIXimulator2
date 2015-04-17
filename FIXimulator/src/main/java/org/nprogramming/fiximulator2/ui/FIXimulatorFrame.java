@@ -433,7 +433,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         setBounds(new java.awt.Rectangle(50, 50, 0, 0));
         setMinimumSize(new java.awt.Dimension(800, 600));
         setName("fiximulatorFrame"); // NOI18N
-        setResizable(false);
+        setResizable(true);
 
         messagePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Application Messages"));
 
@@ -1493,7 +1493,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(messageDetailPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(mainTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(mainTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(messagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1667,9 +1667,9 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         int row = executionTable.getSelectedRow();
         // if there is a row selected
         if (row != -1) {
-            row = executionTable.convertRowIndexToModel(row);
             Execution execution =
-                    executionsApi.getExecution(row);
+                    executionsApi.getExecution(executionIdOf(row));
+
             if (execution.getExecType().equals("Fill") ||
                     execution.getExecType().equals("Partial fill")) {
                 FIXimulator.getApplication().bust(execution);
@@ -1681,6 +1681,10 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_executionBustButtonActionPerformed
+
+    private String executionIdOf(int row) {
+        return executionTable.getValueAt(row, 0).toString();
+    }
 
     private void executorDelayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_executorDelayActionPerformed
         int delay = 1;
@@ -1938,9 +1942,9 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         int row = executionTable.getSelectedRow();
         // if no rows are selected
         if (row != -1) {
-            row = executionTable.convertRowIndexToModel(row);
             Execution execution =
-                    executionsApi.getExecution(row);
+                    executionsApi.getExecution(executionIdOf(row));
+
             if (execution.getExecType().equals("Fill") ||
                     execution.getExecType().equals("Partial fill")) {
                 dialogExecution = execution.clone();

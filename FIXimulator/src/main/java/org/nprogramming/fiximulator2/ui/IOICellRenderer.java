@@ -1,21 +1,8 @@
-/*
- * File     : IOICellRenderer.java
- *
- * Author   : Zoltan Feledy
- * 
- * Contents : This renderer is used on the JTable that displays IOI 
- *            messages and colors the messages based on their types.
- * 
- */
-
 package org.nprogramming.fiximulator2.ui;
 
-import org.nprogramming.fiximulator2.ui.tables.IOITableModel;
-
-import java.awt.Color;
-import java.awt.Component;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.*;
 
 public class IOICellRenderer  extends DefaultTableCellRenderer {
 
@@ -26,7 +13,7 @@ public class IOICellRenderer  extends DefaultTableCellRenderer {
         int myRow = table.convertRowIndexToModel(row);
         Component component = super.getTableCellRendererComponent(table, value,
                                           isSelected, hasFocus, myRow, column);
-        String type = (String) ((IOITableModel)table.getModel())
+        String type = (String) table.getModel()
                 .getValueAt(myRow, 1);
         if (type.equals("NEW")) {
             component.setForeground(Color.BLACK);

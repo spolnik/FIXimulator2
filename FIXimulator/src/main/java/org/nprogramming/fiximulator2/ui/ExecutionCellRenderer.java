@@ -1,22 +1,8 @@
-/*
- * File     : ExecutionCellRenderer.java
- *
- * Author   : Zoltan Feledy
- * 
- * Contents : This renderer is used on the JTable that displays 
- *            Executions and colors the executions that have received
- *            a DontKnowTrade.
- * 
- */
-
 package org.nprogramming.fiximulator2.ui;
 
-import org.nprogramming.fiximulator2.ui.tables.ExecutionTableModel;
-
-import java.awt.Color;
-import java.awt.Component;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.*;
 
 public class ExecutionCellRenderer  extends DefaultTableCellRenderer {
 
@@ -27,9 +13,9 @@ public class ExecutionCellRenderer  extends DefaultTableCellRenderer {
         int myRow = table.convertRowIndexToModel(row);
         Component component = super.getTableCellRendererComponent(table, value,
                                           isSelected, hasFocus, myRow, column);
-        Boolean DKd = (Boolean)((ExecutionTableModel)table.getModel())
+        Boolean DKd = (Boolean) table.getModel()
                 .getValueAt(myRow, 12);
-                
+
         if ( DKd ) {
             component.setForeground(Color.RED);
         }
