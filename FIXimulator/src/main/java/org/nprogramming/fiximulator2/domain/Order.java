@@ -1,7 +1,9 @@
 package org.nprogramming.fiximulator2.domain;
 
+import java.util.UUID;
+
 public class Order implements Cloneable {
-    private static int nextID = 1;
+
     private boolean receivedOrder = false;
     private boolean receivedCancel = false;
     private boolean receivedReplace = false;
@@ -29,8 +31,9 @@ public class Order implements Cloneable {
             order.setOrigClientID(getID());
             order.setID(generateID());
             return order;
-        } catch ( CloneNotSupportedException e ) {}
-        return null;
+        } catch ( CloneNotSupportedException e ) {
+            return null;
+        }
     }
     
     public Order () {
@@ -38,8 +41,7 @@ public class Order implements Cloneable {
     }
 
     public String generateID() {
-        return "O" + Long.valueOf(
-                System.currentTimeMillis()+(nextID++)).toString();
+        return "O" + UUID.randomUUID();
     }
 
     public String getID() {
@@ -88,14 +90,6 @@ public class Order implements Cloneable {
 
     public void setExecuted(double executed) {
         this.executed = executed;
-    }
-
-    public static int getNextID() {
-        return nextID;
-    }
-
-    public static void setNextID(int nextID) {
-        Order.nextID = nextID;
     }
 
     public double getOpen() {

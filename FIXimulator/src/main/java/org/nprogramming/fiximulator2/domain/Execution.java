@@ -1,7 +1,9 @@
 package org.nprogramming.fiximulator2.domain;
 
+import java.util.UUID;
+
 public class Execution implements Cloneable {
-    private static int nextID = 1;
+
     private Order order;
     private boolean DKd = false;
     private String ID = null;
@@ -22,8 +24,9 @@ public class Execution implements Cloneable {
             execution.setID(generateID());
             execution.setDKd(false);
             return execution;
-        } catch(CloneNotSupportedException e) {}
-        return null;
+        } catch(CloneNotSupportedException e) {
+            return null;
+        }
     }
         
     public Execution( Order order ) {
@@ -32,8 +35,7 @@ public class Execution implements Cloneable {
     }
     
     public String generateID() {
-        return "E" + Long.valueOf(
-                System.currentTimeMillis()+(nextID++)).toString();
+        return "E" + UUID.randomUUID();
     }
 
     public String getID() {

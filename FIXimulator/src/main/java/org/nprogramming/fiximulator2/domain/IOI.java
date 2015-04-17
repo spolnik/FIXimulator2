@@ -1,7 +1,9 @@
 package org.nprogramming.fiximulator2.domain;
 
+import java.util.UUID;
+
 public class IOI implements Cloneable {
-    private static int nextID = 1;
+
     private String ID = null;
     private String refID = null;
     private String type = null;     // NEW, CANCEL, REPLACE
@@ -24,13 +26,13 @@ public class IOI implements Cloneable {
             ioi.setRefID(getID());
             ioi.setID(ioi.generateID());
             return ioi;
-        } catch(CloneNotSupportedException e) {}
-        return null;
+        } catch(CloneNotSupportedException e) {
+            return null;
+        }
     }
     
     public String generateID() {
-        return "I" + Long.valueOf(
-                System.currentTimeMillis()+(nextID++)).toString();
+        return "I" + UUID.randomUUID();
     }
     
     public String getID() {
@@ -125,10 +127,8 @@ public class IOI implements Cloneable {
     }
 
     public void setSymbol(String symbol) {
-        if (symbol.equals(""))
-            this.symbol = "<MISSING>";
-        else
-            this.symbol = symbol;
+        this.symbol = symbol.equals("")
+                ? "<MISSING>"
+                : symbol;
     }
-    
 }
