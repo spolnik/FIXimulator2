@@ -15,13 +15,13 @@ public class IOICellRenderer  extends DefaultTableCellRenderer {
                                           isSelected, hasFocus, myRow, column);
         String type = (String) table.getModel()
                 .getValueAt(myRow, 1);
-        if (type.equals("NEW")) {
+        if ("NEW".equals(type)) {
             component.setForeground(Color.BLACK);
         }
-        if (type.equals("CANCEL")) {
+        if ("CANCEL".equals(type)) {
             component.setForeground(Color.RED);
         }
-        if (type.equals("REPLACE")) {
+        if ("REPLACE".equals(type)) {
             component.setForeground(Color.BLUE);
         }
         return component;

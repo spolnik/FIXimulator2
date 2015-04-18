@@ -31,18 +31,20 @@ final class FixIOISender {
 
         // IOITransType
         IOITransType ioiType = null;
-        if (ioi.getType().equals("NEW"))
+        if ("NEW".equals(ioi.getType()))
             ioiType = new IOITransType(IOITransType.NEW);
-        if (ioi.getType().equals("CANCEL"))
+        if ("CANCEL".equals(ioi.getType()))
             ioiType = new IOITransType(IOITransType.CANCEL);
-        if (ioi.getType().equals("REPLACE"))
+        if ("REPLACE".equals(ioi.getType()))
             ioiType = new IOITransType(IOITransType.REPLACE);
 
         // Side
         Side side = null;
-        if (ioi.getSide().equals("BUY")) side = new Side(Side.BUY);
-        if (ioi.getSide().equals("SELL")) side = new Side(Side.SELL);
-        if (ioi.getSide().equals("UNDISCLOSED"))
+        if ("BUY".equals(ioi.getSide()))
+            side = new Side(Side.BUY);
+        if ("SELL".equals(ioi.getSide()))
+            side = new Side(Side.SELL);
+        if ("UNDISCLOSED".equals(ioi.getSide()))
             side = new Side(Side.UNDISCLOSED);
 
         // IOIShares
@@ -59,7 +61,7 @@ final class FixIOISender {
         // *** Conditionally required fields ***
         // IOIRefID
         IOIRefID ioiRefID;
-        if (ioi.getType().equals("CANCEL") || ioi.getType().equals("REPLACE")) {
+        if ("CANCEL".equals(ioi.getType()) || "REPLACE".equals(ioi.getType())) {
             ioiRefID = new IOIRefID(ioi.getRefID());
             fixIOI.set(ioiRefID);
         }
@@ -71,15 +73,15 @@ final class FixIOISender {
 
         // IDSource
         IDSource idSource = null;
-        if (ioi.getIDSource().equals("TICKER"))
+        if ("TICKER".equals(ioi.getIDSource()))
             idSource = new IDSource(IDSource.EXCHANGE_SYMBOL);
-        if (ioi.getIDSource().equals("RIC"))
+        if ("RIC".equals(ioi.getIDSource()))
             idSource = new IDSource(IDSource.RIC_CODE);
-        if (ioi.getIDSource().equals("SEDOL"))
+        if ("SEDOL".equals(ioi.getIDSource()))
             idSource = new IDSource(IDSource.SEDOL);
-        if (ioi.getIDSource().equals("CUSIP"))
+        if ("CUSIP".equals(ioi.getIDSource()))
             idSource = new IDSource(IDSource.CUSIP);
-        if (ioi.getIDSource().equals("UNKOWN"))
+        if ("UNKOWN".equals(ioi.getIDSource()))
             idSource = new IDSource("100");
         fixIOI.set(idSource);
 
@@ -89,9 +91,9 @@ final class FixIOISender {
 
         // IOINaturalFlag
         IOINaturalFlag ioiNaturalFlag = new IOINaturalFlag();
-        if (ioi.getNatural().equals("YES"))
+        if ("YES".equals(ioi.getNatural()))
             ioiNaturalFlag.setValue(true);
-        if (ioi.getNatural().equals("NO"))
+        if ("NO".equals(ioi.getNatural()))
             ioiNaturalFlag.setValue(false);
         fixIOI.set(ioiNaturalFlag);
 
@@ -99,7 +101,8 @@ final class FixIOISender {
         Instrument instrument =
                 instrumentRepository.getInstrument(ioi.getSymbol());
         String name = "Unknown security";
-        if (instrument != null) name = instrument.getName();
+        if (instrument != null)
+            name = instrument.getName();
         SecurityDesc desc = new SecurityDesc(name);
         fixIOI.set(desc);
 

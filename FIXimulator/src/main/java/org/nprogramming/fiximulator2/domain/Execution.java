@@ -8,8 +8,8 @@ import java.util.UUID;
 public class Execution implements Cloneable, ItemWithId {
 
     private Order order;
-    private boolean DKd = false;
-    private String ID = null;
+    private boolean dkd = false;
+    private String id = null;
     private String refID = null;
     private char execType;
     private char execTranType;
@@ -21,12 +21,17 @@ public class Execution implements Cloneable, ItemWithId {
 
     private static final Logger LOG = LoggerFactory.getLogger(Execution.class);
 
+    public Execution( Order order ) {
+        id = generateID();
+        this.order = order;
+    }
+
     @Override
     public Execution clone() {
         try {
             Execution execution = (Execution)super.clone();
             execution.setRefID(id());
-            execution.setID(generateID());
+            execution.setId(generateID());
             execution.setDKd(false);
             return execution;
         } catch(CloneNotSupportedException e) {
@@ -34,31 +39,26 @@ public class Execution implements Cloneable, ItemWithId {
             return null;
         }
     }
-        
-    public Execution( Order order ) {
-        ID = generateID();
-        this.order = order;
-    }
-    
+
     public String generateID() {
         return "E" + UUID.randomUUID();
     }
 
     @Override
     public String id() {
-        return ID;
+        return id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public boolean isDKd() {
-        return DKd;
+        return dkd;
     }
 
-    public void setDKd(boolean DKd) {
-        this.DKd = DKd;
+    public void setDKd(boolean dkd) {
+        this.dkd = dkd;
     }
 
     public double getAvgPx() {
@@ -78,11 +78,18 @@ public class Execution implements Cloneable, ItemWithId {
     }
 
     public String getExecTranType() {
-        if (execTranType == '0') return "New";
-        if (execTranType == '1') return "Cancel";
-        if (execTranType == '2') return "Correct";
-        if (execTranType == '3') return "Status";
-        return "<UNKOWN>";
+        switch (execTranType) {
+            case '0':
+                return "New";
+            case '1':
+                return "Cancel";
+            case '2':
+                return "Correct";
+            case '3':
+                return "Status";
+            default:
+                return "<UNKOWN>";
+        }
     }
 
     public char getFIXExecTranType() {
@@ -94,22 +101,40 @@ public class Execution implements Cloneable, ItemWithId {
     }
 
     public String getExecType() {
-        if (execType == '0') return "New";
-        if (execType == '1') return "Partial fill";
-        if (execType == '2') return "Fill";
-        if (execType == '3') return "Done for day";
-        if (execType == '4') return "Canceled";
-        if (execType == '5') return "Replace";
-        if (execType == '6') return "Pending Cancel";
-        if (execType == '7') return "Stopped";
-        if (execType == '8') return "Rejected";
-        if (execType == '9') return "Suspended";
-        if (execType == 'A') return "Pending New";
-        if (execType == 'B') return "Calculated";
-        if (execType == 'C') return "Expired";
-        if (execType == 'D') return "Restated";
-        if (execType == 'E') return "Pending Replace";
-        return "<UNKNOWN>";
+        switch (execType) {
+            case '0':
+                return "New";
+            case '1':
+                return "Partial fill";
+            case '2':
+                return "Fill";
+            case '3':
+                return "Done for day";
+            case '4':
+                return "Canceled";
+            case '5':
+                return "Replace";
+            case '6':
+                return "Pending Cancel";
+            case '7':
+                return "Stopped";
+            case '8':
+                return "Rejected";
+            case '9':
+                return "Suspended";
+            case 'A':
+                return "Pending New";
+            case 'B':
+                return "Calculated";
+            case 'C':
+                return "Expired";
+            case 'D':
+                return "Restated";
+            case 'E':
+                return "Pending Replace";
+            default:
+                return "<UNKNOWN>";
+        }
     }
     
     public char getFIXExecType() {
