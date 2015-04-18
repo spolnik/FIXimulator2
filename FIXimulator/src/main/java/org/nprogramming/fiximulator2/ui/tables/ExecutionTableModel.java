@@ -25,12 +25,12 @@ public class ExecutionTableModel extends AbstractTableModel implements NotifyApi
     private static final int REF_ID = 11;
     private static final int DKD = 12;
 
-    private final Map<Integer, Execution> rowToExecution;
-    private final Map<String, Integer> idToRow;
-
     private static String[] headers =
             {"ID", "ClOrdID", "Side", "Symbol", "LastQty", "LastPx",
                     "CumQty", "AvgPx", "Open", "ExecType", "ExecTranType", "RefID", "DKd"};
+
+    private final Map<Integer, Execution> rowToExecution;
+    private final Map<String, Integer> idToRow;
 
     private final ExecutionsApi executionsApi;
 
@@ -41,7 +41,7 @@ public class ExecutionTableModel extends AbstractTableModel implements NotifyApi
         idToRow = new HashMap<>();
 
         executionsApi.getAll().forEach(
-                this::addExecution
+                this::add
         );
 
         executionsApi.addCallback(this);
@@ -86,23 +86,10 @@ public class ExecutionTableModel extends AbstractTableModel implements NotifyApi
         return rowToExecution.size();
     }
 
-    private void addExecution(Execution execution) {
-        int row = rowToExecution.size();
-
-        rowToExecution.put(row, execution);
-        idToRow.put(execution.getID(), row);
-
-        fireTableRowsInserted(row, row);
-    }
-
-    private Execution getExecution(int row) {
-        return rowToExecution.get(row);
-    }
-
     @Override
     public Object getValueAt(int row, int column) {
 
-        Execution execution = getExecution(row);
+        Execution execution = get(row);
         Order order = execution.getOrder();
 
         switch (column) {
@@ -140,7 +127,7 @@ public class ExecutionTableModel extends AbstractTableModel implements NotifyApi
     @Override
     public void added(String id) {
 
-        addExecution(
+        add(
                 executionsApi.getExecution(id)
         );
     }
@@ -150,6 +137,19 @@ public class ExecutionTableModel extends AbstractTableModel implements NotifyApi
         replace(
                 executionsApi.getExecution(id)
         );
+    }
+
+    private void add(Execution execution) {
+        int row = rowToExecution.size();
+
+        rowToExecution.put(row, execution);
+        idToRow.put(execution.getID(), row);
+
+        fireTableRowsInserted(row, row);
+    }
+
+    private Execution get(int row) {
+        return rowToExecution.get(row);
     }
 
     private void replace(Execution execution) {
