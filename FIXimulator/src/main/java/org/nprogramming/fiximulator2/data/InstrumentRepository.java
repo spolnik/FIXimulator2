@@ -17,8 +17,6 @@ import java.util.Random;
 public final class InstrumentRepository extends DefaultHandler implements InstrumentsApi {
 
     private final ArrayList<Instrument> instruments = new ArrayList<>();
-    private final ArrayList<Instrument> oldInstruments = new ArrayList<>();
-    private Callback callback = null;
 
     private static final Logger LOG = LoggerFactory.getLogger(InstrumentRepository.class);
 
@@ -31,25 +29,6 @@ public final class InstrumentRepository extends DefaultHandler implements Instru
             saxParser.parse(input, this);
         } catch (Exception e) {
             LOG.error("Error reading/parsing instrument file.", e);
-        }
-    }
-
-    @Override
-    public void reloadInstrumentSet(File file) {
-        try {
-            oldInstruments.clear();
-            oldInstruments.addAll(instruments);
-            instruments.clear();
-            InputStream input =
-                    new BufferedInputStream(new FileInputStream(file));
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser saxParser = factory.newSAXParser();
-            saxParser.parse(input, this);
-            callback.update();
-        } catch (Exception e) {
-            LOG.error("Error reading/parsing instrument file.", e);
-            instruments.clear();
-            instruments.addAll(oldInstruments);
         }
     }
 
@@ -101,37 +80,6 @@ public final class InstrumentRepository extends DefaultHandler implements Instru
         int index = generator.nextInt(size);
 
         return instruments.get(index);
-    }
-
-    public void outputToXML() {
-        try {
-            BufferedWriter writer =
-                    new BufferedWriter(new FileWriter("config/instruments.xml"));
-            writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            writer.write("<instruments>\n");
-
-            for (Instrument instrument : instruments) {
-                String output = "   <instrument";
-                output += " name=\"" + instrument.getName() + "\"";
-                output += " ticker=\"" + instrument.getTicker() + "\"";
-                output += " cusip=\"" + instrument.getCusip() + "\"";
-                output += " sedol=\"" + instrument.getSedol() + "\"";
-                output += " ric=\"" + instrument.getRIC() + "\"";
-                output += " price=\"" + instrument.getPrice() + "\"";
-                output += "/>\n";
-                writer.write(output);
-            }
-
-            writer.write("</instruments>\n");
-            writer.close();
-        } catch (IOException e) {
-            LOG.error("Error: ", e);
-        }
-    }
-
-    @Override
-    public void addCallback(Callback instrumentModel) {
-        this.callback = instrumentModel;
     }
 }
 

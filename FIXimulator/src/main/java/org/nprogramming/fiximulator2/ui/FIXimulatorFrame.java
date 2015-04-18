@@ -1,7 +1,11 @@
 package org.nprogramming.fiximulator2.ui;
 
-import org.nprogramming.fiximulator2.api.*;
-import org.nprogramming.fiximulator2.data.*;
+import org.nprogramming.fiximulator2.api.InstrumentsApi;
+import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;
+import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
+import org.nprogramming.fiximulator2.data.InMemoryOrderRepository;
+import org.nprogramming.fiximulator2.data.InMemoryRepository;
+import org.nprogramming.fiximulator2.data.InstrumentRepository;
 import org.nprogramming.fiximulator2.domain.Execution;
 import org.nprogramming.fiximulator2.domain.IOI;
 import org.nprogramming.fiximulator2.domain.Order;
@@ -10,27 +14,10 @@ import org.nprogramming.fiximulator2.ui.tables.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JSlider;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
 
 public class FIXimulatorFrame extends javax.swing.JFrame {
 
@@ -72,11 +59,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
     private void initComponents() {
         org.jdesktop.beansbinding.BindingGroup bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        aboutDialog = new JDialog();
-        JPanel aboutPanel = new JPanel();
-        JButton okButton = new JButton();
-        JLabel aboutDialogLabel = new JLabel();
-        instrumentFileChooser = new JFileChooser();
         ioiDialog = new JDialog();
         JButton ioiDialogOK = new JButton();
         JButton ioiDialogCancel = new JButton();
@@ -118,7 +100,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         JPanel autoIOIPanel = new JPanel();
         securityIDComboBox = new JComboBox();
         rateSlider = new JSlider();
-        JLabel rateDisplayLable = new JLabel();
+        JLabel rateDisplayLabel = new JLabel();
         JLabel symbolLabel = new JLabel();
         JButton stopButton = new JButton();
         JButton startButton = new JButton();
@@ -198,61 +180,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         JCheckBox logToFile = new JCheckBox();
         JCheckBox logToDB = new JCheckBox();
         JButton showSettingsButton = new JButton();
-        JMenuBar mainMenuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu();
-        JMenu instrumentMenu = new JMenu();
-        JMenuItem loadInstrumentMenuItem = new JMenuItem();
-        JMenu helpMenu = new JMenu();
-        JMenuItem aboutMenuItem = new JMenuItem();
-
-        aboutDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        aboutDialog.setTitle("About...");
-        aboutDialog.setLocationByPlatform(true);
-
-        aboutPanel.setPreferredSize(new java.awt.Dimension(200, 100));
-
-        okButton.setText("OK");
-        okButton.addActionListener(this::okButtonActionPerformed);
-
-        aboutDialogLabel.setText("FIXimulator by Zoltan Feledy");
-
-        javax.swing.GroupLayout aboutPanelLayout = new javax.swing.GroupLayout(aboutPanel);
-        aboutPanel.setLayout(aboutPanelLayout);
-        aboutPanelLayout.setHorizontalGroup(
-                aboutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(aboutPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(aboutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                        .addComponent(okButton)
-                                        .addComponent(aboutDialogLabel))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        aboutPanelLayout.setVerticalGroup(
-                aboutPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(aboutPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(aboutDialogLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(okButton)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout aboutDialogLayout = new javax.swing.GroupLayout(aboutDialog.getContentPane());
-        aboutDialog.getContentPane().setLayout(aboutDialogLayout);
-        aboutDialogLayout.setHorizontalGroup(
-                aboutDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(aboutDialogLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(aboutPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                                .addContainerGap())
-        );
-        aboutDialogLayout.setVerticalGroup(
-                aboutDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, aboutDialogLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(aboutPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(7, 7, 7))
-        );
 
         ioiDialog.setTitle("Add IOI...");
         ioiDialog.setAlwaysOnTop(true);
@@ -555,7 +482,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         rateSlider.setValue(60);
         rateSlider.addChangeListener(this::sliderChanged);
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, rateSlider, org.jdesktop.beansbinding.ELProperty.create("${value}"), rateDisplayLable, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, rateSlider, org.jdesktop.beansbinding.ELProperty.create("${value}"), rateDisplayLabel, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         symbolLabel.setText("Symbol (55):");
@@ -587,7 +514,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
                                         .addGroup(autoIOIPanelLayout.createSequentialGroup()
                                                 .addComponent(ioiSliderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(rateDisplayLable, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(rateDisplayLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(autoIOIPanelLayout.createSequentialGroup()
                                                 .addComponent(symbolLabel)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -613,7 +540,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(autoIOIPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(ioiSliderLabel)
-                                        .addComponent(rateDisplayLable, javax.swing.GroupLayout.DEFAULT_SIZE, 14, Short.MAX_VALUE))
+                                        .addComponent(rateDisplayLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 14, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(rateSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1023,7 +950,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
             if (i == 2) // Side
                 executionTable.getColumnModel().
                         getColumn(i).setPreferredWidth(30);
-            if (i == 3) // Sybol
+            if (i == 3) // Symbol
                 executionTable.getColumnModel().
                         getColumn(i).setPreferredWidth(60);
             if (i == 4) // LastQty
@@ -1440,28 +1367,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
 
         mainTabbedPane.addTab("Settings", settingsPanel);
 
-        fileMenu.setText("File");
-
-        mainMenuBar.add(fileMenu);
-
-        instrumentMenu.setText("Instruments");
-
-        loadInstrumentMenuItem.setText("Load Instruments...");
-        loadInstrumentMenuItem.addActionListener(this::loadInstrumentMenuItemActionPerformed);
-        instrumentMenu.add(loadInstrumentMenuItem);
-
-        mainMenuBar.add(instrumentMenu);
-
-        helpMenu.setText("Help");
-
-        aboutMenuItem.setText("About...");
-        aboutMenuItem.addActionListener(this::aboutMenuItemActionPerformed);
-        helpMenu.add(aboutMenuItem);
-
-        mainMenuBar.add(helpMenu);
-
-        setJMenuBar(mainMenuBar);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1494,10 +1399,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         bindingGroup.bind();
 
         pack();
-    }
-
-    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        aboutDialog.dispose();
     }
 
     private void symbolComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1715,22 +1616,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
     private void saveSettingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveSettingsButtonActionPerformed
         FIXimulator.getApplication().saveSettings();
     }//GEN-LAST:event_saveSettingsButtonActionPerformed
-
-    @SuppressWarnings("static-access")
-    private void loadInstrumentMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadInstrumentMenuItemActionPerformed
-        int result = instrumentFileChooser.showOpenDialog(this);
-        if (result == instrumentFileChooser.APPROVE_OPTION) {
-            File file = instrumentFileChooser.getSelectedFile();
-            instrumentsApi.reloadInstrumentSet(file);
-        } else {
-            LOG.info("User cancelled loading file...");
-        }
-    }//GEN-LAST:event_loadInstrumentMenuItemActionPerformed
-
-    private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
-        aboutDialog.pack();
-        aboutDialog.setVisible(true);
-    }//GEN-LAST:event_aboutMenuItemActionPerformed
 
     private void pricePrecisionComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pricePrecisionComboActionPerformed
         FIXimulator.getApplication().getSettings()
@@ -2014,7 +1899,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         });
     }
 
-    private JDialog aboutDialog;
     private JCheckBox autoAcknowledge;
     private JCheckBox autoCancel;
     private JCheckBox autoPendingCancel;
@@ -2026,7 +1910,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
     private JFormattedTextField executionDialogShares;
     private JTable executionTable;
     private JComboBox executorDelay;
-    private JFileChooser instrumentFileChooser;
     private JDialog ioiDialog;
     private JLabel ioiDialogID;
     private JComboBox ioiDialogIDSource;

@@ -1,12 +1,11 @@
 package org.nprogramming.fiximulator2.ui.tables;
 
-import javax.swing.table.AbstractTableModel;
-
 import org.nprogramming.fiximulator2.api.InstrumentsApi;
-import org.nprogramming.fiximulator2.api.Callback;
 import org.nprogramming.fiximulator2.domain.Instrument;
 
-public class InstrumentTableModel extends AbstractTableModel implements Callback {
+import javax.swing.table.AbstractTableModel;
+
+public class InstrumentTableModel extends AbstractTableModel {
 
     private static final int TICKER = 0;
     private static final int NAME = 1;
@@ -22,7 +21,6 @@ public class InstrumentTableModel extends AbstractTableModel implements Callback
 
     public InstrumentTableModel(InstrumentsApi instrumentsApi){
         this.instrumentsApi = instrumentsApi;
-        instrumentsApi.addCallback(this);
     }
 
     @Override
@@ -71,10 +69,5 @@ public class InstrumentTableModel extends AbstractTableModel implements Callback
             default:
                 return new Object();
         }
-    }
-
-    @Override
-    public void update() {
-        fireTableDataChanged();
     }
 }
