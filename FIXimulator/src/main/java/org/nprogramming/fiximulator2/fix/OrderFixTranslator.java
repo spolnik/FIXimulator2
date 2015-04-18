@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import quickfix.FieldNotFound;
 import quickfix.field.*;
 
+import java.util.concurrent.Callable;
+
 public final class OrderFixTranslator {
 
     private final OrderRepositoryWithCallback orderRepository;
@@ -21,21 +23,19 @@ public final class OrderFixTranslator {
     public Order from(quickfix.fix42.OrderCancelReplaceRequest message) {
         Order order = new Order();
 
-        try {
+        logIfException(() -> {
             ClOrdID clOrdID = new ClOrdID();
             message.get(clOrdID);
             order.setClientOrderID(clOrdID.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             OrigClOrdID origClOrdID = new OrigClOrdID();
             message.get(origClOrdID);
             order.setOrigClientID(origClOrdID.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
         Order oldOrder = orderRepository.get(order.getOrigClientID());
         if (oldOrder != null) {
@@ -45,70 +45,62 @@ public final class OrderFixTranslator {
             order.setStatus(oldOrder.getFIXStatus());
         }
 
-        try {
+        logIfException(() -> {
             Side msgSide = new Side();
             message.get(msgSide);
             order.setSide(msgSide.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             Symbol msgSymbol = new Symbol();
             message.get(msgSymbol);
             order.setSymbol(msgSymbol.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             OrdType msgType = new OrdType();
             message.get(msgType);
             order.setOrderType(msgType.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             OrderQty msgQty = new OrderQty();
             message.get(msgQty);
             order.setQuantity(msgQty.getValue());
             order.setOpen(msgQty.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             TimeInForce msgTIF = new TimeInForce();
             message.get(msgTIF);
             order.setTimeInForce(msgTIF.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             Price price = new Price();
             message.get(price);
             order.setPriceLimit(price.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             SecurityID secID = new SecurityID();
             message.get(secID);
             order.setSecurityID(secID.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             IDSource idSrc = new IDSource();
             message.get(idSrc);
             order.setIdSource(idSrc.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
         return order;
     }
@@ -116,21 +108,19 @@ public final class OrderFixTranslator {
     public Order from(quickfix.fix42.OrderCancelRequest message) {
         Order order = new Order();
 
-        try {
+        logIfException(() -> {
             ClOrdID clOrdID = new ClOrdID();
             message.get(clOrdID);
             order.setClientOrderID(clOrdID.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             OrigClOrdID origClOrdID = new OrigClOrdID();
             message.get(origClOrdID);
             order.setOrigClientID(origClOrdID.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
         Order oldOrder = orderRepository.get(order.getOrigClientID());
         if (oldOrder != null) {
@@ -141,46 +131,43 @@ public final class OrderFixTranslator {
             order.setStatus(oldOrder.getFIXStatus());
         }
 
-        try {
+        logIfException(() -> {
             Side msgSide = new Side();
             message.get(msgSide);
             order.setSide(msgSide.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             Symbol msgSymbol = new Symbol();
             message.get(msgSymbol);
             order.setSymbol(msgSymbol.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             OrderQty msgQty = new OrderQty();
             message.get(msgQty);
             order.setQuantity(msgQty.getValue());
             order.setOpen(msgQty.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+
+        logIfException(() -> {
             SecurityID secID = new SecurityID();
             message.get(secID);
             order.setSecurityID(secID.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+
+        logIfException(() -> {
             IDSource idSrc = new IDSource();
             message.get(idSrc);
             order.setIdSource(idSrc.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
         return order;
     }
@@ -189,82 +176,80 @@ public final class OrderFixTranslator {
 
         Order order = new Order();
 
-        try {
+        logIfException(() -> {
             ClOrdID clOrdID = new ClOrdID();
             message.get(clOrdID);
             order.setClientOrderID(clOrdID.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             Side msgSide = new Side();
             message.get(msgSide);
             order.setSide(msgSide.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             Symbol msgSymbol = new Symbol();
             message.get(msgSymbol);
             order.setSymbol(msgSymbol.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             OrdType msgType = new OrdType();
             message.get(msgType);
             order.setOrderType(msgType.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             OrderQty msgQty = new OrderQty();
             message.get(msgQty);
             order.setQuantity(msgQty.getValue());
             order.setOpen(msgQty.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             TimeInForce msgTIF = new TimeInForce();
             message.get(msgTIF);
             order.setTimeInForce(msgTIF.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             Price price = new Price();
             message.get(price);
             order.setPriceLimit(price.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             SecurityID secID = new SecurityID();
             message.get(secID);
             order.setSecurityID(secID.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
+            return null;
+        });
 
-        try {
+        logIfException(() -> {
             IDSource idSrc = new IDSource();
             message.get(idSrc);
             order.setIdSource(idSrc.getValue());
-        } catch (FieldNotFound ex) {
-            LOG.debug("Field Not Found: {}", ex.field);
-        }
-
-        LOG.debug("SecurityID: {}", order.getSecurityID());
-        LOG.debug("IDSource: {}", order.getIdSource());
+            return null;
+        });
 
         return order;
+    }
+
+    private void logIfException(Callable callable) {
+        try {
+            callable.call();
+        } catch (FieldNotFound ex) {
+            LOG.error("Field Not Found: {}", ex.field);
+        } catch (Exception e) {
+            LOG.error("Error: ", e);
+        }
     }
 }
