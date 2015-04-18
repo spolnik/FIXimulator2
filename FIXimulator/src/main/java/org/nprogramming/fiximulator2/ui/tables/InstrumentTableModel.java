@@ -18,7 +18,7 @@ public class InstrumentTableModel extends AbstractTableModel implements Callback
     private static final String[] headers =
         {"Ticker", "Name", "Sedol", "RIC", "Cusip", "Price"};
 
-    private final InstrumentsApi instrumentsApi;
+    private final transient InstrumentsApi instrumentsApi;
 
     public InstrumentTableModel(InstrumentsApi instrumentsApi){
         this.instrumentsApi = instrumentsApi;

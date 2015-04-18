@@ -29,10 +29,10 @@ public class ExecutionTableModel extends AbstractTableModel implements NotifyApi
             {"ID", "ClOrdID", "Side", "Symbol", "LastQty", "LastPx",
                     "CumQty", "AvgPx", "Open", "ExecType", "ExecTranType", "RefID", "DKd"};
 
-    private final Map<Integer, Execution> rowToExecution;
-    private final Map<String, Integer> idToRow;
+    private final transient Map<Integer, Execution> rowToExecution;
+    private final transient Map<String, Integer> idToRow;
 
-    private final RepositoryWithCallback<Execution> executionsRepository;
+    private final transient RepositoryWithCallback<Execution> executionsRepository;
 
     public ExecutionTableModel(RepositoryWithCallback<Execution> executionsRepository) {
         this.executionsRepository = executionsRepository;

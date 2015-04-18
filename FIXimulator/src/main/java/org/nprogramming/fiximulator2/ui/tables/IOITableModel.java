@@ -25,10 +25,10 @@ public class IOITableModel extends AbstractTableModel implements NotifyApi {
         {"ID", "Type", "Side", "Shares", "Symbol", "Price", 
          "SecurityID", "IDSource", "Natural", "RefID"};
 
-    private final Map<Integer, IOI> rowToIOI;
-    private final Map<String, Integer> idToRow;
+    private final transient Map<Integer, IOI> rowToIOI;
+    private final transient Map<String, Integer> idToRow;
 
-    private final RepositoryWithCallback<IOI> ioiRepository;
+    private final transient RepositoryWithCallback<IOI> ioiRepository;
 
 
     public IOITableModel(RepositoryWithCallback<IOI> ioiRepository){

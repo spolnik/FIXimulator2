@@ -25,7 +25,7 @@ public class MessageDetailTableModel extends AbstractTableModel
     private static final int SECTION = 5;
 
     private JTable messageTable = null; 
-    private final List<LogField> fields = new ArrayList<>();
+    private final transient List<LogField> fields = new ArrayList<>();
 
     private static final String[] headers =
         {"Field", "Tag", "Value", "Value Name", "Required", "Section"};

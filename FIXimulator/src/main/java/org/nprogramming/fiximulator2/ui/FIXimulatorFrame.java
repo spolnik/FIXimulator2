@@ -63,7 +63,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Error: ", e);
         }
         initComponents();
     }
@@ -1281,24 +1281,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         cachedObjectsLabel.setText("Number of cached objects:");
 
         cachedObjectsCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"50", "100", "200"}));
-        try {
-            Long settingValue = FIXimulator.getApplication().getSettings()
-                    .getLong("FIXimulatorCachedObjects");
-            if (settingValue == 50 || settingValue == 100 || settingValue == 200) {
-                cachedObjectsCombo.setSelectedItem(settingValue.toString());
-            } else {
-                // default due to bad value
-                cachedObjectsCombo.setSelectedItem("50");
-                FIXimulator.getApplication().getSettings()
-                        .setLong("FIXimulatorCachedObjects", 50);
-            }
-        } catch (Exception e) {
-            // default to to setting not existing
-            cachedObjectsCombo.setSelectedItem("50");
-            FIXimulator.getApplication().getSettings()
-                    .setLong("FIXimulatorCachedObjects", 50);
-        }
-        cachedObjectsCombo.addActionListener(FIXimulatorFrame.this::cachedObjectsComboActionPerformed);
 
         pricePrecisionCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}));
         try {
@@ -1313,6 +1295,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
                         .setLong("FIXimulatorPricePrecision", 4);
             }
         } catch (Exception e) {
+            LOG.error("Error: ", e);
             // default to to setting not existing
             pricePrecisionCombo.setSelectedItem("4");
             FIXimulator.getApplication().getSettings()
@@ -1749,7 +1732,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
             File file = instrumentFileChooser.getSelectedFile();
             instrumentsApi.reloadInstrumentSet(file);
         } else {
-            System.out.println("User cancelled loading file...");
+            LOG.info("User cancelled loading file...");
         }
     }//GEN-LAST:event_loadInstrumentMenuItemActionPerformed
 
@@ -1775,12 +1758,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
                 .setBool("FIXimulatorSendOnBehalfOfSubID",
                         sendOnBehalfOfSubID.isSelected());
     }//GEN-LAST:event_sendOnBehalfOfSubIDActionPerformed
-
-    private void cachedObjectsComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cachedObjectsComboActionPerformed
-        FIXimulator.getApplication().getSettings()
-                .setLong("FIXimulatorCachedObjects",
-                        Long.valueOf(cachedObjectsCombo.getSelectedItem().toString()));
-    }//GEN-LAST:event_cachedObjectsComboActionPerformed
 
     private void showSettingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showSettingsButtonActionPerformed
         System.out.println(FIXimulator.getApplication().getSettings().toString());
@@ -2038,6 +2015,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
             try {
                 fiximulator = new FIXimulator(orderRepository, executionRepository, ioiRepository, instrumentsApi);
             } catch (FileNotFoundException e) {
+                LOG.error("Error: ", e);
                 return;
             }
             fiximulator.start();

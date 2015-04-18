@@ -28,10 +28,10 @@ public class OrderTableModel extends AbstractTableModel implements NotifyApi {
             {"ID", "Status", "Side", "Quantity", "Symbol", "Type", "Limit", "TIF",
                     "Executed", "Open", "AvgPx", "ClOrdID", "OrigClOrdID"};
 
-    private final Map<Integer, Order> rowToOrder;
-    private final Map<String, Integer> idToRow;
+    private final transient Map<Integer, Order> rowToOrder;
+    private final transient Map<String, Integer> idToRow;
 
-    private final OrderRepositoryWithCallback orderRepository;
+    private final transient OrderRepositoryWithCallback orderRepository;
 
     public OrderTableModel(OrderRepositoryWithCallback orderRepository) {
         this.orderRepository = orderRepository;

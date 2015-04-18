@@ -12,19 +12,24 @@ package org.nprogramming.fiximulator2.ui;
 
 import java.sql.*;
 import org.nprogramming.fiximulator2.fix.FIXimulator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
 
 class QueryTableModel extends AbstractTableModel {
-    Vector results = new Vector();
+
+    private transient Vector results = new Vector();
     private static String[] columns = {"Results"};
-    Connection connection;
-    Statement statement;
-    String url;
-    String driver;
-    String user;
-    String pass;
-    
+    private transient Connection connection;
+    private transient String url;
+    private transient String driver;
+    private transient String user;
+    private transient String pass;
+
+    private static final Logger LOG = LoggerFactory.getLogger(QueryTableModel.class);
+
     public QueryTableModel() {
         try {
             url = FIXimulator.getApplication().getSettings()
@@ -35,7 +40,9 @@ class QueryTableModel extends AbstractTableModel {
                     .getString("JdbcUser");
             pass = FIXimulator.getApplication().getSettings()
                     .getString("JdbcPassword");
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            LOG.error("Error: ", e);
+        }
     }
 
     public int getRowCount() {
@@ -68,7 +75,7 @@ class QueryTableModel extends AbstractTableModel {
         }
         
         try {
-            statement = connection.createStatement();
+            Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             ResultSetMetaData meta = rs.getMetaData();
             int fields = meta.getColumnCount();
@@ -88,13 +95,15 @@ class QueryTableModel extends AbstractTableModel {
             fireTableChanged(null);
         } catch(Exception e) {
             results = new Vector();
-            e.printStackTrace();
+            LOG.error("Error: ", e);
         }
         
         if (connection != null) {
             try {
                 connection.close ();
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                LOG.error("Error: ", e);
+            }
         }
     }
 }
