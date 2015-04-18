@@ -12,7 +12,7 @@ public class InMemoryRepository<TItem extends ItemWithId> implements RepositoryW
     protected NotifyApi callback = null;
 
     @Override
-    public void add(TItem item) {
+    public void save(TItem item) {
         items.put(item.id(), item);
 
         if (callback != null)

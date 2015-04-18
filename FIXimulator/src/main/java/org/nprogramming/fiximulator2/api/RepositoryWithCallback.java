@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface RepositoryWithCallback<TItem extends ItemWithId> {
 
-    void add(TItem item);
+    void save(TItem item);
 
     void addCallback(NotifyApi callback);
 
