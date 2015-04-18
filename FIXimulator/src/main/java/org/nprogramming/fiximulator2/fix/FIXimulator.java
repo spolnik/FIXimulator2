@@ -1,34 +1,17 @@
 package org.nprogramming.fiximulator2.fix;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.net.URL;
-
-import org.nprogramming.fiximulator2.api.ExecutionsApi;
-import org.nprogramming.fiximulator2.api.IndicationsOfInterestApi;
 import org.nprogramming.fiximulator2.api.InstrumentsApi;
 import org.nprogramming.fiximulator2.api.OrdersApi;
+import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
 import org.nprogramming.fiximulator2.core.LogMessageSet;
-import org.nprogramming.fiximulator2.data.InstrumentRepository;
+import org.nprogramming.fiximulator2.domain.Execution;
+import org.nprogramming.fiximulator2.domain.IOI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import quickfix.Acceptor;
-import quickfix.CompositeLogFactory;
-import quickfix.ConfigError;
-import quickfix.DefaultMessageFactory;
-import quickfix.FieldConvertError;
-import quickfix.FileLogFactory;
-import quickfix.FileStoreFactory;
-import quickfix.JdbcLogFactory;
-import quickfix.LogFactory;
-import quickfix.MessageFactory;
-import quickfix.MessageStoreFactory;
-import quickfix.ScreenLogFactory;
-import quickfix.SessionSettings;
-import quickfix.SocketAcceptor;
+import quickfix.*;
+
+import java.io.*;
+import java.net.URL;
 
 public final class FIXimulator {
 
@@ -36,13 +19,12 @@ public final class FIXimulator {
 
     private Acceptor acceptor = null;
     private static FIXimulatorApplication application = null;
-    private static InstrumentRepository instruments = null;
     private static LogMessageSet messages = null;
 
     public FIXimulator(
             OrdersApi ordersApi,
-            ExecutionsApi executionsApi,
-            IndicationsOfInterestApi indicationsOfInterestApi,
+            RepositoryWithCallback<Execution> executionRepository,
+            RepositoryWithCallback<IOI> ioiRepository,
             InstrumentsApi instrumentsApi
     ) {
         InputStream inputStream = null;
@@ -68,8 +50,8 @@ public final class FIXimulator {
                     settings,
                     messages,
                     ordersApi,
-                    executionsApi,
-                    indicationsOfInterestApi,
+                    executionRepository,
+                    ioiRepository,
                     instrumentsApi,
                     new OrderFixTranslator(ordersApi)
             );

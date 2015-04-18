@@ -1,7 +1,7 @@
 package org.nprogramming.fiximulator2.ui.tables;
 
-import org.nprogramming.fiximulator2.api.ExecutionsApi;
 import org.nprogramming.fiximulator2.api.NotifyApi;
+import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
 import org.nprogramming.fiximulator2.domain.Execution;
 import org.nprogramming.fiximulator2.domain.Order;
 
@@ -25,28 +25,27 @@ public class ExecutionTableModel extends AbstractTableModel implements NotifyApi
     private static final int REF_ID = 11;
     private static final int DKD = 12;
 
-    private static String[] headers =
+    private static final String[] headers =
             {"ID", "ClOrdID", "Side", "Symbol", "LastQty", "LastPx",
                     "CumQty", "AvgPx", "Open", "ExecType", "ExecTranType", "RefID", "DKd"};
 
     private final Map<Integer, Execution> rowToExecution;
     private final Map<String, Integer> idToRow;
 
-    private final ExecutionsApi executionsApi;
+    private final RepositoryWithCallback<Execution> executionsRepository;
 
-    public ExecutionTableModel(ExecutionsApi executionsApi) {
-        this.executionsApi = executionsApi;
+    public ExecutionTableModel(RepositoryWithCallback<Execution> executionsRepository) {
+        this.executionsRepository = executionsRepository;
 
         rowToExecution = new HashMap<>();
         idToRow = new HashMap<>();
 
-        executionsApi.getAll().forEach(
-                this::add
+        executionsRepository.getAll().forEach(
+                this::addAndRefresh
         );
 
-        executionsApi.addCallback(this);
+        executionsRepository.addCallback(this);
     }
-
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -94,7 +93,7 @@ public class ExecutionTableModel extends AbstractTableModel implements NotifyApi
 
         switch (column) {
             case ID:
-                return execution.getID();
+                return execution.id();
             case CLIENT_ORDER_ID:
                 return order.getClientOrderID();
             case SIDE:
@@ -127,39 +126,39 @@ public class ExecutionTableModel extends AbstractTableModel implements NotifyApi
     @Override
     public void added(String id) {
 
-        add(
-                executionsApi.getExecution(id)
+        addAndRefresh(
+                executionsRepository.get(id)
         );
     }
 
     @Override
     public void update(String id) {
-        replace(
-                executionsApi.getExecution(id)
+        replaceAndRefresh(
+                executionsRepository.get(id)
         );
     }
 
-    private void add(Execution execution) {
+    public Execution get(int row) {
+        return rowToExecution.get(row);
+    }
+
+    private void addAndRefresh(Execution execution) {
         int row = rowToExecution.size();
 
         rowToExecution.put(row, execution);
-        idToRow.put(execution.getID(), row);
+        idToRow.put(execution.id(), row);
 
         fireTableRowsInserted(row, row);
     }
 
-    private Execution get(int row) {
-        return rowToExecution.get(row);
-    }
+    private void replaceAndRefresh(Execution execution) {
 
-    private void replace(Execution execution) {
-
-        Integer row = idToRow.get(execution.getID());
+        Integer row = idToRow.get(execution.id());
         if (row == null)
             return;
 
         rowToExecution.put(row, execution);
-        idToRow.put(execution.getID(), row);
+        idToRow.put(execution.id(), row);
 
         fireTableRowsUpdated(row, row);
     }

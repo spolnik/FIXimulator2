@@ -1,8 +1,10 @@
 package org.nprogramming.fiximulator2.domain;
 
+import org.nprogramming.fiximulator2.api.ItemWithId;
+
 import java.util.UUID;
 
-public class Execution implements Cloneable {
+public class Execution implements Cloneable, ItemWithId {
 
     private Order order;
     private boolean DKd = false;
@@ -20,7 +22,7 @@ public class Execution implements Cloneable {
     public Execution clone() {
         try {
             Execution execution = (Execution)super.clone();
-            execution.setRefID(getID());
+            execution.setRefID(id());
             execution.setID(generateID());
             execution.setDKd(false);
             return execution;
@@ -38,7 +40,8 @@ public class Execution implements Cloneable {
         return "E" + UUID.randomUUID();
     }
 
-    public String getID() {
+    @Override
+    public String id() {
         return ID;
     }
 

@@ -1,9 +1,6 @@
 package org.nprogramming.fiximulator2.fix;
 
-import org.nprogramming.fiximulator2.api.ExecutionsApi;
-import org.nprogramming.fiximulator2.api.IndicationsOfInterestApi;
-import org.nprogramming.fiximulator2.api.InstrumentsApi;
-import org.nprogramming.fiximulator2.api.OrdersApi;
+import org.nprogramming.fiximulator2.api.*;
 import org.nprogramming.fiximulator2.core.LogMessageSet;
 import org.nprogramming.fiximulator2.core.StatusSwitcher;
 import org.nprogramming.fiximulator2.domain.Execution;
@@ -38,8 +35,8 @@ public class FIXimulatorApplication extends MessageCracker
     private Thread executorThread;
     private LogMessageSet messages;
     private final OrdersApi ordersApi;
-    private final ExecutionsApi executionsApi;
-    private final IndicationsOfInterestApi indicationsOfInterestApi;
+    private final RepositoryWithCallback<Execution> executionRepository;
+    private final RepositoryWithCallback<IOI> ioiRepository;
     private final InstrumentsApi instrumentsApi;
     private final OrderFixTranslator orderFixTranslator;
     private SessionSettings settings;
@@ -51,16 +48,16 @@ public class FIXimulatorApplication extends MessageCracker
             SessionSettings settings,
             LogMessageSet messages,
             OrdersApi ordersApi,
-            ExecutionsApi executionsApi,
-            IndicationsOfInterestApi indicationsOfInterestApi,
+            RepositoryWithCallback<Execution> executionRepository,
+            RepositoryWithCallback<IOI> ioiRepository,
             InstrumentsApi instrumentsApi,
             OrderFixTranslator orderFixTranslator
     ) {
         this.settings = settings;
         this.messages = messages;
         this.ordersApi = ordersApi;
-        this.executionsApi = executionsApi;
-        this.indicationsOfInterestApi = indicationsOfInterestApi;
+        this.executionRepository = executionRepository;
+        this.ioiRepository = ioiRepository;
         this.instrumentsApi = instrumentsApi;
         this.orderFixTranslator = orderFixTranslator;
     }
@@ -186,9 +183,9 @@ public class FIXimulatorApplication extends MessageCracker
             ExecID execID = new ExecID();
             message.get(execID);
             Execution execution =
-                    executionsApi.getExecution(execID.getValue());
+                    executionRepository.get(execID.getValue());
             execution.setDKd(true);
-            executionsApi.update(execution.getID());
+            executionRepository.update(execution.id());
         } catch (FieldNotFound ex) {
             LOG.error("Error: ", ex);
         }
@@ -435,7 +432,7 @@ public class FIXimulatorApplication extends MessageCracker
 
     public void correct(Execution correction) {
         Order order = correction.getOrder();
-        Execution original = executionsApi.getExecution(correction.getRefID());
+        Execution original = executionRepository.get(correction.getRefID());
 
         double fillQty = correction.getLastShares();
         double oldQty = original.getLastShares();
@@ -515,7 +512,7 @@ public class FIXimulatorApplication extends MessageCracker
     public void sendIOI(IOI ioi) {
         // *** Required fields ***
         // IOIid
-        IOIid ioiID = new IOIid(ioi.getID());
+        IOIid ioiID = new IOIid(ioi.id());
 
         // IOITransType
         IOITransType ioiType = null;
@@ -604,7 +601,7 @@ public class FIXimulatorApplication extends MessageCracker
 
         // *** Send message ***
         sendMessage(fixIOI);
-        indicationsOfInterestApi.addIndicationOfInterest(ioi);
+        ioiRepository.add(ioi);
     }
 
     public void sendExecution(Execution execution) {
@@ -615,7 +612,7 @@ public class FIXimulatorApplication extends MessageCracker
         OrderID orderID = new OrderID(order.getID());
 
         // ExecID (17)
-        ExecID execID = new ExecID(execution.getID());
+        ExecID execID = new ExecID(execution.id());
 
         // ExecTransType (20)
         ExecTransType execTransType =
@@ -679,7 +676,7 @@ public class FIXimulatorApplication extends MessageCracker
 
         // *** Send message ***
         sendMessage(executionReport);
-        executionsApi.addExecution(execution);
+        executionRepository.add(execution);
     }
 
     // IOI Sender methods

@@ -1,8 +1,10 @@
 package org.nprogramming.fiximulator2.domain;
 
+import org.nprogramming.fiximulator2.api.ItemWithId;
+
 import java.util.UUID;
 
-public class IOI implements Cloneable {
+public class IOI implements Cloneable, ItemWithId {
 
     private String ID = null;
     private String refID = null;
@@ -23,7 +25,7 @@ public class IOI implements Cloneable {
     public IOI clone() {
         try {
             IOI ioi = (IOI)super.clone();
-            ioi.setRefID(getID());
+            ioi.setRefID(id());
             ioi.setID(ioi.generateID());
             return ioi;
         } catch(CloneNotSupportedException e) {
@@ -34,8 +36,9 @@ public class IOI implements Cloneable {
     public String generateID() {
         return "I" + UUID.randomUUID();
     }
-    
-    public String getID() {
+
+    @Override
+    public String id() {
         return ID;
     }
 
