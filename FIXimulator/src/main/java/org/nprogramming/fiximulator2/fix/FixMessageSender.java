@@ -51,7 +51,7 @@ final class FixMessageSender {
         try {
             Session.sendToTarget(message, currentSession);
         } catch (SessionNotFound e) {
-            e.printStackTrace();
+            LOG.error("Error: ", e);
         }
     }
 }
