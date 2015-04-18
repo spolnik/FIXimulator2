@@ -10,7 +10,7 @@
  * 
  */
 
-package org.nprogramming.fiximulator2.core;
+package org.nprogramming.fiximulator2.log4fix;
 /*
  * The Log4FIX Software License
  * Copyright (c) 2006 - 2007 opentradingsolutions.org  All rights reserved.
@@ -141,7 +141,7 @@ public class LogMessage implements Comparable<Object> {
      * The sending time of the message. This value may be null if the
      * {@link SendingTime} field is not found in the message. If the value is 
      * null then the {@link #getValidationErrorMessages()} contains an 
-     * <code>Exception</code> describing the problem.
+     * <code>Exception</code> describing the pro£blem.
      * @return the sending time of the message or null if the message was 
      * missing the sending time.
      */

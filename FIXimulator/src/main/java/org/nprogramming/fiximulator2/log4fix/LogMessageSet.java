@@ -1,4 +1,4 @@
-package org.nprogramming.fiximulator2.core;
+package org.nprogramming.fiximulator2.log4fix;
 
 import org.nprogramming.fiximulator2.api.Callback;
 import quickfix.DataDictionary;

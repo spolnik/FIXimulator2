@@ -3,7 +3,7 @@ package org.nprogramming.fiximulator2.fix;
 import org.nprogramming.fiximulator2.api.InstrumentsApi;
 import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;
 import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
-import org.nprogramming.fiximulator2.core.LogMessageSet;
+import org.nprogramming.fiximulator2.log4fix.LogMessageSet;
 import org.nprogramming.fiximulator2.core.StatusSwitcher;
 import org.nprogramming.fiximulator2.domain.Execution;
 import org.nprogramming.fiximulator2.domain.IOI;
@@ -65,6 +65,7 @@ public class FIXimulatorApplication extends MessageCracker
         this.orderFixTranslator = orderFixTranslator;
     }
 
+    @Override
     public void onCreate(SessionID sessionID) {
     }
 
@@ -205,7 +206,7 @@ public class FIXimulatorApplication extends MessageCracker
             messages.add(message, false, dictionary, sessionID);
             crack(message, sessionID);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Error: ", e);
         }
     }
 
@@ -240,7 +241,7 @@ public class FIXimulatorApplication extends MessageCracker
                                     new File("config/FIXimulator.cfg")));
             settings.toStream(outputStream);
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            LOG.error("Error: ", ex);
         }
     }
 
@@ -478,7 +479,7 @@ public class FIXimulatorApplication extends MessageCracker
             ioiSenderThread = new Thread(ioiSender);
             ioiSenderThread.start();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Error: ", e);
         }
         if (connected && ioiSenderStarted)
             ioiSenderStatus.on();
@@ -490,7 +491,7 @@ public class FIXimulatorApplication extends MessageCracker
         try {
             ioiSenderThread.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOG.error("Error: ", e);
         }
         ioiSenderStatus.off();
     }
@@ -625,7 +626,7 @@ public class FIXimulatorApplication extends MessageCracker
             executorThread = new Thread(executor);
             executorThread.start();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Error: ", e);
         }
         if (connected && executorStarted)
             executorStatus.on();
@@ -637,7 +638,7 @@ public class FIXimulatorApplication extends MessageCracker
         try {
             executorThread.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOG.error("Error: ", e);
         }
         executorStatus.off();
     }
@@ -711,7 +712,9 @@ public class FIXimulatorApplication extends MessageCracker
                         random.nextDouble() * 100 * factor) / factor;
             }
 
-            if (fillQty == 0) fillQty = 1;
+            if (fillQty == 0)
+                fillQty = 1;
+
             for (int i = 0; i < partials; i++) {
                 double open = order.getOpen();
                 if (open > 0) {

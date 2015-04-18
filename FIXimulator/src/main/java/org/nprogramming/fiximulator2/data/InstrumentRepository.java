@@ -3,6 +3,8 @@ package org.nprogramming.fiximulator2.data;
 import org.nprogramming.fiximulator2.api.InstrumentsApi;
 import org.nprogramming.fiximulator2.api.Callback;
 import org.nprogramming.fiximulator2.domain.Instrument;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -12,59 +14,58 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-
 public final class InstrumentRepository extends DefaultHandler implements InstrumentsApi {
 
     private final ArrayList<Instrument> instruments = new ArrayList<>();
     private final ArrayList<Instrument> oldInstruments = new ArrayList<>();
     private Callback callback = null;
-    
+
+    private static final Logger LOG = LoggerFactory.getLogger(InstrumentRepository.class);
+
     public InstrumentRepository(File file) {
         try {
-            InputStream input = 
+            InputStream input =
                     new BufferedInputStream(new FileInputStream(file));
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
-            saxParser.parse( input, this);		
-        } catch ( Exception e ) {
-            System.out.println( "Error reading/parsing instrument file." );
-            e.printStackTrace();
+            saxParser.parse(input, this);
+        } catch (Exception e) {
+            LOG.error("Error reading/parsing instrument file.", e);
         }
     }
 
     @Override
-    public void reloadInstrumentSet( File file ) {
+    public void reloadInstrumentSet(File file) {
         try {
             oldInstruments.clear();
             oldInstruments.addAll(instruments);
             instruments.clear();
-            InputStream input = 
+            InputStream input =
                     new BufferedInputStream(new FileInputStream(file));
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
-            saxParser.parse( input, this);
+            saxParser.parse(input, this);
             callback.update();
-        } catch ( Exception e ) {
-            System.out.println( "Error reading/parsing instrument file." );
-            e.printStackTrace();
+        } catch (Exception e) {
+            LOG.error("Error reading/parsing instrument file.", e);
             instruments.clear();
             instruments.addAll(oldInstruments);
         }
     }
-    
+
     @Override
-    public void startElement( String namespace, String localName, 
-                    String qualifiedName, Attributes attributes ){
-        if ( qualifiedName.equals( "instrument" )) {
-            String ticker = attributes.getValue( "ticker" );
-            String cusip = attributes.getValue( "cusip" );
-            String sedol = attributes.getValue( "sedol" );
-            String name = attributes.getValue( "name" );
-            String ric = attributes.getValue( "ric" );
-            String price = attributes.getValue( "price" );
-            Instrument instrument = 
-                    new Instrument( ticker, sedol, name, ric, cusip, price );
-            instruments.add( instrument );
+    public void startElement(String namespace, String localName,
+                             String qualifiedName, Attributes attributes) {
+        if (qualifiedName.equals("instrument")) {
+            String ticker = attributes.getValue("ticker");
+            String cusip = attributes.getValue("cusip");
+            String sedol = attributes.getValue("sedol");
+            String name = attributes.getValue("name");
+            String ric = attributes.getValue("ric");
+            String price = attributes.getValue("price");
+            Instrument instrument =
+                    new Instrument(ticker, sedol, name, ric, cusip, price);
+            instruments.add(instrument);
         }
     }
 
@@ -74,12 +75,12 @@ public final class InstrumentRepository extends DefaultHandler implements Instru
     }
 
     @Override
-    public Instrument getInstrument( int i ) {
-        return instruments.get( i );
+    public Instrument getInstrument(int i) {
+        return instruments.get(i);
     }
 
     @Override
-    public Instrument getInstrument( String identifier ) {
+    public Instrument getInstrument(String identifier) {
 
         for (Instrument instrument : instruments) {
             if (instrument.getTicker().equals(identifier) ||
@@ -97,15 +98,15 @@ public final class InstrumentRepository extends DefaultHandler implements Instru
         Random generator = new Random();
 
         int size = instruments.size();
-        int index = generator.nextInt( size );
+        int index = generator.nextInt(size);
 
-        return instruments.get( index );
+        return instruments.get(index);
     }
-	
+
     public void outputToXML() {
         try {
-            BufferedWriter writer = 
-                   new BufferedWriter(new FileWriter("config/instruments.xml"));
+            BufferedWriter writer =
+                    new BufferedWriter(new FileWriter("config/instruments.xml"));
             writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
             writer.write("<instruments>\n");
 
@@ -123,11 +124,13 @@ public final class InstrumentRepository extends DefaultHandler implements Instru
 
             writer.write("</instruments>\n");
             writer.close();
-        } catch ( IOException e ) {e.printStackTrace();}
+        } catch (IOException e) {
+            LOG.error("Error: ", e);
+        }
     }
 
     @Override
-    public void addCallback(Callback instrumentModel){
+    public void addCallback(Callback instrumentModel) {
         this.callback = instrumentModel;
     }
 }

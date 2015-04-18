@@ -1,6 +1,8 @@
 package org.nprogramming.fiximulator2.domain;
 
 import org.nprogramming.fiximulator2.api.ItemWithId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
@@ -26,6 +28,8 @@ public class Order implements Cloneable, ItemWithId {
     private double priceLimit = 0.0;
     private double avgPx = 0.0;
 
+    private static final Logger LOG = LoggerFactory.getLogger(Order.class);
+
     @Override
     public Order clone() {
         try {
@@ -34,6 +38,7 @@ public class Order implements Cloneable, ItemWithId {
             order.setID(generateID());
             return order;
         } catch ( CloneNotSupportedException e ) {
+            LOG.error("Error: ", e);
             return null;
         }
     }

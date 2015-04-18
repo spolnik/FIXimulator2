@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import javax.swing.UIManager;
 
@@ -46,10 +47,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
             e.printStackTrace();
         }
         initComponents();
-    }
-
-    public IOI getDialogIOI() {
-        return dialogIOI;
     }
 
     /**
@@ -2026,7 +2023,11 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
 
             InstrumentsApi instrumentsApi = new InstrumentRepository(new File(instrumentsXml.getPath()));
 
-            fiximulator = new FIXimulator(orderRepository, executionRepository, ioiRepository, instrumentsApi);
+            try {
+                fiximulator = new FIXimulator(orderRepository, executionRepository, ioiRepository, instrumentsApi);
+            } catch (FileNotFoundException e) {
+                return;
+            }
             fiximulator.start();
             new FIXimulatorFrame(orderRepository, executionRepository, ioiRepository, instrumentsApi).setVisible(true);
         });

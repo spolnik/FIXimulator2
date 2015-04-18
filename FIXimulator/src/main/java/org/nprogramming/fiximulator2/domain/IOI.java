@@ -1,6 +1,8 @@
 package org.nprogramming.fiximulator2.domain;
 
 import org.nprogramming.fiximulator2.api.ItemWithId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
@@ -16,7 +18,9 @@ public class IOI implements Cloneable, ItemWithId {
     private String iDSource = "";   //
     private double price = 0.0;
     private String natural = "";    // YES, NO
-    
+
+    private static final Logger LOG = LoggerFactory.getLogger(IOI.class);
+
     public IOI () {
         ID = generateID();
     }
@@ -29,6 +33,7 @@ public class IOI implements Cloneable, ItemWithId {
             ioi.setID(ioi.generateID());
             return ioi;
         } catch(CloneNotSupportedException e) {
+            LOG.error("Error: ", e);
             return null;
         }
     }

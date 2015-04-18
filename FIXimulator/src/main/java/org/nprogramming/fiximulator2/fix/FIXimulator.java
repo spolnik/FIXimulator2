@@ -2,7 +2,7 @@ package org.nprogramming.fiximulator2.fix;
 
 import org.nprogramming.fiximulator2.api.InstrumentsApi;
 import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
-import org.nprogramming.fiximulator2.core.LogMessageSet;
+import org.nprogramming.fiximulator2.log4fix.LogMessageSet;
 import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;
 import org.nprogramming.fiximulator2.domain.Execution;
 import org.nprogramming.fiximulator2.domain.IOI;
@@ -26,8 +26,8 @@ public final class FIXimulator {
             RepositoryWithCallback<Execution> executionRepository,
             RepositoryWithCallback<IOI> ioiRepository,
             InstrumentsApi instrumentsApi
-    ) {
-        InputStream inputStream = null;
+    ) throws FileNotFoundException {
+        InputStream inputStream;
         ClassLoader classLoader = FIXimulator.class.getClassLoader();
 
         try {
@@ -38,8 +38,8 @@ public final class FIXimulator {
                     new FileInputStream(
                             new File(configUrl.getPath())));
         } catch (FileNotFoundException exception) {
-            exception.printStackTrace();
-            System.exit(0);
+            LOG.error("Error: ", exception);
+            throw exception;
         }
 
         messages = new LogMessageSet();

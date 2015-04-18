@@ -8,8 +8,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import org.nprogramming.fiximulator2.fix.FIXimulator;
-import org.nprogramming.fiximulator2.core.LogMessage;
-import org.nprogramming.fiximulator2.core.LogMessageSet;
+import org.nprogramming.fiximulator2.log4fix.LogMessage;
+import org.nprogramming.fiximulator2.log4fix.LogMessageSet;
 import org.nprogramming.fiximulator2.util.LogField;
 
 public class MessageDetailTableModel extends AbstractTableModel 

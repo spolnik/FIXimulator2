@@ -1,6 +1,8 @@
 package org.nprogramming.fiximulator2.domain;
 
 import org.nprogramming.fiximulator2.api.ItemWithId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
@@ -18,6 +20,8 @@ public class Execution implements Cloneable, ItemWithId {
     private double cumQty = 0.0;
     private double avgPx = 0.0;
 
+    private static final Logger LOG = LoggerFactory.getLogger(Execution.class);
+
     @Override
     public Execution clone() {
         try {
@@ -27,6 +31,7 @@ public class Execution implements Cloneable, ItemWithId {
             execution.setDKd(false);
             return execution;
         } catch(CloneNotSupportedException e) {
+            LOG.error("Error: ", e);
             return null;
         }
     }

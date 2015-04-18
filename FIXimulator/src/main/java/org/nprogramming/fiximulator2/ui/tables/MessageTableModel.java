@@ -4,8 +4,8 @@ import javax.swing.table.AbstractTableModel;
 
 import org.nprogramming.fiximulator2.api.Callback;
 import org.nprogramming.fiximulator2.fix.FIXimulator;
-import org.nprogramming.fiximulator2.core.LogMessage;
-import org.nprogramming.fiximulator2.core.LogMessageSet;
+import org.nprogramming.fiximulator2.log4fix.LogMessage;
+import org.nprogramming.fiximulator2.log4fix.LogMessageSet;
 import quickfix.field.converter.UtcTimestampConverter;
 
 public class MessageTableModel extends AbstractTableModel implements Callback {
