@@ -1,13 +1,3 @@
-/*
- * File     : MessageDetailTableModel.java
- *
- * Author   : Zoltan Feledy
- * 
- * Contents : This class is the TableModel for the Message Details 
- *            Table.
- * 
- */
-
 package org.nprogramming.fiximulator2.ui.tables;
 
 import java.util.ArrayList;
@@ -24,24 +14,35 @@ import org.nprogramming.fiximulator2.util.LogField;
 
 public class MessageDetailTableModel extends AbstractTableModel 
         implements ListSelectionListener {
+
     private static LogMessageSet messages = FIXimulator.getMessageSet();
+
+    private static final int FIELD = 0;
+    private static final int TAG = 1;
+    private static final int VALUE = 2;
+    private static final int VALUE_NAME = 3;
+    private static final int REQUIRED = 4;
+    private static final int SECTION = 5;
+
     private JTable messageTable = null; 
-    private ArrayList<LogField> fields = new ArrayList<>();
-    private static String[] columns = 
+    private final List<LogField> fields = new ArrayList<>();
+
+    private static final String[] headers =
         {"Field", "Tag", "Value", "Value Name", "Required", "Section"};
         
     public MessageDetailTableModel(JTable messageTable){
         this.messageTable = messageTable;
         messageTable.getSelectionModel().addListSelectionListener(this);
     }
-    
+
+    @Override
     public int getColumnCount() {
-        return columns.length;
+        return headers.length;
     }
 
     @Override
     public String getColumnName(int column) {
-        return columns[column];
+        return headers[column];
     }
 
     @Override
@@ -49,31 +50,36 @@ public class MessageDetailTableModel extends AbstractTableModel
         if (column == 1) return Integer.class;
         return String.class;
     }
-        
+
+    @Override
     public int getRowCount() {
         return fields.size();
     }
 
+    @Override
     public Object getValueAt( int row, int column ) {
         LogField logField = fields.get( row );
-        if (column == 0)
-            return logField.getFieldName();
-        if (column == 1)
-            return logField.getTag();
-        if (column == 2)
-            return logField.getValue();
-        if (column == 3)
-            return logField.getFieldValueName();
-        if (column == 4)
-            return (logField.isRequired() ? "Yes" : "No");
-        if (column == 5) {
-            if (logField.isHeaderField())
-                return "Header";
-            if (logField.isTrailerField())
-                return "Trailer";
-            return "Body";
+
+        switch (column) {
+            case FIELD:
+                return logField.getFieldName();
+            case TAG:
+                return logField.getTag();
+            case VALUE:
+                return logField.getValue();
+            case VALUE_NAME:
+                return logField.getFieldValueName();
+            case REQUIRED:
+                return (logField.isRequired() ? "Yes" : "No");
+            case SECTION:
+                if (logField.isHeaderField())
+                    return "Header";
+                if (logField.isTrailerField())
+                    return "Trailer";
+                return "Body";
+            default:
+                return null;
         }
-        return null;
     }
 
     public void updateMessageDetailsTable(LogMessage message) {
@@ -87,7 +93,8 @@ public class MessageDetailTableModel extends AbstractTableModel
         
         fireTableDataChanged();
     }
-    
+
+    @Override
     public void valueChanged(ListSelectionEvent selection) {
         if (!selection.getValueIsAdjusting()) {
             int row = messageTable.getSelectedRow();

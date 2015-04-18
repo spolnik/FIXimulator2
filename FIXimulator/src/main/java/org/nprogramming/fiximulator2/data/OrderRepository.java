@@ -2,10 +2,7 @@ package org.nprogramming.fiximulator2.data;
 
 import org.nprogramming.fiximulator2.api.Callback;
 import org.nprogramming.fiximulator2.api.OrdersApi;
-import org.nprogramming.fiximulator2.fix.FIXimulator;
 import org.nprogramming.fiximulator2.domain.Order;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +11,8 @@ public final class OrderRepository implements OrdersApi {
 
     private final List<Order> orders = new ArrayList<>();
     private final List<Order> ordersToFill = new ArrayList<>();
-    private Callback callback = null;
 
-    private static final Logger LOG = LoggerFactory.getLogger(OrderRepository.class);
+    private Callback callback = null;
 
     @Override
     public void addOrderToFill(Order orderToFill) {
@@ -30,17 +26,9 @@ public final class OrderRepository implements OrdersApi {
 
     private void add(Order order, boolean toFill) {
         orders.add(order);
-        if (toFill) ordersToFill.add(order);
-        int limit = 50;
-        try {
-            limit = (int) FIXimulator.getApplication().getSettings()
-                    .getLong("FIXimulatorCachedObjects");
-        } catch (Exception e) {
-            LOG.error("Error: ", e);
-        }
-        while (orders.size() > limit) {
-            orders.remove(0);
-        }
+        if (toFill)
+            ordersToFill.add(order);
+
         callback.update();
     }
 

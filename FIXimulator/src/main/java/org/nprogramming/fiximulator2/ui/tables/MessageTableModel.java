@@ -1,12 +1,3 @@
-/*
- * File     : MessageTableModel.java
- *
- * Author   : Zoltan Feledy
- * 
- * Contents : This class is the TableModel for the Message Table.
- * 
- */
-
 package org.nprogramming.fiximulator2.ui.tables;
 
 import javax.swing.table.AbstractTableModel;
@@ -18,21 +9,30 @@ import org.nprogramming.fiximulator2.core.LogMessageSet;
 import quickfix.field.converter.UtcTimestampConverter;
 
 public class MessageTableModel extends AbstractTableModel implements Callback {
+
     private static LogMessageSet messages = FIXimulator.getMessageSet();
-    private static String[] columns = 
+
+    private static final int ID = 0;
+    private static final int DIRECTION = 1;
+    private static final int SENDING_TIME = 2;
+    private static final int TYPE = 3;
+    private static final int MESSAGE = 4;
+
+    private static final String[] headers =
         {"#", "Direction", "SendingTime", "Type", "Message"};
     
     public MessageTableModel(){
         messages.addCallback(this);
     }
-    
+
+    @Override
     public int getColumnCount() {
-        return columns.length;
+        return headers.length;
     }
 
     @Override
     public String getColumnName(int column) {
-        return columns[column];
+        return headers[column];
     }
     
     @Override
@@ -40,21 +40,34 @@ public class MessageTableModel extends AbstractTableModel implements Callback {
         if (column == 0) return Integer.class;
         return String.class;
     }
-    
+
+    @Override
     public int getRowCount() {
         return messages.size();
     }
 
+    @Override
     public Object getValueAt( int row, int column ) {
+
         LogMessage msg = messages.getMessage( row );
-        if ( column == 0 ) return msg.getMessageIndex();
-        if ( column == 1 ) return (msg.isIncoming() ? "incoming" : "outgoing");
-        if ( column == 2 ) return UtcTimestampConverter.convert(msg.getSendingTime(),true);
-        if ( column == 3 ) return msg.getMessageTypeName();
-        if ( column == 4 ) return msg.getRawMessage();
-        return new Object();
+
+        switch (column) {
+            case ID:
+                return msg.getMessageIndex();
+            case DIRECTION:
+                return (msg.isIncoming() ? "incoming" : "outgoing");
+            case SENDING_TIME:
+                return UtcTimestampConverter.convert(msg.getSendingTime(), true);
+            case TYPE:
+                return msg.getMessageTypeName();
+            case MESSAGE:
+                return msg.getRawMessage();
+            default:
+                return new Object();
+        }
     }
 
+    @Override
     public void update() {
         fireTableDataChanged();
     }
