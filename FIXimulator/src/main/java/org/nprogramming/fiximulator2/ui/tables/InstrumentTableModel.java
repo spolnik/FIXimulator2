@@ -4,6 +4,8 @@ import org.nprogramming.fiximulator2.api.InstrumentsApi;
 import org.nprogramming.fiximulator2.domain.Instrument;
 
 import javax.swing.table.AbstractTableModel;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InstrumentTableModel extends AbstractTableModel {
 
@@ -15,12 +17,26 @@ public class InstrumentTableModel extends AbstractTableModel {
     private static final int PRICE = 5;
 
     private static final String[] headers =
-        {"Ticker", "Name", "Sedol", "RIC", "Cusip", "Price"};
+            {"Ticker", "Name", "Sedol", "RIC", "Cusip", "Price"};
 
-    private final transient InstrumentsApi instrumentsApi;
+    private final transient Map<Integer, Instrument> rowToInstrument;
 
-    public InstrumentTableModel(InstrumentsApi instrumentsApi){
-        this.instrumentsApi = instrumentsApi;
+    public InstrumentTableModel(InstrumentsApi instrumentsApi) {
+
+        rowToInstrument = new HashMap<>();
+
+        instrumentsApi.getAll().forEach(
+                this::addAndRefresh
+        );
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return false;
+    }
+
+    @Override
+    public void setValueAt(Object value, int rowIndex, int columnIndex) {
     }
 
     @Override
@@ -45,13 +61,13 @@ public class InstrumentTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return instrumentsApi.size();
+        return rowToInstrument.size();
     }
 
     @Override
     public Object getValueAt(int row, int column) {
 
-        Instrument instrument = instrumentsApi.getInstrument(row);
+        Instrument instrument = get(row);
 
         switch (column) {
             case TICKER:
@@ -69,5 +85,17 @@ public class InstrumentTableModel extends AbstractTableModel {
             default:
                 return new Object();
         }
+    }
+
+    private Instrument get(int row) {
+        return rowToInstrument.get(row);
+    }
+
+    private void addAndRefresh(Instrument instrument) {
+        int row = rowToInstrument.size();
+
+        rowToInstrument.put(row, instrument);
+
+        fireTableRowsInserted(row, row);
     }
 }

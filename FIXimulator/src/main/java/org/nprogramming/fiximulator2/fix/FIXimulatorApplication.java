@@ -16,6 +16,7 @@ import quickfix.field.*;
 import quickfix.fix42.OrderCancelReject;
 
 import java.io.*;
+import java.util.List;
 import java.util.Random;
 
 public class FIXimulatorApplication extends MessageCracker
@@ -553,8 +554,19 @@ public class FIXimulatorApplication extends MessageCracker
             ioiSenderStatus.off();
         }
 
+        private Instrument randomInstrument() {
+
+            List<Instrument> instruments = instrumentsApi.getAll();
+            Random generator = new Random();
+
+            int size = instruments.size();
+            int index = generator.nextInt(size);
+
+            return instruments.get(index);
+        }
+
         public void sendRandomIOI() {
-            Instrument instrument = instrumentsApi.randomInstrument();
+            Instrument instrument = randomInstrument();
             IOI ioi = new IOI();
             ioi.setType("NEW");
 
