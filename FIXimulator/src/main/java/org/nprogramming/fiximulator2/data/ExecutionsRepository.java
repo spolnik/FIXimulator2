@@ -1,45 +1,30 @@
 package org.nprogramming.fiximulator2.data;
 
 import org.nprogramming.fiximulator2.api.ExecutionsApi;
-import org.nprogramming.fiximulator2.api.Callback;
-import org.nprogramming.fiximulator2.fix.FIXimulator;
+import org.nprogramming.fiximulator2.api.NotifyApi;
 import org.nprogramming.fiximulator2.domain.Execution;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public final class ExecutionsRepository implements ExecutionsApi {
 
-    private final List<Execution> executions = new ArrayList<>();
-    private Callback callback = null;
-
-    private static final Logger LOG = LoggerFactory.getLogger(ExecutionsRepository.class);
+    private final Map<String, Execution> executions = new HashMap<>();
+    private NotifyApi callback = null;
 
     @Override
-    public void addExecution ( Execution execution ) {
-        executions.add( execution );
-        int limit = 50;
-        try {
-            limit = (int) FIXimulator.getApplication().getSettings()
-                    .getLong("FIXimulatorCachedObjects");
-        } catch ( Exception e ) {
-            LOG.error("Error: ", e);
-        }
-        while ( executions.size() > limit ) {
-            executions.remove(0);
-        }
-        callback.update();
+    public void addExecution(Execution execution) {
+
+        executions.put(execution.getID(), execution);
+        callback.added(execution.getID());
     }
 
     @Override
-    public void update () {
-        callback.update();
+    public void update(String id) {
+        callback.update(id);
     }
 
     @Override
-    public void addCallback(Callback callback){
+    public void addCallback(NotifyApi callback) {
         this.callback = callback;
     }
 
@@ -49,16 +34,18 @@ public final class ExecutionsRepository implements ExecutionsApi {
     }
 
     @Override
-    public Execution getExecution( int i ) {
-        return executions.get( i );
+    public List<Execution> getAll() {
+        return Collections.unmodifiableList(
+                new ArrayList<>(executions.values())
+        );
     }
 
     @Override
-    public Execution getExecution( String id ) {
-        for (Execution execution : executions) {
-            if (execution.getID().equals(id))
-                return execution;
+    public Execution getExecution(String id) {
+        if (executions.containsKey(id)) {
+            return executions.get(id);
         }
+
         return null;
     }
 }

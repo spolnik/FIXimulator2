@@ -188,7 +188,7 @@ public class FIXimulatorApplication extends MessageCracker
             Execution execution =
                     executionsApi.getExecution(execID.getValue());
             execution.setDKd(true);
-            executionsApi.update();
+            executionsApi.update(execution.getID());
         } catch (FieldNotFound ex) {
             LOG.error("Error: ", ex);
         }

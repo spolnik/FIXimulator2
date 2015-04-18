@@ -10,12 +10,14 @@
 package org.nprogramming.fiximulator2.ui.tables;
 
 import javax.swing.table.AbstractTableModel;
+
+import org.nprogramming.fiximulator2.api.Callback;
 import org.nprogramming.fiximulator2.fix.FIXimulator;
 import org.nprogramming.fiximulator2.core.LogMessage;
 import org.nprogramming.fiximulator2.core.LogMessageSet;
 import quickfix.field.converter.UtcTimestampConverter;
 
-public class MessageTableModel extends AbstractTableModel {
+public class MessageTableModel extends AbstractTableModel implements Callback {
     private static LogMessageSet messages = FIXimulator.getMessageSet();
     private static String[] columns = 
         {"#", "Direction", "SendingTime", "Type", "Message"};
@@ -40,7 +42,7 @@ public class MessageTableModel extends AbstractTableModel {
     }
     
     public int getRowCount() {
-        return messages.getCount();
+        return messages.size();
     }
 
     public Object getValueAt( int row, int column ) {

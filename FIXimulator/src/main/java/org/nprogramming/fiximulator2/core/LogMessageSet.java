@@ -1,61 +1,45 @@
-/*
- * File     : LogMessageSet.java
- *
- * Author   : Zoltan Feledy
- * 
- * Contents : This class is a Set of LogMessage objects with utility 
- *            methods to access the individual messages.
- */
-
 package org.nprogramming.fiximulator2.core;
 
-import java.util.ArrayList;
-
-import org.nprogramming.fiximulator2.fix.FIXimulator;
-import org.nprogramming.fiximulator2.ui.tables.MessageTableModel;
+import org.nprogramming.fiximulator2.api.Callback;
 import quickfix.DataDictionary;
 import quickfix.Message;
 import quickfix.SessionID;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class LogMessageSet {
-	private static final long serialVersionUID = 1L;
-	private ArrayList<LogMessage> messages = null;
-	private MessageTableModel model;
-	private int messageIndex = 0;
-	
-	public LogMessageSet() {
-		messages = new ArrayList<>();
-	}
-	
-	public void add(Message message, boolean incoming, 
-                DataDictionary dictionary, SessionID sessionID) {
-		messageIndex++;
-		LogMessage msg = 
-                        new LogMessage(messageIndex, incoming, sessionID,
-				message.toString(), dictionary);
-                messages.add(msg);
-                int limit = 50;
-                try {
-                    limit = (int) FIXimulator.getApplication().getSettings()
-                            .getLong("FIXimulatorCachedObjects");
-                } catch ( Exception e ) {}
-                while ( messages.size() > limit ) {
-                    messages.remove(0);
-                }
 
-		model.update();		
-	}
-	
-	public LogMessage getMessage( int i ) {
-		return messages.get(i);
-	}
-	
-	public int getCount(){
-		return messages.size();
-	}
+    private List<LogMessage> messages = null;
+    private Callback callback;
+    private int messageIndex = 0;
 
-	public void addCallback(MessageTableModel model) {
-		this.model = model;	
-	}
+    public LogMessageSet() {
+        messages = new ArrayList<>();
+    }
+
+    public void add(Message message, boolean incoming,
+                    DataDictionary dictionary, SessionID sessionID) {
+        messageIndex++;
+        LogMessage msg =
+                new LogMessage(messageIndex, incoming, sessionID,
+                        message.toString(), dictionary);
+        messages.add(msg);
+
+
+        callback.update();
+    }
+
+    public LogMessage getMessage(int i) {
+        return messages.get(i);
+    }
+
+    public int size() {
+        return messages.size();
+    }
+
+    public void addCallback(Callback callback) {
+        this.callback = callback;
+    }
 }
