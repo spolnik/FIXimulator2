@@ -8,8 +8,8 @@ import java.util.*;
 
 public class InMemoryRepository<TItem extends ItemWithId> implements RepositoryWithCallback<TItem> {
 
-    private final Map<String, TItem> items = new HashMap<>();
-    private NotifyApi callback = null;
+    protected final Map<String, TItem> items = new HashMap<>();
+    protected NotifyApi callback = null;
 
     @Override
     public void add(TItem item) {

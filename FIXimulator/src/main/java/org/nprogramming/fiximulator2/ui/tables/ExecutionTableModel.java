@@ -68,6 +68,7 @@ public class ExecutionTableModel extends AbstractTableModel implements NotifyApi
 
     @Override
     public Class getColumnClass(int column) {
+
         switch (column) {
             case LAST_QTY:
             case LAST_PX:

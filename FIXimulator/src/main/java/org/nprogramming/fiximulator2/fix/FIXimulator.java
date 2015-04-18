@@ -1,9 +1,9 @@
 package org.nprogramming.fiximulator2.fix;
 
 import org.nprogramming.fiximulator2.api.InstrumentsApi;
-import org.nprogramming.fiximulator2.api.OrdersApi;
 import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
 import org.nprogramming.fiximulator2.core.LogMessageSet;
+import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;
 import org.nprogramming.fiximulator2.domain.Execution;
 import org.nprogramming.fiximulator2.domain.IOI;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ public final class FIXimulator {
     private static LogMessageSet messages = null;
 
     public FIXimulator(
-            OrdersApi ordersApi,
+            OrderRepositoryWithCallback ordersRepository,
             RepositoryWithCallback<Execution> executionRepository,
             RepositoryWithCallback<IOI> ioiRepository,
             InstrumentsApi instrumentsApi
@@ -49,11 +49,11 @@ public final class FIXimulator {
             application = new FIXimulatorApplication(
                     settings,
                     messages,
-                    ordersApi,
+                    ordersRepository,
                     executionRepository,
                     ioiRepository,
                     instrumentsApi,
-                    new OrderFixTranslator(ordersApi)
+                    new OrderFixTranslator(ordersRepository)
             );
 
             MessageStoreFactory messageStoreFactory =

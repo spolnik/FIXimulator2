@@ -2,7 +2,7 @@ package org.nprogramming.fiximulator2.fix;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.nprogramming.fiximulator2.api.OrdersApi;
+import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;
 import org.nprogramming.fiximulator2.domain.Order;
 import quickfix.field.*;
 import quickfix.fix42.NewOrderSingle;
@@ -17,8 +17,8 @@ public class OrderFixTranslator_ForOrderSingle {
 
     @Before
     public void setUp() throws Exception {
-        OrdersApi ordersApi = mock(OrdersApi.class);
-        orderFixTranslator = new OrderFixTranslator(ordersApi);
+        orderFixTranslator =
+                new OrderFixTranslator(mock(OrderRepositoryWithCallback.class));
         newOrderSingle = newOrderSingle();
     }
 

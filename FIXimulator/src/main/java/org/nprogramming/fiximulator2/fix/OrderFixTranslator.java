@@ -1,6 +1,6 @@
 package org.nprogramming.fiximulator2.fix;
 
-import org.nprogramming.fiximulator2.api.OrdersApi;
+import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;
 import org.nprogramming.fiximulator2.domain.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,13 +9,13 @@ import quickfix.field.*;
 
 public final class OrderFixTranslator {
 
-    private final OrdersApi ordersApi;
+    private final OrderRepositoryWithCallback orderRepository;
 
     private final static Logger LOG = LoggerFactory.getLogger(OrderFixTranslator.class);
 
-    public OrderFixTranslator(OrdersApi ordersApi) {
+    public OrderFixTranslator(OrderRepositoryWithCallback orderRepository) {
 
-        this.ordersApi = ordersApi;
+        this.orderRepository = orderRepository;
     }
 
     public Order from(quickfix.fix42.OrderCancelReplaceRequest message) {
@@ -37,7 +37,7 @@ public final class OrderFixTranslator {
             LOG.debug("Field Not Found: {}", ex.field);
         }
 
-        Order oldOrder = ordersApi.getOrder(order.getOrigClientID());
+        Order oldOrder = orderRepository.get(order.getOrigClientID());
         if (oldOrder != null) {
             order.setOpen(oldOrder.getOpen());
             order.setExecuted(oldOrder.getExecuted());
@@ -132,7 +132,7 @@ public final class OrderFixTranslator {
             LOG.debug("Field Not Found: {}", ex.field);
         }
 
-        Order oldOrder = ordersApi.getOrder(order.getOrigClientID());
+        Order oldOrder = orderRepository.get(order.getOrigClientID());
         if (oldOrder != null) {
             order.setOpen(oldOrder.getOpen());
             order.setExecuted(oldOrder.getExecuted());

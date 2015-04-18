@@ -1,12 +1,14 @@
 package org.nprogramming.fiximulator2.ui.tables;
 
-import org.nprogramming.fiximulator2.api.Callback;
+import org.nprogramming.fiximulator2.api.NotifyApi;
+import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;
 import org.nprogramming.fiximulator2.domain.Order;
-import org.nprogramming.fiximulator2.api.OrdersApi;
 
 import javax.swing.table.AbstractTableModel;
+import java.util.HashMap;
+import java.util.Map;
 
-public class OrderTableModel extends AbstractTableModel implements Callback {
+public class OrderTableModel extends AbstractTableModel implements NotifyApi {
 
     private static final int ID = 0;
     private static final int STATUS = 1;
@@ -26,11 +28,31 @@ public class OrderTableModel extends AbstractTableModel implements Callback {
             {"ID", "Status", "Side", "Quantity", "Symbol", "Type", "Limit", "TIF",
                     "Executed", "Open", "AvgPx", "ClOrdID", "OrigClOrdID"};
 
-    private final OrdersApi ordersApi;
+    private final Map<Integer, Order> rowToOrder;
+    private final Map<String, Integer> idToRow;
 
-    public OrderTableModel(OrdersApi ordersApi) {
-        this.ordersApi = ordersApi;
-        ordersApi.addCallback(this);
+    private final OrderRepositoryWithCallback orderRepository;
+
+    public OrderTableModel(OrderRepositoryWithCallback orderRepository) {
+        this.orderRepository = orderRepository;
+
+        rowToOrder = new HashMap<>();
+        idToRow = new HashMap<>();
+
+        orderRepository.getAll().forEach(
+                this::addAndRefresh
+        );
+
+        orderRepository.addCallback(this);
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return false;
+    }
+
+    @Override
+    public void setValueAt(Object value, int rowIndex, int columnIndex) {
     }
 
     @Override
@@ -60,17 +82,17 @@ public class OrderTableModel extends AbstractTableModel implements Callback {
 
     @Override
     public int getRowCount() {
-        return ordersApi.size();
+        return rowToOrder.size();
     }
 
     @Override
     public Object getValueAt(int row, int column) {
 
-        Order order = ordersApi.getOrder(row);
+        Order order = get(row);
 
         switch (column) {
             case ID:
-                return order.getID();
+                return order.id();
             case STATUS:
                 return order.getStatus();
             case SIDE:
@@ -101,7 +123,41 @@ public class OrderTableModel extends AbstractTableModel implements Callback {
     }
 
     @Override
-    public void update() {
-        fireTableDataChanged();
+    public void added(String id) {
+        addAndRefresh(
+                orderRepository.get(id)
+        );
+    }
+
+    @Override
+    public void update(String id) {
+        replaceAndRefresh(
+                orderRepository.get(id)
+        );
+    }
+
+    public Order get(int row) {
+        return rowToOrder.get(row);
+    }
+
+    private void addAndRefresh(Order order) {
+        int row = rowToOrder.size();
+
+        rowToOrder.put(row, order);
+        idToRow.put(order.id(), row);
+
+        fireTableRowsInserted(row, row);
+    }
+
+    private void replaceAndRefresh(Order order) {
+
+        Integer row = idToRow.get(order.id());
+        if (row == null)
+            return;
+
+        rowToOrder.put(row, order);
+        idToRow.put(order.id(), row);
+
+        fireTableRowsUpdated(row, row);
     }
 }

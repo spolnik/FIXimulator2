@@ -18,7 +18,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
 
     private static FIXimulator fiximulator;
 
-    private final OrdersApi ordersApi;
+    private final OrderRepositoryWithCallback orderRepository;
     private final RepositoryWithCallback<Execution> executionRepository;
     private final RepositoryWithCallback<IOI> ioiRepository;
     private final InstrumentsApi instrumentsApi;
@@ -28,14 +28,15 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
     private ExecutionTableModel executionTableModel;
 
     private static Logger LOG = LoggerFactory.getLogger(FIXimulatorFrame.class);
+    private OrderTableModel orderTableModel;
 
     public FIXimulatorFrame(
-            OrdersApi ordersApi,
+            OrderRepositoryWithCallback orderRepository,
             RepositoryWithCallback<Execution> executionRepository,
             RepositoryWithCallback<IOI> ioiRepository,
             InstrumentsApi instrumentsApi
     ) {
-        this.ordersApi = ordersApi;
+        this.orderRepository = orderRepository;
         this.executionRepository = executionRepository;
         this.ioiRepository = ioiRepository;
         this.instrumentsApi = instrumentsApi;
@@ -907,7 +908,8 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
 
         //ioiTable.setDefaultRenderer(Object.class, new IOICellRenderer());
         orderTable.setAutoCreateRowSorter(true);
-        orderTable.setModel(new OrderTableModel(ordersApi));
+        orderTableModel = new OrderTableModel(orderRepository);
+        orderTable.setModel(orderTableModel);
         orderTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         //Set initial column widths
         for (int i = 0; i < orderTable.getColumnCount(); i++) {
@@ -1644,7 +1646,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         // if no rows are selected
         if (row != -1) {
             row = orderTable.convertRowIndexToModel(row);
-            Order order = ordersApi.getOrder(row);
+            Order order = orderTableModel.get(row);
             if (order.getStatus().equals("Received") ||
                     order.getStatus().equals("Pending New")) {
                 FIXimulator.getApplication().acknowledge(order);
@@ -1781,7 +1783,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         // if no rows are selected
         if (row != -1) {
             row = orderTable.convertRowIndexToModel(row);
-            Order order = ordersApi.getOrder(row);
+            Order order = orderTableModel.get(row);
             if (order.getStatus().equals("Received") ||
                     order.getStatus().equals("Pending New")) {
                 FIXimulator.getApplication().reject(order);
@@ -1798,7 +1800,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         // if no rows are selected
         if (row != -1) {
             row = orderTable.convertRowIndexToModel(row);
-            Order order = ordersApi.getOrder(row);
+            Order order = orderTableModel.get(row);
             FIXimulator.getApplication().cancel(order);
         }
     }//GEN-LAST:event_cancelButtonActionPerformed
@@ -1808,7 +1810,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         // if no rows are selected
         if (row != -1) {
             row = orderTable.convertRowIndexToModel(row);
-            Order order = ordersApi.getOrder(row);
+            Order order = orderTableModel.get(row);
             FIXimulator.getApplication().dfd(order);
         }
     }//GEN-LAST:event_dfdButtonActionPerformed
@@ -1818,7 +1820,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         // if no rows are selected
         if (row != -1) {
             row = orderTable.convertRowIndexToModel(row);
-            Order order = ordersApi.getOrder(row);
+            Order order = orderTableModel.get(row);
             if (order.isReceivedCancel()) {
                 FIXimulator.getApplication().pendingCancel(order);
             } else {
@@ -1833,7 +1835,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         // if no rows are selected
         if (row != -1) {
             row = orderTable.convertRowIndexToModel(row);
-            Order order = ordersApi.getOrder(row);
+            Order order = orderTableModel.get(row);
             FIXimulator.getApplication().cancel(order);
         }
     }//GEN-LAST:event_cancelAcceptButtonActionPerformed
@@ -1843,7 +1845,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         // if no rows are selected
         if (row != -1) {
             row = orderTable.convertRowIndexToModel(row);
-            Order order = ordersApi.getOrder(row);
+            Order order = orderTableModel.get(row);
             if (order.isReceivedReplace()) {
                 FIXimulator.getApplication().pendingReplace(order);
             } else {
@@ -1858,7 +1860,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         // if no rows are selected
         if (row != -1) {
             row = orderTable.convertRowIndexToModel(row);
-            Order order = ordersApi.getOrder(row);
+            Order order = orderTableModel.get(row);
             if (order.isReceivedReplace() ||
                     order.getStatus().equals("Pending Replace")) {
                 FIXimulator.getApplication().replace(order);
@@ -1874,7 +1876,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         // if no rows are selected
         if (row != -1) {
             row = orderTable.convertRowIndexToModel(row);
-            Order order = ordersApi.getOrder(row);
+            Order order = orderTableModel.get(row);
             if (order.isReceivedCancel() ||
                     order.getStatus().equals("Pending Cancel")) {
                 FIXimulator.getApplication().rejectCancelReplace(order, true);
@@ -1890,7 +1892,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         // if no rows are selected
         if (row != -1) {
             row = orderTable.convertRowIndexToModel(row);
-            Order order = ordersApi.getOrder(row);
+            Order order = orderTableModel.get(row);
             if (order.isReceivedReplace() ||
                     order.getStatus().equals("Pending Replace")) {
                 FIXimulator.getApplication().rejectCancelReplace(order, false);
@@ -1926,7 +1928,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         // if no rows are selected
         if (row != -1) {
             row = orderTable.convertRowIndexToModel(row);
-            Order order = ordersApi.getOrder(row);
+            Order order = orderTableModel.get(row);
             dialogExecution = new Execution(order);
             executionDialogShares.setValue(0);
             executionDialogPrice.setValue(0.0);
@@ -2016,7 +2018,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
-            OrdersApi ordersApi = new OrderRepository();
+            OrderRepositoryWithCallback orderRepository = new InMemoryOrderRepository();
             RepositoryWithCallback<Execution> executionRepository = new InMemoryRepository<>();
             RepositoryWithCallback<IOI> ioiRepository = new InMemoryRepository<>();
 
@@ -2024,9 +2026,9 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
 
             InstrumentsApi instrumentsApi = new InstrumentRepository(new File(instrumentsXml.getPath()));
 
-            fiximulator = new FIXimulator(ordersApi, executionRepository, ioiRepository, instrumentsApi);
+            fiximulator = new FIXimulator(orderRepository, executionRepository, ioiRepository, instrumentsApi);
             fiximulator.start();
-            new FIXimulatorFrame(ordersApi, executionRepository, ioiRepository, instrumentsApi).setVisible(true);
+            new FIXimulatorFrame(orderRepository, executionRepository, ioiRepository, instrumentsApi).setVisible(true);
         });
     }
 
