@@ -57,6 +57,8 @@ import org.nprogramming.fiximulator2.util.FIXMessageHelper;
 import org.nprogramming.fiximulator2.util.LogField;
 import org.nprogramming.fiximulator2.util.LogGroup;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import quickfix.DataDictionary;
 import quickfix.Field;
 import quickfix.FieldConvertError;
@@ -75,37 +77,25 @@ public class LogMessage implements Comparable<Object> {
     public static final char DEFAULT_DELIMETER = '|';
     public static final char SOH_DELIMETER = (char) 0x01;
 
-    public static final String INCOMING = "incoming";
-    public static final String MESSAGE_TYPE_NAME = "messageTypeName";
-    public static final String SENDING_TIME = "sendingTime";
-    public static final String RAW_MESSAGE = "rawMessage";
-
-    private SessionID sessionId;
     private boolean incoming;
     private String rawMessage;
     private String messageTypeName;
     private Date sendingTime;
     private DataDictionary dictionary;
-    //private List<ValidationError> validationErrors;
-    private boolean isValid;
     private int messageIndex;
+
+    private static final Logger LOG = LoggerFactory.getLogger(LogMessage.class);
 
     public LogMessage(int messageIndex, boolean incoming, SessionID sessionId,
             String rawMessage, DataDictionary dictionary) {
         this.messageIndex = messageIndex;
 
-        isValid = true;
         this.dictionary = dictionary;
         this.rawMessage = rawMessage.replace(SOH_DELIMETER, DEFAULT_DELIMETER);
-        this.sessionId = sessionId;
         this.incoming = incoming;
 
         sendingTime = lookupSendingTime();
         messageTypeName = lookupMessageTypeName();
-    }
-
-    public SessionID getSessionId() {
-        return sessionId;
     }
 
     public String getRawMessage() {
@@ -120,28 +110,13 @@ public class LogMessage implements Comparable<Object> {
     	return messageIndex;
     }
 
-    /**
-     * A message is valid if all required fields are found in the message and 
-     * the checksum value is correct. If true then the 
-     * {@link #getValidationErrorMessages()} has one or more 
-     * <code>Exception</code>s explaining the problems with the message
-     * as reported by QuickFIX/J.
-     *
-     * @return true if the message is valid.
-     */
-    public boolean isValid() {
-        return isValid;
-    }
-
     public boolean isIncoming() {
         return incoming;
     }
 
     /**
      * The sending time of the message. This value may be null if the
-     * {@link SendingTime} field is not found in the message. If the value is 
-     * null then the {@link #getValidationErrorMessages()} contains an 
-     * <code>Exception</code> describing the pro£blem.
+     * SendingTime field is not found in the message.
      * @return the sending time of the message or null if the message was 
      * missing the sending time.
      */
@@ -164,9 +139,7 @@ public class LogMessage implements Comparable<Object> {
      * objects. This is done so that memory utilization is kept low. The caller 
      * should clear the returned list when it is finished with the values. The 
      * typical caller would clear the list when a new message is displayed. 
-     * In fact, this is exactly what the
-     * {@link org.opentradingsolutions.log4fix.ui.messages.ViewModel} does.
-     * @return locally created <tt>List</tt> of <tt>LogField</tt> objects; 
+     * @return locally created <tt>List</tt> of <tt>LogField</tt> objects;
      * not a cached value.
      */
     public List<LogField> getLogFields() {
@@ -174,7 +147,7 @@ public class LogMessage implements Comparable<Object> {
 
         Message message = createMessage();
 
-        List<LogField> logFields = new ArrayList<LogField>();
+        List<LogField> logFields = new ArrayList<>();
 
         Map<Integer, Field> allFields = getAllFields(message);
 
@@ -194,12 +167,28 @@ public class LogMessage implements Comparable<Object> {
     }
 
     public int compareTo(Object o) {
+
         LogMessage rhs = (LogMessage) o;
         int rhsMessageIndex = rhs.messageIndex;
         return (messageIndex < rhsMessageIndex ? -1 :
                 (messageIndex == rhsMessageIndex ? 0 : 1));
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LogMessage that = (LogMessage) o;
+
+        return messageIndex == that.messageIndex;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return messageIndex;
+    }
 
     @Override
     public String toString() {
@@ -238,6 +227,7 @@ public class LogMessage implements Comparable<Object> {
 
                     }
                 } catch (FieldNotFound fieldNotFound) {
+                    LOG.error("Error: ", fieldNotFound);
                 }
 
                 logField.addGroup(logGroup);
@@ -253,9 +243,12 @@ public class LogMessage implements Comparable<Object> {
         try {
             return new Message(sohMessage, dictionary, true);
         } catch (InvalidMessage invalidMessage) {
+            LOG.error("Parent Error: ", invalidMessage);
+
             try {
                 return new Message(sohMessage, dictionary, false);
             } catch (InvalidMessage ugh) {
+                LOG.error("Error: ", ugh);
                 return null;
             }
         }
@@ -263,7 +256,7 @@ public class LogMessage implements Comparable<Object> {
 
     @SuppressWarnings("unchecked")
 	private Map<Integer, Field> getAllFields(Message genericMessage) {
-        Map<Integer, Field> allFields = new LinkedHashMap<Integer, Field>();
+        Map<Integer, Field> allFields = new LinkedHashMap<>();
 
         Iterator iterator = genericMessage.getHeader().iterator();
         while (iterator.hasNext()) {
@@ -293,7 +286,6 @@ public class LogMessage implements Comparable<Object> {
         String messageTypeValue = FIXMessageHelper.getMessageType(rawMessage,
                 DEFAULT_DELIMETER);
         if (messageTypeValue == null) {
-            isValid = false;
             return null;
         }
         return dictionary.getValueName(MsgType.FIELD, messageTypeValue);
@@ -304,10 +296,11 @@ public class LogMessage implements Comparable<Object> {
             Date date = FIXMessageHelper.getSendingTime(
                     rawMessage, DEFAULT_DELIMETER);
             if (date == null) {
-                return date;
+                return null;
             }
             return date;
         } catch (FieldConvertError fieldConvertError) {
+            LOG.error("Error: ", fieldConvertError);
             return null;
         }
     }

@@ -6,6 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import quickfix.FieldNotFound;
 import quickfix.field.*;
+import quickfix.fix42.NewOrderSingle;
+import quickfix.fix42.OrderCancelReplaceRequest;
+import quickfix.fix42.OrderCancelRequest;
 
 import java.util.concurrent.Callable;
 
@@ -13,14 +16,14 @@ public final class OrderFixTranslator {
 
     private final OrderRepositoryWithCallback orderRepository;
 
-    private final static Logger LOG = LoggerFactory.getLogger(OrderFixTranslator.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OrderFixTranslator.class);
 
     public OrderFixTranslator(OrderRepositoryWithCallback orderRepository) {
 
         this.orderRepository = orderRepository;
     }
 
-    public Order from(quickfix.fix42.OrderCancelReplaceRequest message) {
+    public Order from(OrderCancelReplaceRequest message) {
         Order order = new Order();
 
         logIfException(() -> {
@@ -105,7 +108,7 @@ public final class OrderFixTranslator {
         return order;
     }
 
-    public Order from(quickfix.fix42.OrderCancelRequest message) {
+    public Order from(OrderCancelRequest message) {
         Order order = new Order();
 
         logIfException(() -> {
@@ -172,7 +175,7 @@ public final class OrderFixTranslator {
         return order;
     }
 
-    public Order from(quickfix.fix42.NewOrderSingle message) {
+    public Order from(NewOrderSingle message) {
 
         Order order = new Order();
 
@@ -248,6 +251,7 @@ public final class OrderFixTranslator {
             callable.call();
         } catch (FieldNotFound ex) {
             LOG.error("Field Not Found: {}", ex.field);
+            LOG.error("Error: ", ex);
         } catch (Exception e) {
             LOG.error("Error: ", e);
         }

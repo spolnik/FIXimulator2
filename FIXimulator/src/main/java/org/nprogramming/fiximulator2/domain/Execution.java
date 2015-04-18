@@ -1,6 +1,5 @@
 package org.nprogramming.fiximulator2.domain;
 
-import org.nprogramming.fiximulator2.api.ItemWithId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

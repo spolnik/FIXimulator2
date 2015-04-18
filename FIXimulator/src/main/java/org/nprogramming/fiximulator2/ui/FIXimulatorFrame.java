@@ -188,7 +188,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         JPanel appSettingsPanel = new JPanel();
         JLabel pricePrecisionLabel = new JLabel();
         JLabel cachedObjectsLabel = new JLabel();
-        cachedObjectsCombo = new JComboBox();
+        JComboBox cachedObjectsCombo = new JComboBox();
         pricePrecisionCombo = new JComboBox();
         JSeparator oboCompIDSeparator = new JSeparator();
         sendOnBehalfOfCompID = new JCheckBox();
@@ -200,7 +200,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         JButton showSettingsButton = new JButton();
         JMenuBar mainMenuBar = new JMenuBar();
         JMenu fileMenu = new JMenu();
-        JMenuItem exitMenuItem = new JMenuItem();
         JMenu instrumentMenu = new JMenu();
         JMenuItem loadInstrumentMenuItem = new JMenuItem();
         JMenu helpMenu = new JMenu();
@@ -1443,10 +1442,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
 
         fileMenu.setText("File");
 
-        exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(FIXimulatorFrame.this::exitMenuItemActionPerformed);
-        fileMenu.add(exitMenuItem);
-
         mainMenuBar.add(fileMenu);
 
         instrumentMenu.setText("Instruments");
@@ -1720,10 +1715,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
     private void saveSettingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveSettingsButtonActionPerformed
         FIXimulator.getApplication().saveSettings();
     }//GEN-LAST:event_saveSettingsButtonActionPerformed
-
-    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_exitMenuItemActionPerformed
 
     @SuppressWarnings("static-access")
     private void loadInstrumentMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadInstrumentMenuItemActionPerformed
@@ -2029,7 +2020,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
     private JCheckBox autoPendingCancel;
     private JCheckBox autoPendingReplace;
     private JCheckBox autoReplace;
-    private JComboBox cachedObjectsCombo;
     private JComboBox cannedQueryCombo;
     private JDialog executionDialog;
     private JFormattedTextField executionDialogPrice;

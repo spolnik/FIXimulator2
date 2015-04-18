@@ -713,7 +713,7 @@ public class FIXimulatorApplication extends MessageCracker
                         random.nextDouble() * 100 * factor) / factor;
             }
 
-            if (fillQty == 0)
+            if (Double.doubleToRawLongBits(fillQty) == 0)
                 fillQty = 1;
 
             for (int i = 0; i < partials; i++) {

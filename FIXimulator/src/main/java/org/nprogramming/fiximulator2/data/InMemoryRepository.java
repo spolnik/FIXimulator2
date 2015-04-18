@@ -1,6 +1,6 @@
 package org.nprogramming.fiximulator2.data;
 
-import org.nprogramming.fiximulator2.api.ItemWithId;
+import org.nprogramming.fiximulator2.domain.ItemWithId;
 import org.nprogramming.fiximulator2.api.NotifyApi;
 import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
 

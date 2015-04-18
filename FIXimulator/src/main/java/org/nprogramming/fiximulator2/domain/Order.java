@@ -1,6 +1,5 @@
 package org.nprogramming.fiximulator2.domain;
 
-import org.nprogramming.fiximulator2.api.ItemWithId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +15,7 @@ public class Order implements Cloneable, ItemWithId {
     private char orderType;
     private char timeInForce = '0';     // Day order if omitted
     private char status;
-    private String ID = null;
+    private String id = null;
     private String clientOrderID = null;
     private String origClientID = null;
     private String symbol = null;
@@ -30,6 +29,10 @@ public class Order implements Cloneable, ItemWithId {
 
     private static final Logger LOG = LoggerFactory.getLogger(Order.class);
 
+    public Order () {
+        id = generateID();
+    }
+
     @Override
     public Order clone() {
         try {
@@ -42,10 +45,6 @@ public class Order implements Cloneable, ItemWithId {
             return null;
         }
     }
-    
-    public Order () {
-        ID = generateID();
-    }
 
     public String generateID() {
         return "O" + UUID.randomUUID();
@@ -53,11 +52,11 @@ public class Order implements Cloneable, ItemWithId {
 
     @Override
     public String id() {
-        return ID;
+        return id;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setID(String id) {
+        this.id = id;
     }
 
     public String getClientOrderID() {
@@ -117,16 +116,29 @@ public class Order implements Cloneable, ItemWithId {
     }
 
     public String getSide() {
-        if (side == '1') return "Buy";
-        if (side == '2') return "Sell";
-        if (side == '3') return "Buy minus";
-        if (side == '4') return "Sell plus";
-        if (side == '5') return "Sell short";
-        if (side == '6') return "Sell short exempt";
-        if (side == '7') return "Undisclosed";
-        if (side == '8') return "Cross";
-        if (side == '9') return "Cross short";
-        return "<UNKNOWN>";
+
+        switch (side) {
+            case '1':
+                return "Buy";
+            case '2':
+                return "Sell";
+            case '3':
+                return "Buy minus";
+            case '4':
+                return "Sell plus";
+            case '5':
+                return "Sell short";
+            case '6':
+                return "Sell short exempt";
+            case '7':
+                return "Undisclosed";
+            case '8':
+                return "Cross";
+            case '9':
+                return "Cross short";
+            default:
+                return "<UNKNOWN>";
+        }
     }
     
     public char getFIXSide() {
@@ -142,24 +154,48 @@ public class Order implements Cloneable, ItemWithId {
         if (receivedCancel) return "Cancel Received";
         if (receivedReplace) return "Replace Received";
         if (rejectedCancelReplace) return "Cancel/Replace Rejected";
-        if (status == '0') return "New";
-        if (status == '1') return "Partially filled";
-        if (status == '2') return "Filled";
-        if (status == '3') return "Done for day";
-        if (status == '4') return "Canceled";
-        if (status == '5') return "Replaced";
-        if (status == '6') return "Pending Cancel";
-        if (status == '7') return "Stopped";
-        if (status == '8') return "Rejected";
-        if (status == '9') return "Suspended";
-        if (status == 'A') return "Pending New";
-        if (status == 'B') return "Calculated";
-        if (status == 'C') return "Expired";
-        if (status == 'D') return "Accepted for bidding";
-        if (status == 'E') return "Pending Replace";
-        return "<UNKNOWN>";
-     }
-    
+
+        return geStatusAsString();
+    }
+
+    private String geStatusAsString() {
+
+        switch (status) {
+            case '0':
+                return "New";
+            case '1':
+                return "Partially filled";
+            case '2':
+                return "Filled";
+            case '3':
+                return "Done for day";
+            case '4':
+                return "Canceled";
+            case '5':
+                return "Replaced";
+            case '6':
+                return "Pending Cancel";
+            case '7':
+                return "Stopped";
+            case '8':
+                return "Rejected";
+            case '9':
+                return "Suspended";
+            case 'A':
+                return "Pending New";
+            case 'B':
+                return "Calculated";
+            case 'C':
+                return "Expired";
+            case 'D':
+                return "Accepted for bidding";
+            case 'E':
+                return "Pending Replace";
+            default:
+                return "<UNKNOWN>";
+        }
+    }
+
     public char getFIXStatus() {
         return status;
     }
@@ -177,14 +213,24 @@ public class Order implements Cloneable, ItemWithId {
     }
 
     public String getTimeInForce() {
-        if (timeInForce == '0') return "Day";
-        if (timeInForce == '1') return "GTC";
-        if (timeInForce == '2') return "OPG";
-        if (timeInForce == '3') return "IOC";
-        if (timeInForce == '4') return "FOK";
-        if (timeInForce == '5') return "GTX";
-        if (timeInForce == '6') return "GTD";
-        return "<UNKNOWN>";
+        switch (timeInForce) {
+            case '0':
+                return "Day";
+            case '1':
+                return "GTC";
+            case '2':
+                return "OPG";
+            case '3':
+                return "IOC";
+            case '4':
+                return "FOK";
+            case '5':
+                return "GTX";
+            case '6':
+                return "GTD";
+            default:
+                return "<UNKNOWN>";
+        }
     }
     
     public char getFIXTimeInForce() {
@@ -212,26 +258,48 @@ public class Order implements Cloneable, ItemWithId {
     }
 
     public String getOrderType() {
-        if (orderType == '1') return "Market";
-        if (orderType == '2') return "Limit";
-        if (orderType == '3') return "Stop";
-        if (orderType == '4') return "Stop limit";
-        if (orderType == '5') return "Market on close";
-        if (orderType == '6') return "With or without";
-        if (orderType == '7') return "Limit or better";
-        if (orderType == '8') return "Limit with or without";
-        if (orderType == '9') return "On basis";
-        if (orderType == 'A') return "On close";
-        if (orderType == 'B') return "Limit on close";
-        if (orderType == 'C') return "Forex - Market";
-        if (orderType == 'D') return "Previously quoted";
-        if (orderType == 'E') return "Previously indicated";
-        if (orderType == 'F') return "Forex - Limit";
-        if (orderType == 'G') return "Forex - Swap";
-        if (orderType == 'H') return "Forex - Previously Quoted";
-        if (orderType == 'I') return "Funari";
-        if (orderType == 'P') return "Pegged";
-        return "<UNKNOWN>";
+        switch (orderType) {
+            case '1':
+                return "Market";
+            case '2':
+                return "Limit";
+            case '3':
+                return "Stop";
+            case '4':
+                return "Stop limit";
+            case '5':
+                return "Market on close";
+            case '6':
+                return "With or without";
+            case '7':
+                return "Limit or better";
+            case '8':
+                return "Limit with or without";
+            case '9':
+                return "On basis";
+            case 'A':
+                return "On close";
+            case 'B':
+                return "Limit on close";
+            case 'C':
+                return "Forex - Market";
+            case 'D':
+                return "Previously quoted";
+            case 'E':
+                return "Previously indicated";
+            case 'F':
+                return "Forex - Limit";
+            case 'G':
+                return "Forex - Swap";
+            case 'H':
+                return "Forex - Previously Quoted";
+            case 'I':
+                return "Funari";
+            case 'P':
+                return "Pegged";
+            default:
+                return "<UNKNOWN>";
+        }
     }
     
     public char getFIXOrderType() {

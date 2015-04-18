@@ -70,8 +70,8 @@ class QueryTableModel extends AbstractTableModel {
             connection = DriverManager.getConnection(url, user, pass);
         }
         catch(Exception e) {
-            System.out.println("Could not initialize the database.");
-            e.printStackTrace();
+            LOG.error("Could not initialize the database.");
+            LOG.error("Error: ", e);
         }
         
         try {

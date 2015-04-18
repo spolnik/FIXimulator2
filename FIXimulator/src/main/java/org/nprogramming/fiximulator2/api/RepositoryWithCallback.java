@@ -1,5 +1,7 @@
 package org.nprogramming.fiximulator2.api;
 
+import org.nprogramming.fiximulator2.domain.ItemWithId;
+
 import java.util.List;
 
 public interface RepositoryWithCallback<TItem extends ItemWithId> {
