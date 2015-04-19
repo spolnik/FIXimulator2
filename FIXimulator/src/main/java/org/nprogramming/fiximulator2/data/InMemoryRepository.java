@@ -36,7 +36,7 @@ public class InMemoryRepository<TItem extends ItemWithId> implements RepositoryW
 
     @Override
     public void update(String id) {
-        callback.update(id);
+        callback.updated(id);
     }
 
     @Override

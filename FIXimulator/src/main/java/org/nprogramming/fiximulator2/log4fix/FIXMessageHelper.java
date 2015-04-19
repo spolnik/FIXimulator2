@@ -9,7 +9,7 @@
  * 
  */
 
-package org.nprogramming.fiximulator2.util;
+package org.nprogramming.fiximulator2.log4fix;
 /*
  * The Log4FIX Software License
  * Copyright (c) 2006 - 2007 opentradingsolutions.org  All rights reserved.

@@ -9,7 +9,7 @@
  * 
  */
 
-package org.nprogramming.fiximulator2.util;
+package org.nprogramming.fiximulator2.log4fix;
 
 /*
  * The Log4FIX Software License
@@ -163,7 +163,7 @@ public class LogField {
 
     public void addGroup(LogGroup group) {
         if (groups == null) {
-            groups = new ArrayList<LogGroup>();
+            groups = new ArrayList<>();
         }
 
         groups.add(group);

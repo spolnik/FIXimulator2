@@ -46,28 +46,12 @@ package org.nprogramming.fiximulator2.log4fix;
  * SUCH DAMAGE.
  */
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.nprogramming.fiximulator2.util.FIXMessageHelper;
-import org.nprogramming.fiximulator2.util.LogField;
-import org.nprogramming.fiximulator2.util.LogGroup;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import quickfix.DataDictionary;
-import quickfix.Field;
-import quickfix.FieldConvertError;
-import quickfix.FieldNotFound;
-import quickfix.Group;
-import quickfix.InvalidMessage;
-import quickfix.Message;
-import quickfix.SessionID;
+import quickfix.*;
 import quickfix.field.MsgType;
+
+import java.util.*;
 
 /**
  * @author Brian M. Coyner
@@ -166,6 +150,7 @@ public class LogMessage implements Comparable<Object> {
         return logFields;
     }
 
+    @Override
     public int compareTo(Object o) {
 
         LogMessage rhs = (LogMessage) o;

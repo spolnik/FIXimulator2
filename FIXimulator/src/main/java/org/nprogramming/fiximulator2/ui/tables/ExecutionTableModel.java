@@ -133,7 +133,7 @@ public class ExecutionTableModel extends AbstractTableModel implements NotifyApi
     }
 
     @Override
-    public void update(String id) {
+    public void updated(String id) {
         replaceAndRefresh(
                 executionsRepository.get(id)
         );

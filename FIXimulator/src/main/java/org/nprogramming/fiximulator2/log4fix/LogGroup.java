@@ -9,7 +9,7 @@
  * 
  */
 
-package org.nprogramming.fiximulator2.util;
+package org.nprogramming.fiximulator2.log4fix;
 /*
  * The Log4FIX Software License
  * Copyright (c) 2006 - 2007 opentradingsolutions.org  All rights reserved.
@@ -62,7 +62,7 @@ public class LogGroup extends LogField {
     public LogGroup(MsgType messageType, Field field,
             DataDictionary dictionary) {
         super(messageType, field, dictionary);
-        fields = new ArrayList<LogField>();
+        fields = new ArrayList<>();
     }
 
     public void addField(LogField logField) {

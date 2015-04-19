@@ -2,7 +2,7 @@ package org.nprogramming.fiximulator2.ui.tables;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.nprogramming.fiximulator2.api.Callback;
+import org.nprogramming.fiximulator2.log4fix.Callback;
 import org.nprogramming.fiximulator2.fix.FIXimulator;
 import org.nprogramming.fiximulator2.log4fix.LogMessage;
 import org.nprogramming.fiximulator2.log4fix.LogMessageSet;
@@ -37,7 +37,9 @@ public class MessageTableModel extends AbstractTableModel implements Callback {
     
     @Override
     public Class getColumnClass(int column) {
-        if (column == 0) return Integer.class;
+        if (column == ID)
+            return Integer.class;
+
         return String.class;
     }
 

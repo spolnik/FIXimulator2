@@ -167,8 +167,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         JButton saveSettingsButton = new JButton();
         JPanel appSettingsPanel = new JPanel();
         JLabel pricePrecisionLabel = new JLabel();
-        JLabel cachedObjectsLabel = new JLabel();
-        JComboBox cachedObjectsCombo = new JComboBox();
         pricePrecisionCombo = new JComboBox();
         JSeparator oboCompIDSeparator = new JSeparator();
         sendOnBehalfOfCompID = new JCheckBox();
@@ -1202,10 +1200,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
 
         pricePrecisionLabel.setText("Price precision:");
 
-        cachedObjectsLabel.setText("Number of cached objects:");
-
-        cachedObjectsCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"50", "100", "200"}));
-
         pricePrecisionCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}));
         try {
             Long settingValue = FIXimulator.getApplication().getSettings()
@@ -1285,18 +1279,14 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
                                         .addComponent(sendOnBehalfOfSubID)
                                         .addGroup(appSettingsPanelLayout.createSequentialGroup()
                                                 .addGroup(appSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(cachedObjectsLabel)
                                                         .addComponent(pricePrecisionLabel))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(appSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(cachedObjectsCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addComponent(pricePrecisionCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addComponent(oboCompIDSeparator, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
                                         .addComponent(sendOnBehalfOfCompID))
                                 .addContainerGap())
         );
-
-        appSettingsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, cachedObjectsCombo, pricePrecisionCombo);
 
         appSettingsPanelLayout.setVerticalGroup(
                 appSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1305,10 +1295,6 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
                                 .addGroup(appSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(pricePrecisionLabel)
                                         .addComponent(pricePrecisionCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(appSettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(cachedObjectsLabel)
-                                        .addComponent(cachedObjectsCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addComponent(oboCompIDSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

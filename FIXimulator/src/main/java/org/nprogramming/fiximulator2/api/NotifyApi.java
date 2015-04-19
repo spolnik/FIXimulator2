@@ -4,5 +4,5 @@ public interface NotifyApi {
 
     void added(String id);
 
-    void update(String id);
+    void updated(String id);
 }

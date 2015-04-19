@@ -10,7 +10,7 @@ import javax.swing.table.AbstractTableModel;
 import org.nprogramming.fiximulator2.fix.FIXimulator;
 import org.nprogramming.fiximulator2.log4fix.LogMessage;
 import org.nprogramming.fiximulator2.log4fix.LogMessageSet;
-import org.nprogramming.fiximulator2.util.LogField;
+import org.nprogramming.fiximulator2.log4fix.LogField;
 
 public class MessageDetailTableModel extends AbstractTableModel 
         implements ListSelectionListener {

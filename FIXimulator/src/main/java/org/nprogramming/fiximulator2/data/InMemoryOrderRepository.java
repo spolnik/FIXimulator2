@@ -18,7 +18,7 @@ public final class InMemoryOrderRepository
 
         ordersToFill.add(orderToFill);
 
-        callback.update(orderToFill.id());
+        callback.updated(orderToFill.id());
     }
 
     @Override
