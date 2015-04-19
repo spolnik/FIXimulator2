@@ -31,6 +31,11 @@ public class InstrumentsApplication extends Application<InstrumentsConfiguration
         final InstrumentResource instrumentResource = new InstrumentResource(instrumentsApi);
         final InstrumentsResource instrumentsResource = new InstrumentsResource(instrumentsApi);
 
+        final InstrumentsFileHealthCheck healthCheck =
+                new InstrumentsFileHealthCheck(configuration.getDefaultInputFilePath());
+
+        environment.healthChecks().register("inputFilePath", healthCheck);
+
         environment.jersey().register(instrumentResource);
         environment.jersey().register(instrumentsResource);
     }
