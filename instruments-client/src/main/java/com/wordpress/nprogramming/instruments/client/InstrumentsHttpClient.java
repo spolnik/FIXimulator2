@@ -2,6 +2,8 @@ package com.wordpress.nprogramming.instruments.client;
 
 import com.wordpress.nprogramming.instruments.api.Instrument;
 import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -14,6 +16,8 @@ import java.util.stream.Stream;
 public class InstrumentsHttpClient implements InstrumentsApi {
 
     private final Client client;
+
+    private static final Logger LOG = LoggerFactory.getLogger(InstrumentsHttpClient.class);
 
     public InstrumentsHttpClient() {
         client = ClientBuilder.newClient();
@@ -33,7 +37,10 @@ public class InstrumentsHttpClient implements InstrumentsApi {
         WebTarget target = client.target("http://localhost:8080")
                 .path("api/instruments");
 
-        return target.request(MediaType.APPLICATION_JSON).get(new GenericType<List<Instrument>>(){});
+        return target.request(MediaType.APPLICATION_JSON).get(
+                new GenericType<List<Instrument>>(){
+                }
+        );
     }
 
     public static void main(String[] args) {
@@ -41,9 +48,11 @@ public class InstrumentsHttpClient implements InstrumentsApi {
 
         Instrument instrument = httpClient.getInstrument("IBM");
 
-        System.out.println(instrument);
+        LOG.info("getInstrument('IBM')");
+        LOG.info(instrument.toString());
 
+        LOG.info("getInstruments()");
         Stream<Instrument> instruments = httpClient.getAll().stream().limit(10);
-        instruments.forEach(System.out::println);
+        instruments.forEach(x -> LOG.info(x.toString()));
     }
 }

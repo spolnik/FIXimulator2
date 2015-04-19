@@ -5,13 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.util.Arrays;
+
 public class Instrument {
 
     @NotEmpty
     private final String ticker;
-    @Length(min = 9, max = 9)
+    @Length(min = 9, max = 9, message = "length must be 9")
     private final String cusip;
-    @Length(min = 7, max = 7)
+    @Length(min = 7, max = 7, message = "length must be 7")
     private final String sedol;
     @NotEmpty
     private final String name;
@@ -67,6 +69,16 @@ public class Instrument {
         return price;
     }
 
+    public boolean canBeIdentifiedBy(String id) {
+        return Arrays.asList(
+                getName(),
+                getTicker(),
+                getCusip(),
+                getRIC(),
+                getSedol()
+        ).contains(id);
+    }
+
     @Override
     public String toString() {
         return "Instrument{" +
@@ -77,5 +89,9 @@ public class Instrument {
                 ", ric='" + ric + '\'' +
                 ", price='" + price + '\'' +
                 '}';
+    }
+
+    public static Instrument empty() {
+        return new Instrument("", "", "", "", "", "");
     }
 }

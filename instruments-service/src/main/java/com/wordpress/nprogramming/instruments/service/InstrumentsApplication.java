@@ -3,7 +3,6 @@ package com.wordpress.nprogramming.instruments.service;
 import com.google.common.base.Preconditions;
 import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
 import io.dropwizard.Application;
-import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
 import java.io.File;
@@ -18,11 +17,6 @@ public class InstrumentsApplication extends Application<InstrumentsConfiguration
     @Override
     public String getName() {
         return "instruments-service";
-    }
-
-    @Override
-    public void initialize(Bootstrap<InstrumentsConfiguration> bootstrap) {
-        super.initialize(bootstrap);
     }
 
     @Override

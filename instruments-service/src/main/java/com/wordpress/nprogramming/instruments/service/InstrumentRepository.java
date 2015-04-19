@@ -13,9 +13,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public final class InstrumentRepository extends DefaultHandler implements InstrumentsApi {
 
@@ -38,7 +36,8 @@ public final class InstrumentRepository extends DefaultHandler implements Instru
     @Override
     public void startElement(String namespace, String localName,
                              String qualifiedName, Attributes attributes) {
-        if (qualifiedName.equals("instrument")) {
+
+        if (isAnInstrument(qualifiedName)) {
 
             String ticker = attributes.getValue("ticker");
             String cusip = attributes.getValue("cusip");
@@ -46,31 +45,29 @@ public final class InstrumentRepository extends DefaultHandler implements Instru
             String name = attributes.getValue("name");
             String ric = attributes.getValue("ric");
             String price = attributes.getValue("price");
-            Instrument instrument =
-                    new Instrument(ticker, sedol, name, ric, cusip, price);
 
-            instruments.add(instrument);
+            instruments.add(
+                    new Instrument(ticker, sedol, name, ric, cusip, price)
+            );
         }
     }
 
     @Override
     public Instrument getInstrument(String identifier) {
 
-        for (Instrument instrument : instruments) {
-            if (instrument.getTicker().equals(identifier) ||
-                    instrument.getSedol().equals(identifier) ||
-                    instrument.getCusip().equals(identifier) ||
-                    instrument.getName().equals(identifier) ||
-                    instrument.getRIC().equals(identifier))
-                return instrument;
-        }
-
-        return null;
+        return instruments.stream()
+                .filter(x -> x.canBeIdentifiedBy(identifier))
+                .findFirst()
+                .orElse(Instrument.empty());
     }
 
     @Override
     public List<Instrument> getAll() {
         return Collections.unmodifiableList(instruments);
+    }
+
+    private boolean isAnInstrument(String qualifiedName) {
+        return "instrument".equals(qualifiedName);
     }
 }
 
