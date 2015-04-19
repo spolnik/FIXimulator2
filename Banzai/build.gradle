@@ -5,6 +5,5 @@ mainClassName = 'quickfix.banzai.Banzai'
 dependencies {
     runtime libs.mina
 
-    compile libs.quickfixj_old,
-            libs.quickfixj.fix42
+    compile libs.quickfixj
 }

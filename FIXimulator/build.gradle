@@ -8,7 +8,6 @@ dependencies {
 
     compile project(':instruments-api'),
             project(':instruments-client'),
-            libs.quickfixj_old,
-            libs.quickfixj.fix42,
+            libs.quickfixj,
             libs.jdesktop
 }

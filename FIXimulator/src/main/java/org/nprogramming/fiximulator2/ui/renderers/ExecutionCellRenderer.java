@@ -13,11 +13,13 @@ public class ExecutionCellRenderer extends DefaultTableCellRenderer {
             JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column
     ) {
 
+        int myRow = table.convertRowIndexToModel(row);
+
         Component component = super.getTableCellRendererComponent(table, value,
-                isSelected, hasFocus, row, column);
+                isSelected, hasFocus, myRow, column);
 
         Boolean dontKnowTrade = (Boolean) table.getModel()
-                .getValueAt(row, DKD);
+                .getValueAt(myRow, DKD);
 
         if (dontKnowTrade) {
             component.setForeground(Color.RED);

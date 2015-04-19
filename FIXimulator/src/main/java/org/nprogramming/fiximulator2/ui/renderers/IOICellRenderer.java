@@ -11,11 +11,13 @@ public class IOICellRenderer  extends DefaultTableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, 
             boolean isSelected, boolean hasFocus, int row, int column) {
-        
+
+        int myRow = table.convertRowIndexToModel(row);
+
         Component component = super.getTableCellRendererComponent(table, value,
-                                          isSelected, hasFocus, row, column);
+                                          isSelected, hasFocus, myRow, column);
         String type = (String) table.getModel()
-                .getValueAt(row, TYPE);
+                .getValueAt(myRow, TYPE);
 
         if ("NEW".equals(type)) {
             component.setForeground(Color.BLACK);
