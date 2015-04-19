@@ -1,55 +1,59 @@
 package com.wordpress.nprogramming.instruments.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Preconditions;
 import com.wordpress.nprogramming.instruments.api.Instrument;
 import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.Attributes;
-import org.xml.sax.helpers.DefaultHandler;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.*;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public final class InstrumentRepository extends DefaultHandler implements InstrumentsApi {
-
-    private final List<Instrument> instruments = new ArrayList<>();
+public final class InstrumentRepository implements InstrumentsApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(InstrumentRepository.class);
 
-    public InstrumentRepository(File file) {
+    private final List<Instrument> instruments = new ArrayList<>();
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    public InstrumentRepository(InstrumentsConfiguration configuration) {
+
+        URL instrumentsJson =
+                InstrumentRepository.class.getClassLoader().getResource(
+                        configuration.getDefaultInputFilePath()
+                );
+
+        Preconditions.checkNotNull(
+                instrumentsJson,
+                configuration.getDefaultInputFilePath() + " does not exist."
+        );
+
+        loadInstruments(instrumentsJson);
+    }
+
+    private void loadInstruments(URL instrumentsJson) {
         try {
-            InputStream input =
-                    new BufferedInputStream(new FileInputStream(file));
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser saxParser = factory.newSAXParser();
-            saxParser.parse(input, this);
+            File file = new File(
+                    instrumentsJson.getPath()
+            );
+
+            instruments(file).forEach(
+                    this.instruments::add
+            );
         } catch (Exception e) {
             LOG.error("Error reading/parsing instrument file.", e);
         }
     }
 
-    @Override
-    public void startElement(String namespace, String localName,
-                             String qualifiedName, Attributes attributes) {
-
-        if (isAnInstrument(qualifiedName)) {
-
-            String ticker = attributes.getValue("ticker");
-            String cusip = attributes.getValue("cusip");
-            String sedol = attributes.getValue("sedol");
-            String name = attributes.getValue("name");
-            String ric = attributes.getValue("ric");
-            String price = attributes.getValue("price");
-
-            instruments.add(
-                    new Instrument(ticker, sedol, name, ric, cusip, price)
-            );
-        }
+    private List<Instrument> instruments(File file) throws java.io.IOException {
+        return objectMapper.readValue(
+                file, new TypeReference<List<Instrument>>() {
+                });
     }
 
     @Override
@@ -64,10 +68,6 @@ public final class InstrumentRepository extends DefaultHandler implements Instru
     @Override
     public List<Instrument> getAll() {
         return Collections.unmodifiableList(instruments);
-    }
-
-    private boolean isAnInstrument(String qualifiedName) {
-        return "instrument".equals(qualifiedName);
     }
 }
 

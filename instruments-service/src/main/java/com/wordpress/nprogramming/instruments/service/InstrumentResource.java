@@ -8,8 +8,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
-@Path("/api/instruments/{instrumentId}")
+@Path("/api/instruments")
 @Produces(MediaType.APPLICATION_JSON)
 public class InstrumentResource {
 
@@ -20,6 +21,12 @@ public class InstrumentResource {
     }
 
     @GET
+    public List<Instrument> listInstruments() {
+        return instrumentsApi.getAll();
+    }
+
+    @GET
+    @Path("{instrumentId}")
     public Instrument getInstrument(@PathParam("instrumentId") String instrumentId) {
         return instrumentsApi.getInstrument(instrumentId);
     }

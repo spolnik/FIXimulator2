@@ -1,0 +1,3090 @@
+[
+  {
+    "ticker": "TXU",
+    "sedol": "2885700",
+    "name": "TXU CORP",
+    "ric": "TXU.N",
+    "cusip": "873168108",
+    "price": "58.56"
+  },
+  {
+    "ticker": "IBM",
+    "sedol": "2005973",
+    "name": "INTL BUSINESS MACHINES CORP",
+    "ric": "IBM.N",
+    "cusip": "459200101",
+    "price": "92.07"
+  },
+  {
+    "ticker": "YHOO",
+    "sedol": "2986539",
+    "name": "YAHOO! INC",
+    "ric": "YHOO.OQ",
+    "cusip": "984332106",
+    "price": "32.09"
+  },
+  {
+    "ticker": "EBAY",
+    "sedol": "2293819",
+    "name": "EBAY INC",
+    "ric": "EBAY.OQ",
+    "cusip": "278642103",
+    "price": "32.59"
+  },
+  {
+    "ticker": "AMZN",
+    "sedol": "2000019",
+    "name": "AMAZON.COM INC",
+    "ric": "AMZN.OQ",
+    "cusip": "023135106",
+    "price": "34.15"
+  },
+  {
+    "ticker": "LU",
+    "sedol": "2537573",
+    "name": "LUCENT TECHNOLOGIES INC",
+    "ric": "LU.N",
+    "cusip": "549463107",
+    "price": "2.52"
+  },
+  {
+    "ticker": "TPX",
+    "sedol": "2216991",
+    "name": "TEMPUR-PEDIC INTERNATIONAL",
+    "ric": "TPX.N",
+    "cusip": "88023U101",
+    "price": "19.24"
+  },
+  {
+    "ticker": "MENT",
+    "sedol": "2578033",
+    "name": "MENTOR GRAPHICS CORP",
+    "ric": "MENT.OQ",
+    "cusip": "587200106",
+    "price": "13.60"
+  },
+  {
+    "ticker": "ASD",
+    "sedol": "2029809",
+    "name": "AMERICAN STANDARD COS INC",
+    "ric": "ASD.N",
+    "cusip": "029712106",
+    "price": "45.27"
+  },
+  {
+    "ticker": "FSL",
+    "sedol": "B01XK74",
+    "name": "FREESCALE SEMICONDUCTOR-A",
+    "ric": "FSL.N",
+    "cusip": "35687M107",
+    "price": "39.71"
+  },
+  {
+    "ticker": "AVT",
+    "sedol": "2066505",
+    "name": "AVNET INC",
+    "ric": "AVT.N",
+    "cusip": "053807103",
+    "price": "25.49"
+  },
+  {
+    "ticker": "CSCO",
+    "sedol": "2198163",
+    "name": "CISCO SYSTEMS INC",
+    "ric": "CSCO.OQ",
+    "cusip": "17275R102",
+    "price": "20.74"
+  },
+  {
+    "ticker": "S",
+    "sedol": "2922447",
+    "name": "SPRINT NEXTEL CORP",
+    "ric": "FON.N",
+    "cusip": "852061100",
+    "price": "20.50"
+  },
+  {
+    "ticker": "HPQ",
+    "sedol": "2424006",
+    "name": "HEWLETT-PACKARD CO",
+    "ric": "HPQ.N",
+    "cusip": "428236103",
+    "price": "40.12"
+  },
+  {
+    "ticker": "T",
+    "sedol": "2831811",
+    "name": "AT&amp;T INC",
+    "ric": "T.N",
+    "cusip": "00206R102",
+    "price": "33.06"
+  },
+  {
+    "ticker": "AMCC",
+    "sedol": "2128762",
+    "name": "APPLIED MICRO CIRCUITS CORP",
+    "ric": "AMCC.OQ",
+    "cusip": "03822W109",
+    "price": "3.54"
+  },
+  {
+    "ticker": "PRU",
+    "sedol": "2819118",
+    "name": "PRUDENTIAL FINANCIAL INC",
+    "ric": "PRU.N",
+    "cusip": "744320102",
+    "price": "79.25"
+  },
+  {
+    "ticker": "ABC",
+    "sedol": "2795393",
+    "name": "AMERISOURCEBERGEN CORP",
+    "ric": "ABC.N",
+    "cusip": "03073E105",
+    "price": "44.98"
+  },
+  {
+    "ticker": "MSFT",
+    "sedol": "2588173",
+    "name": "MICROSOFT CORP",
+    "ric": "MSFT.OQ",
+    "cusip": "594918104",
+    "price": "23.76"
+  },
+  {
+    "ticker": "DUK",
+    "sedol": "B127425",
+    "name": "DUKE ENERGY CORP",
+    "ric": "DUK.N",
+    "cusip": "26441C105",
+    "price": "31.72"
+  },
+  {
+    "ticker": "BMY",
+    "sedol": "2126335",
+    "name": "BRISTOL-MYERS SQUIBB CO",
+    "ric": "BMY.N",
+    "cusip": "110122108",
+    "price": "24.41"
+  },
+  {
+    "ticker": "NBR",
+    "sedol": "2963372",
+    "name": "NABORS INDUSTRIES LTD",
+    "ric": "NBR.N",
+    "cusip": "G6359F103",
+    "price": "31.21"
+  },
+  {
+    "ticker": "CFC",
+    "sedol": "2229676",
+    "name": "COUNTRYWIDE FINANCIAL CORP",
+    "ric": "CFC.N",
+    "cusip": "222372104",
+    "price": "40.27"
+  },
+  {
+    "ticker": "HST",
+    "sedol": "2567503",
+    "name": "HOST HOTELS &amp; RESORTS INC",
+    "ric": "HST.N",
+    "cusip": "44107P104",
+    "price": "23.72"
+  },
+  {
+    "ticker": "DTE",
+    "sedol": "2280220",
+    "name": "DTE ENERGY COMPANY",
+    "ric": "DTE.N",
+    "cusip": "233331107",
+    "price": "46.07"
+  },
+  {
+    "ticker": "HOLX",
+    "sedol": "2433530",
+    "name": "HOLOGIC INC",
+    "ric": "HOLX.OQ",
+    "cusip": "436440101",
+    "price": "48.17"
+  },
+  {
+    "ticker": "VOD",
+    "sedol": "2726445",
+    "name": "VODAFONE GROUP PLC-SP ADR",
+    "ric": "VOD.N",
+    "cusip": "92857W100",
+    "price": "25.95"
+  },
+  {
+    "ticker": "RNWK",
+    "sedol": "2127918",
+    "name": "REALNETWORKS INC",
+    "ric": "RNWK.OQ",
+    "cusip": "75605L104",
+    "price": "10.55"
+  },
+  {
+    "ticker": "PGIC",
+    "sedol": "2608220",
+    "name": "PROGRESSIVE GAMING INTERNATI",
+    "ric": "PGIC.OQ",
+    "cusip": "74332S102",
+    "price": "9.28"
+  },
+  {
+    "ticker": "BUCY",
+    "sedol": "B018TZ0",
+    "name": "BUCYRUS INTERNATIONAL INC-A",
+    "ric": "BUCY.OQ",
+    "cusip": "118759109",
+    "price": "56.68"
+  },
+  {
+    "ticker": "TMX",
+    "sedol": "2881612",
+    "name": "TELEFONOS DE MEXICO-SP ADR L",
+    "ric": "TMX.N",
+    "cusip": "879403780",
+    "price": "26.37"
+  },
+  {
+    "ticker": "ADTN",
+    "sedol": "2052924",
+    "name": "ADTRAN INC",
+    "ric": "ADTN.OQ",
+    "cusip": "00738A106",
+    "price": "25.56"
+  },
+  {
+    "ticker": "TTWO",
+    "sedol": "2122117",
+    "name": "TAKE-TWO INTERACTIVE SOFTWRE",
+    "ric": "TTWO.OQ",
+    "cusip": "874054109",
+    "price": "16.36"
+  },
+  {
+    "ticker": "CVS",
+    "sedol": "2577609",
+    "name": "CVS CORP",
+    "ric": "CVS.N",
+    "cusip": "126650100",
+    "price": "28.99"
+  },
+  {
+    "ticker": "WB",
+    "sedol": "2341860",
+    "name": "WACHOVIA CORP",
+    "ric": "WB.N",
+    "cusip": "929903102",
+    "price": "55.49"
+  },
+  {
+    "ticker": "MOLX",
+    "sedol": "2599142",
+    "name": "MOLEX INC",
+    "ric": "MOLX.OQ",
+    "cusip": "608554101",
+    "price": "39.03"
+  },
+  {
+    "ticker": "DRL",
+    "sedol": "2343372",
+    "name": "DORAL FINANCIAL CORP",
+    "ric": "DRL.N",
+    "cusip": "25811P100",
+    "price": "4.25"
+  },
+  {
+    "ticker": "FDC",
+    "sedol": "2344331",
+    "name": "FIRST DATA CORP",
+    "ric": "FDC.N",
+    "cusip": "319963104",
+    "price": "24.81"
+  },
+  {
+    "ticker": "DRC",
+    "sedol": "B0G0V77",
+    "name": "DRESSER-RAND GROUP INC",
+    "ric": "DRC.N",
+    "cusip": "261608103",
+    "price": "23.13"
+  },
+  {
+    "ticker": "FCS",
+    "sedol": "2444479",
+    "name": "FAIRCHILD SEMICON INTERNATIO",
+    "ric": "FCS.N",
+    "cusip": "303726103",
+    "price": "16.55"
+  },
+  {
+    "ticker": "ADSK",
+    "sedol": "2065159",
+    "name": "AUTODESK INC",
+    "ric": "ADSK.OQ",
+    "cusip": "052769106",
+    "price": "39.01"
+  },
+  {
+    "ticker": "KNOT",
+    "sedol": "2526991",
+    "name": "KNOT INC",
+    "ric": "KNOT.OQ",
+    "cusip": "499184109",
+    "price": "23.71"
+  },
+  {
+    "ticker": "CNP",
+    "sedol": "2440637",
+    "name": "CENTERPOINT ENERGY INC",
+    "ric": "CNP.N",
+    "cusip": "15189T107",
+    "price": "16.20"
+  },
+  {
+    "ticker": "PXD",
+    "sedol": "2690830",
+    "name": "PIONEER NATURAL RESOURCES CO",
+    "ric": "PXD.N",
+    "cusip": "723787107",
+    "price": "40.69"
+  },
+  {
+    "ticker": "IDTI",
+    "sedol": "2462437",
+    "name": "INTEGRATED DEVICE TECH INC",
+    "ric": "IDTI.OQ",
+    "cusip": "458118106",
+    "price": "15.31"
+  },
+  {
+    "ticker": "CKFR",
+    "sedol": "2163376",
+    "name": "CHECKFREE CORP",
+    "ric": "CKFR.OQ",
+    "cusip": "162813109",
+    "price": "55.72"
+  },
+  {
+    "ticker": "UTSI",
+    "sedol": "2557139",
+    "name": "UTSTARCOM INC",
+    "ric": "UTSI.OQ",
+    "cusip": "918076100",
+    "price": "7.27"
+  },
+  {
+    "ticker": "PLT",
+    "sedol": "2692030",
+    "name": "PLANTRONICS INC",
+    "ric": "PLT.N",
+    "cusip": "727493108",
+    "price": "19.78"
+  },
+  {
+    "ticker": "GRMN",
+    "sedol": "2695620",
+    "name": "GARMIN LTD",
+    "ric": "GRMN.OQ",
+    "cusip": "G37260109",
+    "price": "97.00"
+  },
+  {
+    "ticker": "JNJ",
+    "sedol": "2475833",
+    "name": "JOHNSON & JOHNSON",
+    "ric": "JNJ.N",
+    "cusip": "478160104",
+    "price": "65.94"
+  },
+  {
+    "ticker": "INGR",
+    "sedol": "2463292",
+    "name": "INTERGRAPH CORP",
+    "ric": "INGR.OQ",
+    "cusip": "458683109",
+    "price": "42.88"
+  },
+  {
+    "ticker": "NU",
+    "sedol": "2645108",
+    "name": "NORTHEAST UTILITIES",
+    "ric": "NU.N",
+    "cusip": "664397106",
+    "price": "26.22"
+  },
+  {
+    "ticker": "MEE",
+    "sedol": "2343662",
+    "name": "MASSEY ENERGY CO",
+    "ric": "MEE.N",
+    "cusip": "576206106",
+    "price": "24.75"
+  },
+  {
+    "ticker": "MLM",
+    "sedol": "2572079",
+    "name": "MARTIN MARIETTA MATERIALS",
+    "ric": "MLM.N",
+    "cusip": "573284106",
+    "price": "95.10"
+  },
+  {
+    "ticker": "GILD",
+    "sedol": "2369174",
+    "name": "GILEAD SCIENCES INC",
+    "ric": "GILD.OQ",
+    "cusip": "375558103",
+    "price": "56.79"
+  },
+  {
+    "ticker": "NXL",
+    "sedol": "2322092",
+    "name": "NEW PLAN EXCEL REALTY TRUST",
+    "ric": "NXL.N",
+    "cusip": "648053106",
+    "price": "27.27"
+  },
+  {
+    "ticker": "FRX",
+    "sedol": "2346508",
+    "name": "FOREST LABORATORIES INC",
+    "ric": "FRX.N",
+    "cusip": "345838106",
+    "price": "47.28"
+  },
+  {
+    "ticker": "FSS",
+    "sedol": "2333986",
+    "name": "FEDERAL SIGNAL CORP",
+    "ric": "FSS.N",
+    "cusip": "313855108",
+    "price": "15.45"
+  },
+  {
+    "ticker": "LOW",
+    "sedol": "2536763",
+    "name": "LOWE'S COS INC",
+    "ric": "LOW.N",
+    "cusip": "548661107",
+    "price": "29.00"
+  },
+  {
+    "ticker": "MER",
+    "sedol": "2580986",
+    "name": "MERRILL LYNCH & CO INC",
+    "ric": "MER.N",
+    "cusip": "590188108",
+    "price": "89.41"
+  },
+  {
+    "ticker": "PDE",
+    "sedol": "2802992",
+    "name": "PRIDE INTERNATIONAL INC",
+    "ric": "PDE.N",
+    "cusip": "74153Q102",
+    "price": "28.57"
+  },
+  {
+    "ticker": "D",
+    "sedol": "2542049",
+    "name": "DOMINION RESOURCES INC/VA",
+    "ric": "D.N",
+    "cusip": "25746U109",
+    "price": "81.20"
+  },
+  {
+    "ticker": "TEVA",
+    "sedol": "2883878",
+    "name": "TEVA PHARMACEUTICAL-SP ADR",
+    "ric": "TEVA.OQ",
+    "cusip": "881624209",
+    "price": "37.56"
+  },
+  {
+    "ticker": "ETR",
+    "sedol": "2317087",
+    "name": "ENTERGY CORP",
+    "ric": "ETR.N",
+    "cusip": "29364G103",
+    "price": "87.64"
+  },
+  {
+    "ticker": "CY",
+    "sedol": "2244549",
+    "name": "CYPRESS SEMICONDUCTOR CORP",
+    "ric": "CY.N",
+    "cusip": "232806109",
+    "price": "16.78"
+  },
+  {
+    "ticker": "HLT",
+    "sedol": "2428008",
+    "name": "HILTON HOTELS CORP",
+    "ric": "HLT.N",
+    "cusip": "432848109",
+    "price": "30.85"
+  },
+  {
+    "ticker": "WMT",
+    "sedol": "2936921",
+    "name": "WAL-MART STORES INC",
+    "ric": "WMT.N",
+    "cusip": "931142103",
+    "price": "46.32"
+  },
+  {
+    "ticker": "GOL",
+    "sedol": "B01NTB1",
+    "name": "GOL LINHAS AEREAS INTEL-ADR",
+    "ric": "GOL.N",
+    "cusip": "38045R107",
+    "price": "28.89"
+  },
+  {
+    "ticker": "OMX",
+    "sedol": "2109002",
+    "name": "OFFICEMAX INC",
+    "ric": "OMX.N",
+    "cusip": "67622P101",
+    "price": "49.57"
+  },
+  {
+    "ticker": "WM",
+    "sedol": "2942188",
+    "name": "WASHINGTON MUTUAL INC",
+    "ric": "WM.N",
+    "cusip": "939322103",
+    "price": "42.97"
+  },
+  {
+    "ticker": "BLS",
+    "sedol": "2090601",
+    "name": "BELLSOUTH CORP",
+    "ric": "BLS.N",
+    "cusip": "079860102",
+    "price": "43.17"
+  },
+  {
+    "ticker": "WEN",
+    "sedol": "2947956",
+    "name": "WENDY'S INTERNATIONAL INC",
+    "ric": "WEN.N",
+    "cusip": "950590109",
+    "price": "35.30"
+  },
+  {
+    "ticker": "UDTT",
+    "sedol": "2247344",
+    "name": "UNIVERSAL DETECTION TECHNOLO",
+    "ric": "UDTTE.OB",
+    "cusip": "913459103",
+    "price": "0.01"
+  },
+  {
+    "ticker": "HINKY",
+    "sedol": "2419176",
+    "name": "HEINEKEN NV-ADR",
+    "ric": "HINKY.PK",
+    "cusip": "423012202",
+    "price": "23.90"
+  },
+  {
+    "ticker": "EFII",
+    "sedol": "2310202",
+    "name": "ELECTRONICS FOR IMAGING",
+    "ric": "EFII.OQ",
+    "cusip": "286082102",
+    "price": "27.00"
+  },
+  {
+    "ticker": "XPRSA",
+    "sedol": "2896412",
+    "name": "U.S. XPRESS ENTERPRISES-A",
+    "ric": "XPRSA.OQ",
+    "cusip": "90338N103",
+    "price": "23.69"
+  },
+  {
+    "ticker": "AIG",
+    "sedol": "2027342",
+    "name": "AMERICAN INTERNATIONAL GROUP",
+    "ric": "AIG.N",
+    "cusip": "026874107",
+    "price": "70.65"
+  },
+  {
+    "ticker": "VMC",
+    "sedol": "2931205",
+    "name": "VULCAN MATERIALS CO",
+    "ric": "VMC.N",
+    "cusip": "929160109",
+    "price": "88.65"
+  },
+  {
+    "ticker": "AG",
+    "sedol": "2010278",
+    "name": "AGCO CORP",
+    "ric": "AG.N",
+    "cusip": "001084102",
+    "price": "30.89"
+  },
+  {
+    "ticker": "SUP",
+    "sedol": "2864141",
+    "name": "SUPERIOR INDUSTRIES INTL",
+    "ric": "SUP.N",
+    "cusip": "868168105",
+    "price": "18.31"
+  },
+  {
+    "ticker": "MRBK",
+    "sedol": "2578389",
+    "name": "MERCANTILE BANKSHARES CORP",
+    "ric": "MRBK.OQ",
+    "cusip": "587405101",
+    "price": "37.62"
+  },
+  {
+    "ticker": "PNC",
+    "sedol": "2692665",
+    "name": "PNC FINANCIAL SERVICES GROUP",
+    "ric": "PNC.N",
+    "cusip": "693475105",
+    "price": "69.34"
+  },
+  {
+    "ticker": "AEP",
+    "sedol": "2026242",
+    "name": "AMERICAN ELECTRIC POWER",
+    "ric": "AEP.N",
+    "cusip": "025537101",
+    "price": "41.43"
+  },
+  {
+    "ticker": "DYAX",
+    "sedol": "2621487",
+    "name": "DYAX CORP",
+    "ric": "DYAX.OQ",
+    "cusip": "26746E103",
+    "price": "3.06"
+  },
+  {
+    "ticker": "MAS",
+    "sedol": "2570200",
+    "name": "MASCO CORP",
+    "ric": "MAS.N",
+    "cusip": "574599106",
+    "price": "27.92"
+  },
+  {
+    "ticker": "HOT",
+    "sedol": "B12GHV2",
+    "name": "STARWOOD HOTELS & RESORTS",
+    "ric": "HOT.N",
+    "cusip": "85590A401",
+    "price": "62.58"
+  },
+  {
+    "ticker": "FSH",
+    "sedol": "2345301",
+    "name": "FISHER SCIENTIFIC INTL INC",
+    "ric": "FSH.N",
+    "cusip": "338032204",
+    "price": "86.58"
+  },
+  {
+    "ticker": "TMO",
+    "sedol": "2886907",
+    "name": "THERMO ELECTRON CORP",
+    "ric": "TMO.N",
+    "cusip": "883556102",
+    "price": "43.62"
+  },
+  {
+    "ticker": "PGN",
+    "sedol": "2604206",
+    "name": "PROGRESS ENERGY INC",
+    "ric": "PGN.N",
+    "cusip": "743263105",
+    "price": "46.32"
+  },
+  {
+    "ticker": "HHH",
+    "sedol": "2490018",
+    "name": "INTERNET HOLDRs TRUST",
+    "ric": "HHH.A",
+    "cusip": "46059W102",
+    "price": "54.18"
+  },
+  {
+    "ticker": "SNV",
+    "sedol": "2158974",
+    "name": "SYNOVUS FINANCIAL CORP",
+    "ric": "SNV.N",
+    "cusip": "87161C105",
+    "price": "29.76"
+  },
+  {
+    "ticker": "PBCT",
+    "sedol": "2682406",
+    "name": "PEOPLES BANK",
+    "ric": "PBCT.OQ",
+    "cusip": "710198102",
+    "price": "32.77"
+  },
+  {
+    "ticker": "RESP",
+    "sedol": "2732549",
+    "name": "RESPIRONICS INC",
+    "ric": "RESP.OQ",
+    "cusip": "761230101",
+    "price": "35.69"
+  },
+  {
+    "ticker": "THQI",
+    "sedol": "2868789",
+    "name": "THQ INC",
+    "ric": "THQI.OQ",
+    "cusip": "872443403",
+    "price": "24.73"
+  },
+  {
+    "ticker": "CVC",
+    "sedol": "2162243",
+    "name": "CABLEVISION SYSTEMS-NY GRP-A",
+    "ric": "CVC.N",
+    "cusip": "12686C109",
+    "price": "27.93"
+  },
+  {
+    "ticker": "PNM",
+    "sedol": "2707826",
+    "name": "PNM RESOURCES INC",
+    "ric": "PNM.N",
+    "cusip": "69349H107",
+    "price": "30.48"
+  },
+  {
+    "ticker": "LNT",
+    "sedol": "2973821",
+    "name": "ALLIANT ENERGY CORP",
+    "ric": "LNT.N",
+    "cusip": "018802108",
+    "price": "39.38"
+  },
+  {
+    "ticker": "LRCX",
+    "sedol": "2502247",
+    "name": "LAM RESEARCH CORP",
+    "ric": "LRCX.OQ",
+    "cusip": "512807108",
+    "price": "51.81"
+  },
+  {
+    "ticker": "CVH",
+    "sedol": "2232696",
+    "name": "COVENTRY HEALTH CARE INC",
+    "ric": "CVH.N",
+    "cusip": "222862104",
+    "price": "45.54"
+  },
+  {
+    "ticker": "ALTR",
+    "sedol": "2021690",
+    "name": "ALTERA CORPORATION",
+    "ric": "ALTR.OQ",
+    "cusip": "021441100",
+    "price": "19.83"
+  },
+  {
+    "ticker": "POM",
+    "sedol": "2971698",
+    "name": "PEPCO HOLDINGS INC",
+    "ric": "POM.N",
+    "cusip": "713291102",
+    "price": "25.53"
+  },
+  {
+    "ticker": "JJZ",
+    "sedol": "2937054",
+    "name": "JACUZZI BRANDS INC",
+    "ric": "JJZ.N",
+    "cusip": "469865109",
+    "price": "12.54"
+  },
+  {
+    "ticker": "AMGN",
+    "sedol": "2023607",
+    "name": "AMGEN INC",
+    "ric": "AMGN.OQ",
+    "cusip": "031162100",
+    "price": "67.54"
+  },
+  {
+    "ticker": "BAC",
+    "sedol": "2295677",
+    "name": "BANK OF AMERICA CORP",
+    "ric": "BAC.N",
+    "cusip": "060505104",
+    "price": "54.46"
+  },
+  {
+    "ticker": "BBY",
+    "sedol": "2094670",
+    "name": "BEST BUY CO INC",
+    "ric": "BBY_w.N^H05",
+    "cusip": "086516101",
+    "price": "52.05"
+  },
+  {
+    "ticker": "POR",
+    "sedol": "B125XQ6",
+    "name": "PORTLAND GENERAL ELECTRIC CO",
+    "ric": "POR_w.N",
+    "cusip": "736508847",
+    "price": "27.28"
+  },
+  {
+    "ticker": "RA",
+    "sedol": "2734943",
+    "name": "RECKSON ASSOC REALTY CORP",
+    "ric": "RA.N",
+    "cusip": "75621K106",
+    "price": "44.37"
+  },
+  {
+    "ticker": "RMD",
+    "sedol": "2732903",
+    "name": "RESMED INC",
+    "ric": "RMD.N",
+    "cusip": "761152107",
+    "price": "46.78"
+  },
+  {
+    "ticker": "IDT",
+    "sedol": "2757304",
+    "name": "IDT CORP-CL B",
+    "ric": "IDT.N",
+    "cusip": "448947309",
+    "price": "12.72"
+  },
+  {
+    "ticker": "MCDTA",
+    "sedol": "2722669",
+    "name": "MCDATA CORPORATION-A",
+    "ric": "MCDTA.OQ",
+    "cusip": "580031201",
+    "price": "4.21"
+  },
+  {
+    "ticker": "BRCD",
+    "sedol": "2422174",
+    "name": "BROCADE COMMUNICATIONS SYS",
+    "ric": "BRCD.OQ",
+    "cusip": "111621108",
+    "price": "6.42"
+  },
+  {
+    "ticker": "STX",
+    "sedol": "2166245",
+    "name": "SEAGATE TECHNOLOGY",
+    "ric": "STX.N",
+    "cusip": "G7945J104",
+    "price": "23.15"
+  },
+  {
+    "ticker": "BIDU",
+    "sedol": "B0FXT17",
+    "name": "BAIDU.COM - ADR",
+    "ric": "BIDU.OQ",
+    "cusip": "056752108",
+    "price": "103.25"
+  },
+  {
+    "ticker": "QQQQ",
+    "sedol": "2402433",
+    "name": "NASDAQ-100 INDEX TRCKNG STCK",
+    "ric": "QQQQ.OQ",
+    "cusip": "631100104",
+    "price": "43.47"
+  },
+  {
+    "ticker": "AMD",
+    "sedol": "2007849",
+    "name": "ADVANCED MICRO DEVICES",
+    "ric": "AMD.N",
+    "cusip": "007903107",
+    "price": "21.20"
+  },
+  {
+    "ticker": "HAL",
+    "sedol": "2405302",
+    "name": "HALLIBURTON CO",
+    "ric": "HAL.N",
+    "cusip": "406216101",
+    "price": "31.99"
+  },
+  {
+    "ticker": "SBAC",
+    "sedol": "2429294",
+    "name": "SBA COMMUNICATIONS CORP-CL A",
+    "ric": "SBAC.OQ",
+    "cusip": "78388J106",
+    "price": "25.75"
+  },
+  {
+    "ticker": "ET",
+    "sedol": "2299011",
+    "name": "E*TRADE FINANCIAL CORP",
+    "ric": "ET.N",
+    "cusip": "269246104",
+    "price": "23.93"
+  },
+  {
+    "ticker": "AGE",
+    "sedol": "2305714",
+    "name": "EDWARDS",
+    "ric": "AGE.N",
+    "cusip": "281760108",
+    "price": "57.16"
+  },
+  {
+    "ticker": "DGX",
+    "sedol": "2702791",
+    "name": "QUEST DIAGNOSTICS",
+    "ric": "DGX.N",
+    "cusip": "74834L100",
+    "price": "51.22"
+  },
+  {
+    "ticker": "GSF",
+    "sedol": "2016180",
+    "name": "GLOBALSANTAFE CORP",
+    "ric": "GSF.N",
+    "cusip": "G3930E101",
+    "price": "55.00"
+  },
+  {
+    "ticker": "EDR",
+    "sedol": "B04NJN0",
+    "name": "EDUCATION REALTY TRUST INC",
+    "ric": "EDR.N",
+    "cusip": "28140H104",
+    "price": "14.72"
+  },
+  {
+    "ticker": "SEPR",
+    "sedol": "2796619",
+    "name": "SEPRACOR INC",
+    "ric": "SEPR.OQ",
+    "cusip": "817315104",
+    "price": "45.05"
+  },
+  {
+    "ticker": "HLTH",
+    "sedol": "2387198",
+    "name": "EMDEON CORP",
+    "ric": "HLTH.OQ",
+    "cusip": "290849108",
+    "price": "11.93"
+  },
+  {
+    "ticker": "MAR",
+    "sedol": "2210614",
+    "name": "MARRIOTT INTERNATIONAL-CL A",
+    "ric": "MAR.N",
+    "cusip": "571903202",
+    "price": "44.55"
+  },
+  {
+    "ticker": "DIA",
+    "sedol": "2140863",
+    "name": "DIAMONDS TRUST SERIES I",
+    "ric": "DIA.A",
+    "cusip": "252787106",
+    "price": "121.35"
+  },
+  {
+    "ticker": "ARJ",
+    "sedol": "2386117",
+    "name": "ARCH CHEMICALS INC",
+    "ric": "ARJ.N",
+    "cusip": "03937R102",
+    "price": "32.74"
+  },
+  {
+    "ticker": "FCL",
+    "sedol": "B04QP20",
+    "name": "FOUNDATION COAL HOLDINGS INC",
+    "ric": "FCL.N",
+    "cusip": "35039W100",
+    "price": "35.54"
+  },
+  {
+    "ticker": "ERTS",
+    "sedol": "2310194",
+    "name": "ELECTRONIC ARTS INC",
+    "ric": "ERTS.OQ",
+    "cusip": "285512109",
+    "price": "47.98"
+  },
+  {
+    "ticker": "NRGX",
+    "sedol": "B02SZH3",
+    "name": "NEUROLOGIX INC",
+    "ric": "NRGX.OB",
+    "cusip": "64125U406",
+    "price": "0.73"
+  },
+  {
+    "ticker": "QCOM",
+    "sedol": "2714923",
+    "name": "QUALCOMM INC",
+    "ric": "QCOM.OQ",
+    "cusip": "747525103",
+    "price": "51.66"
+  },
+  {
+    "ticker": "ACN",
+    "sedol": "2763958",
+    "name": "ACCENTURE LTD-CL A",
+    "ric": "ACN.N",
+    "cusip": "G1150G111",
+    "price": "33.78"
+  },
+  {
+    "ticker": "IEF",
+    "sedol": "2971494",
+    "name": "ISHARES LEHMAN 7-10YR TREAS",
+    "ric": "IEF.A",
+    "cusip": "464287440",
+    "price": "83.06"
+  },
+  {
+    "ticker": "AMTD",
+    "sedol": "2983154",
+    "name": "TD AMERITRADE HOLDING CORP",
+    "ric": "AMTD.OQ",
+    "cusip": "87236Y108",
+    "price": "19.08"
+  },
+  {
+    "ticker": "BRL",
+    "sedol": "2081779",
+    "name": "BARR PHARMACEUTICALS INC",
+    "ric": "BRL.N",
+    "cusip": "068306109",
+    "price": "49.30"
+  },
+  {
+    "ticker": "NRPH",
+    "sedol": "B012Q51",
+    "name": "NEW RIVER PHARMACEUTICALS",
+    "ric": "NRPH.OQ",
+    "cusip": "648468205",
+    "price": "49.85"
+  },
+  {
+    "ticker": "MOD",
+    "sedol": "2598354",
+    "name": "MODINE MANUFACTURING CO",
+    "ric": "MOD.N",
+    "cusip": "607828100",
+    "price": "24.03"
+  },
+  {
+    "ticker": "SEIC",
+    "sedol": "2793610",
+    "name": "SEI INVESTMENTS COMPANY",
+    "ric": "SEIC.OQ",
+    "cusip": "784117103",
+    "price": "45.67"
+  },
+  {
+    "ticker": "CNXS",
+    "sedol": "2164443",
+    "name": "CNS INC",
+    "ric": "CNXS.OQ",
+    "cusip": "126136100",
+    "price": "23.98"
+  },
+  {
+    "ticker": "TOL",
+    "sedol": "2896092",
+    "name": "TOLL BROTHERS INC",
+    "ric": "TOL.N",
+    "cusip": "889478103",
+    "price": "27.30"
+  },
+  {
+    "ticker": "XOM",
+    "sedol": "2326618",
+    "name": "EXXON MOBIL CORP",
+    "ric": "XOM.N",
+    "cusip": "30231G102",
+    "price": "74.43"
+  },
+  {
+    "ticker": "BOL",
+    "sedol": "2084637",
+    "name": "BAUSCH & LOMB INC",
+    "ric": "BOL.N",
+    "cusip": "071707103",
+    "price": "49.39"
+  },
+  {
+    "ticker": "KOMG",
+    "sedol": "2965389",
+    "name": "KOMAG INC",
+    "ric": "KOMG.OQ",
+    "cusip": "500453204",
+    "price": "42.99"
+  },
+  {
+    "ticker": "NTRI",
+    "sedol": "2620398",
+    "name": "NUTRI/SYSTEM INC",
+    "ric": "NTRI.OQ",
+    "cusip": "67069D108",
+    "price": "74.86"
+  },
+  {
+    "ticker": "PEP",
+    "sedol": "2681511",
+    "name": "PEPSICO INC",
+    "ric": "PEP.N",
+    "cusip": "713448108",
+    "price": "61.41"
+  },
+  {
+    "ticker": "HD",
+    "sedol": "2434209",
+    "name": "HOME DEPOT INC",
+    "ric": "HD.N",
+    "cusip": "437076102",
+    "price": "36.40"
+  },
+  {
+    "ticker": "AETH",
+    "sedol": "2504492",
+    "name": "AETHER HOLDINGS INC",
+    "ric": "AETH.OQ",
+    "cusip": "00809C106",
+    "price": "6.82"
+  },
+  {
+    "ticker": "CPB",
+    "sedol": "2162845",
+    "name": "CAMPBELL SOUP CO",
+    "ric": "CPB.N",
+    "cusip": "134429109",
+    "price": "37.47"
+  },
+  {
+    "ticker": "WFR",
+    "sedol": "2580113",
+    "name": "MEMC ELECTRONIC MATERIALS",
+    "ric": "WFR.N",
+    "cusip": "552715104",
+    "price": "35.66"
+  },
+  {
+    "ticker": "XLU",
+    "sedol": "2371812",
+    "name": "UTILITIES SELECT SECTOR SPDR",
+    "ric": "XLU.A",
+    "cusip": "81369Y886",
+    "price": "35.99"
+  },
+  {
+    "ticker": "DHI",
+    "sedol": "2250687",
+    "name": "DR HORTON INC",
+    "ric": "DHI.N",
+    "cusip": "23331A109",
+    "price": "22.38"
+  },
+  {
+    "ticker": "GME",
+    "sedol": "B0LLFT5",
+    "name": "GAMESTOP CORP-CL A",
+    "ric": "GME.N",
+    "cusip": "36467W109",
+    "price": "52.29"
+  },
+  {
+    "ticker": "BEAS",
+    "sedol": "2087476",
+    "name": "BEA SYSTEMS INC",
+    "ric": "BEAS.OQ",
+    "cusip": "073325102",
+    "price": "12.65"
+  },
+  {
+    "ticker": "MCRL",
+    "sedol": "2589734",
+    "name": "MICREL INC",
+    "ric": "MCRL.OQ",
+    "cusip": "594793101",
+    "price": "12.30"
+  },
+  {
+    "ticker": "TMK",
+    "sedol": "2896713",
+    "name": "TORCHMARK CORP",
+    "ric": "TMK.N",
+    "cusip": "891027104",
+    "price": "63.20"
+  },
+  {
+    "ticker": "COF",
+    "sedol": "2654461",
+    "name": "CAPITAL ONE FINANCIAL CORP",
+    "ric": "COF.N",
+    "cusip": "14040H105",
+    "price": "77.50"
+  },
+  {
+    "ticker": "GTI",
+    "sedol": "2906719",
+    "name": "GRAFTECH INTERNATIONAL LTD",
+    "ric": "GTI.N",
+    "cusip": "384313102",
+    "price": "6.74"
+  },
+  {
+    "ticker": "CIT",
+    "sedol": "2965549",
+    "name": "CIT GROUP INC",
+    "ric": "CIT.N",
+    "cusip": "125581108",
+    "price": "52.31"
+  },
+  {
+    "ticker": "VTS",
+    "sedol": "2269843",
+    "name": "VERITAS DGC INC",
+    "ric": "VTS.N",
+    "cusip": "92343P107",
+    "price": "76.23"
+  },
+  {
+    "ticker": "SLM",
+    "sedol": "2101967",
+    "name": "SLM CORP",
+    "ric": "SLM.N",
+    "cusip": "78442P106",
+    "price": "47.38"
+  },
+  {
+    "ticker": "AEIS",
+    "sedol": "2049175",
+    "name": "ADVANCED ENERGY INDUSTRIES",
+    "ric": "AEIS.OQ",
+    "cusip": "007973100",
+    "price": "16.19"
+  },
+  {
+    "ticker": "OXY",
+    "sedol": "2655408",
+    "name": "OCCIDENTAL PETROLEUM CORP",
+    "ric": "OXY.N",
+    "cusip": "674599105",
+    "price": "48.16"
+  },
+  {
+    "ticker": "ADI",
+    "sedol": "2032067",
+    "name": "ANALOG DEVICES",
+    "ric": "ADI.N",
+    "cusip": "032654105",
+    "price": "32.20"
+  },
+  {
+    "ticker": "SLB",
+    "sedol": "2779201",
+    "name": "SCHLUMBERGER LTD",
+    "ric": "SLB.N",
+    "cusip": "806857108",
+    "price": "63.20"
+  },
+  {
+    "ticker": "PLCM",
+    "sedol": "2693420",
+    "name": "POLYCOM INC",
+    "ric": "PLCM.OQ",
+    "cusip": "73172K104",
+    "price": "22.51"
+  },
+  {
+    "ticker": "WCI",
+    "sedol": "2850913",
+    "name": "WCI COMMUNITIES INC",
+    "ric": "WCI.N",
+    "cusip": "92923C104",
+    "price": "15.81"
+  },
+  {
+    "ticker": "TXU",
+    "sedol": "2885700",
+    "name": "TXU CORP",
+    "ric": "TXU.N",
+    "cusip": "873168108",
+    "price": "58.56"
+  },
+  {
+    "ticker": "HP",
+    "sedol": "2420101",
+    "name": "HELMERICH & PAYNE",
+    "ric": "HP.N",
+    "cusip": "423452101",
+    "price": "24.44"
+  },
+  {
+    "ticker": "SPY",
+    "sedol": "2840215",
+    "name": "SPDR TRUST SERIES 1",
+    "ric": "SPY.A",
+    "cusip": "78462F103",
+    "price": "138.58"
+  },
+  {
+    "ticker": "AKAM",
+    "sedol": "2507457",
+    "name": "AKAMAI TECHNOLOGIES",
+    "ric": "AKAM.OQ",
+    "cusip": "00971T101",
+    "price": "35.96"
+  },
+  {
+    "ticker": "PTEN",
+    "sedol": "2672537",
+    "name": "PATTERSON-UTI ENERGY INC",
+    "ric": "PTEN.OQ",
+    "cusip": "703481101",
+    "price": "33.80"
+  },
+  {
+    "ticker": "XLV",
+    "sedol": "2371823",
+    "name": "HEALTH CARE SELECT SECTOR",
+    "ric": "XLV.A",
+    "cusip": "81369Y209",
+    "price": "32.55"
+  },
+  {
+    "ticker": "ATVI",
+    "sedol": "2575818",
+    "name": "ACTIVISION INC",
+    "ric": "ATVI.OQ",
+    "cusip": "004930202",
+    "price": "14.40"
+  },
+  {
+    "ticker": "HXL",
+    "sedol": "2416779",
+    "name": "HEXCEL CORP",
+    "ric": "HXL.N",
+    "cusip": "428291108",
+    "price": "16.77"
+  },
+  {
+    "ticker": "WAG",
+    "sedol": "2934839",
+    "name": "WALGREEN CO",
+    "ric": "WAG.N",
+    "cusip": "931422109",
+    "price": "42.07"
+  },
+  {
+    "ticker": "MDC",
+    "sedol": "2561204",
+    "name": "MDC HOLDINGS INC",
+    "ric": "MDC.N",
+    "cusip": "552676108",
+    "price": "51.30"
+  },
+  {
+    "ticker": "AFR",
+    "sedol": "2838920",
+    "name": "AMERICAN FINANCIAL REALTY TR",
+    "ric": "AFR.N",
+    "cusip": "02607P305",
+    "price": "11.54"
+  },
+  {
+    "ticker": "PMLAY",
+    "sedol": "B0GWD77",
+    "name": "PARMALAT SPA-144A SPON GDR",
+    "ric": "PMLAY.PK",
+    "cusip": "70175R102",
+    "price": "3.05"
+  },
+  {
+    "ticker": "CVX",
+    "sedol": "2838555",
+    "name": "CHEVRON CORP",
+    "ric": "CVX.N",
+    "cusip": "166764100",
+    "price": "70.35"
+  },
+  {
+    "ticker": "IWM",
+    "sedol": "2622059",
+    "name": "ISHARES RUSSELL 2000",
+    "ric": "IWM.A",
+    "cusip": "464287655",
+    "price": "76.80"
+  },
+  {
+    "ticker": "RRI",
+    "sedol": "2687984",
+    "name": "RELIANT ENERGY INC",
+    "ric": "RRI.N",
+    "cusip": "75952B105",
+    "price": "13.56"
+  },
+  {
+    "ticker": "EPL",
+    "sedol": "2675956",
+    "name": "ENERGY PARTNERS LTD",
+    "ric": "EPL.N",
+    "cusip": "29270U105",
+    "price": "24.23"
+  },
+  {
+    "ticker": "ZQK",
+    "sedol": "2717557",
+    "name": "QUIKSILVER INC",
+    "ric": "ZQK.N",
+    "cusip": "74838C106",
+    "price": "14.56"
+  },
+  {
+    "ticker": "CRL",
+    "sedol": "2604336",
+    "name": "CHARLES RIVER LABORATORIES",
+    "ric": "CRL.N",
+    "cusip": "159864107",
+    "price": "43.99"
+  },
+  {
+    "ticker": "UVN",
+    "sedol": "2941925",
+    "name": "UNIVISION COMMUNICATIONS-A",
+    "ric": "UVN.N",
+    "cusip": "914906102",
+    "price": "35.25"
+  },
+  {
+    "ticker": "NOK",
+    "sedol": "2640891",
+    "name": "NOKIA CORP-SPON ADR",
+    "ric": "NOK.N",
+    "cusip": "654902204",
+    "price": "19.75"
+  },
+  {
+    "ticker": "RFMD",
+    "sedol": "2016663",
+    "name": "RF MICRO DEVICES INC",
+    "ric": "RFMD.OQ",
+    "cusip": "749941100",
+    "price": "8.93"
+  },
+  {
+    "ticker": "AMAT",
+    "sedol": "2046552",
+    "name": "APPLIED MATERIALS INC",
+    "ric": "AMAT.OQ",
+    "cusip": "038222105",
+    "price": "18.19"
+  },
+  {
+    "ticker": "NDE",
+    "sedol": "2227250",
+    "name": "INDYMAC BANCORP INC",
+    "ric": "NDE.N",
+    "cusip": "456607100",
+    "price": "45.77"
+  },
+  {
+    "ticker": "BA",
+    "sedol": "2108601",
+    "name": "BOEING CO",
+    "ric": "BA.N",
+    "cusip": "097023105",
+    "price": "85.69"
+  },
+  {
+    "ticker": "IYR",
+    "sedol": "2605652",
+    "name": "ISHARES DJ US REAL ESTATE",
+    "ric": "IYR.N",
+    "cusip": "464287739",
+    "price": "79.89"
+  },
+  {
+    "ticker": "NEM",
+    "sedol": "2636607",
+    "name": "NEWMONT MINING CORP",
+    "ric": "NEM.N",
+    "cusip": "651639106",
+    "price": "45.52"
+  },
+  {
+    "ticker": "VRX",
+    "sedol": "2453011",
+    "name": "VALEANT PHARMACEUTICALS INTE",
+    "ric": "VRX.N",
+    "cusip": "91911X104",
+    "price": "16.73"
+  },
+  {
+    "ticker": "NWL",
+    "sedol": "2635701",
+    "name": "NEWELL RUBBERMAID INC",
+    "ric": "NWL.N",
+    "cusip": "651229106",
+    "price": "28.82"
+  },
+  {
+    "ticker": "XEC",
+    "sedol": "2987521",
+    "name": "CIMAREX ENERGY CO",
+    "ric": "XEC.N",
+    "cusip": "171798101",
+    "price": "35.77"
+  },
+  {
+    "ticker": "BRCM",
+    "sedol": "2235822",
+    "name": "BROADCOM CORP-CL A",
+    "ric": "BRCM.OQ",
+    "cusip": "111320107",
+    "price": "39.08"
+  },
+  {
+    "ticker": "CVG",
+    "sedol": "2284761",
+    "name": "CONVERGYS CORP",
+    "ric": "CVG.N",
+    "cusip": "212485106",
+    "price": "23.08"
+  },
+  {
+    "ticker": "PKG",
+    "sedol": "2504566",
+    "name": "PACKAGING CORP OF AMERICA",
+    "ric": "PKG.N",
+    "cusip": "695156109",
+    "price": "23.22"
+  },
+  {
+    "ticker": "THC",
+    "sedol": "2626879",
+    "name": "TENET HEALTHCARE CORP",
+    "ric": "THC.N",
+    "cusip": "88033G100",
+    "price": "7.34"
+  },
+  {
+    "ticker": "TXN",
+    "sedol": "2885409",
+    "name": "TEXAS INSTRUMENTS INC",
+    "ric": "TXN.N",
+    "cusip": "882508104",
+    "price": "28.96"
+  },
+  {
+    "ticker": "EEM",
+    "sedol": "2582409",
+    "name": "ISHARES MSCI EMERGING MKT IN",
+    "ric": "EEM.A",
+    "cusip": "464287234",
+    "price": "106.34"
+  },
+  {
+    "ticker": "F",
+    "sedol": "2615468",
+    "name": "FORD MOTOR CO",
+    "ric": "F.N",
+    "cusip": "345370860",
+    "price": "8.87"
+  },
+  {
+    "ticker": "GDI",
+    "sedol": "2374178",
+    "name": "GARDNER DENVER INC",
+    "ric": "GDI.N",
+    "cusip": "365558105",
+    "price": "35.64"
+  },
+  {
+    "ticker": "LM",
+    "sedol": "2510615",
+    "name": "LEGG MASON INC",
+    "ric": "LM.N",
+    "cusip": "524901105",
+    "price": "92.24"
+  },
+  {
+    "ticker": "SCHW",
+    "sedol": "2779397",
+    "name": "SCHWAB",
+    "ric": "SCHW.OQ",
+    "cusip": "808513105",
+    "price": "18.28"
+  },
+  {
+    "ticker": "DVNTF",
+    "sedol": "2332778",
+    "name": "DIVERSINET CORP",
+    "ric": "DVNTF.OB",
+    "cusip": "25536K303",
+    "price": "0.82"
+  },
+  {
+    "ticker": "LSI",
+    "sedol": "2498993",
+    "name": "LSI LOGIC CORP",
+    "ric": "LSI.N",
+    "cusip": "502161102",
+    "price": "10.42"
+  },
+  {
+    "ticker": "NSS",
+    "sedol": "2618898",
+    "name": "NS GROUP INC",
+    "ric": "NSS.N",
+    "cusip": "628916108",
+    "price": "65.69"
+  },
+  {
+    "ticker": "GLW",
+    "sedol": "2224701",
+    "name": "CORNING INC",
+    "ric": "GLW.N",
+    "cusip": "219350105",
+    "price": "20.69"
+  },
+  {
+    "ticker": "RCRC",
+    "sedol": "2018324",
+    "name": "RC2 CORP",
+    "ric": "RCRC.OQ",
+    "cusip": "749388104",
+    "price": "39.75"
+  },
+  {
+    "ticker": "BOOM",
+    "sedol": "2326049",
+    "name": "DYNAMIC MATERIALS CORP",
+    "ric": "BOOM.OQ",
+    "cusip": "267888105",
+    "price": "30.18"
+  },
+  {
+    "ticker": "LLL",
+    "sedol": "2247366",
+    "name": "L-3 COMMUNICATIONS HOLDINGS",
+    "ric": "LLL.N",
+    "cusip": "502424104",
+    "price": "79.63"
+  },
+  {
+    "ticker": "ATG",
+    "sedol": "2060961",
+    "name": "AGL RESOURCES INC",
+    "ric": "ATG.N",
+    "cusip": "001204106",
+    "price": "37.88"
+  },
+  {
+    "ticker": "HMA",
+    "sedol": "2417987",
+    "name": "HEALTH MGMT ASSOCIATES INC-A",
+    "ric": "HMA.N",
+    "cusip": "421933102",
+    "price": "19.79"
+  },
+  {
+    "ticker": "IMOS",
+    "sedol": "2774585",
+    "name": "CHIPMOS TECHNOLOGIES BERMUDA",
+    "ric": "IMOS.OQ",
+    "cusip": "G2110R106",
+    "price": "7.58"
+  },
+  {
+    "ticker": "GCT",
+    "sedol": "B03GQV7",
+    "name": "GMH COMMUNITIES TRUST",
+    "ric": "GCT.N",
+    "cusip": "36188G102",
+    "price": "13.32"
+  },
+  {
+    "ticker": "TCO",
+    "sedol": "2872252",
+    "name": "TAUBMAN CENTERS INC",
+    "ric": "TCO.N",
+    "cusip": "876664103",
+    "price": "45.53"
+  },
+  {
+    "ticker": "CUZ",
+    "sedol": "2229922",
+    "name": "COUSINS PROPERTIES INC",
+    "ric": "CUZ.N",
+    "cusip": "222795106",
+    "price": "34.46"
+  },
+  {
+    "ticker": "CVA",
+    "sedol": "2255778",
+    "name": "COVANTA HOLDING CORP",
+    "ric": "CVA.N",
+    "cusip": "22282E102",
+    "price": "19.75"
+  },
+  {
+    "ticker": "PEI",
+    "sedol": "2680767",
+    "name": "PENN REAL ESTATE INVEST TST",
+    "ric": "PEI.N",
+    "cusip": "709102107",
+    "price": "39.00"
+  },
+  {
+    "ticker": "SGU",
+    "sedol": "2766399",
+    "name": "STAR GAS PARTNERS L.P.",
+    "ric": "SGU.N",
+    "cusip": "85512C105",
+    "price": "2.75"
+  },
+  {
+    "ticker": "LNC",
+    "sedol": "2516378",
+    "name": "LINCOLN NATIONAL CORP",
+    "ric": "LNC.N",
+    "cusip": "534187109",
+    "price": "64.59"
+  },
+  {
+    "ticker": "HEW",
+    "sedol": "2876351",
+    "name": "HEWITT ASSOCIATES INC-CL A",
+    "ric": "HEW.N",
+    "cusip": "42822Q100",
+    "price": "25.21"
+  },
+  {
+    "ticker": "JNS",
+    "sedol": "2605555",
+    "name": "JANUS CAPITAL GROUP INC",
+    "ric": "JNS.N",
+    "cusip": "47102X105",
+    "price": "19.69"
+  },
+  {
+    "ticker": "NTAP",
+    "sedol": "2630643",
+    "name": "NETWORK APPLIANCE INC",
+    "ric": "NTAP.OQ",
+    "cusip": "64120L104",
+    "price": "36.19"
+  },
+  {
+    "ticker": "SYNT",
+    "sedol": "2095703",
+    "name": "SYNTEL INC",
+    "ric": "SYNT.OQ",
+    "cusip": "87162H103",
+    "price": "22.63"
+  },
+  {
+    "ticker": "ASX",
+    "sedol": "2646521",
+    "name": "ADVANCED SEMICONDUCTOR E-ADR",
+    "ric": "ASX.N",
+    "cusip": "00756M404",
+    "price": "5.02"
+  },
+  {
+    "ticker": "SMH",
+    "sedol": "2586713",
+    "name": "SEMICONDUCTOR HOLDRs TRUST",
+    "ric": "SMH.A",
+    "cusip": "816636203",
+    "price": "34.22"
+  },
+  {
+    "ticker": "XLF",
+    "sedol": "2364038",
+    "name": "FINANCIAL SELECT SECTOR SPDR",
+    "ric": "XLF.A",
+    "cusip": "81369Y605",
+    "price": "35.76"
+  },
+  {
+    "ticker": "EWJ",
+    "sedol": "2373799",
+    "name": "ISHARES MSCI JAPAN INDEX FD",
+    "ric": "EWJ.N",
+    "cusip": "464286848",
+    "price": "13.30"
+  },
+  {
+    "ticker": "CB",
+    "sedol": "2195722",
+    "name": "CHUBB CORP",
+    "ric": "CB.N",
+    "cusip": "171232101",
+    "price": "52.77"
+  },
+  {
+    "ticker": "HUN",
+    "sedol": "B0650B9",
+    "name": "HUNTSMAN CORP",
+    "ric": "HUN.N",
+    "cusip": "447011107",
+    "price": "17.50"
+  },
+  {
+    "ticker": "ABB",
+    "sedol": "2748472",
+    "name": "ABB LTD-SPON ADR",
+    "ric": "ABB.N",
+    "cusip": "000375204",
+    "price": "15.57"
+  },
+  {
+    "ticker": "AMP",
+    "sedol": "B0J7D57",
+    "name": "AMERIPRISE FINANCIAL INC",
+    "ric": "AMP_w.N",
+    "cusip": "03076C106",
+    "price": "51.65"
+  },
+  {
+    "ticker": "CNB",
+    "sedol": "2205041",
+    "name": "COLONIAL BANCGROUP INC",
+    "ric": "CNB.N",
+    "cusip": "195493309",
+    "price": "23.69"
+  },
+  {
+    "ticker": "KEY",
+    "sedol": "2490911",
+    "name": "KEYCORP",
+    "ric": "KEY.N",
+    "cusip": "493267108",
+    "price": "37.00"
+  },
+  {
+    "ticker": "MANH",
+    "sedol": "2239471",
+    "name": "MANHATTAN ASSOCIATES INC",
+    "ric": "MANH.OQ",
+    "cusip": "562750109",
+    "price": "20.57"
+  },
+  {
+    "ticker": "DPL",
+    "sedol": "2258904",
+    "name": "DPL INC",
+    "ric": "DPL.N",
+    "cusip": "233293109",
+    "price": "27.60"
+  },
+  {
+    "ticker": "MS",
+    "sedol": "2262314",
+    "name": "MORGAN STANLEY",
+    "ric": "MS.N",
+    "cusip": "617446448",
+    "price": "77.33"
+  },
+  {
+    "ticker": "MIR",
+    "sedol": "B0V28J9",
+    "name": "MIRANT CORP",
+    "ric": "MIR.N",
+    "cusip": "60467R100",
+    "price": "28.89"
+  },
+  {
+    "ticker": "SCI",
+    "sedol": "2797560",
+    "name": "SERVICE CORP INTERNATIONAL",
+    "ric": "SCI.N",
+    "cusip": "817565104",
+    "price": "9.53"
+  },
+  {
+    "ticker": "TGT",
+    "sedol": "2259101",
+    "name": "TARGET CORP",
+    "ric": "TGT.N",
+    "cusip": "87612E106",
+    "price": "57.76"
+  },
+  {
+    "ticker": "AVTJ",
+    "sedol": "B01R2X6",
+    "name": "INQBB CORP",
+    "ric": "ACEE.PK",
+    "cusip": "05356L102",
+    "price": "0.01"
+  },
+  {
+    "ticker": "BPG",
+    "sedol": "B01DDB9",
+    "name": "BPI ENERGY HOLDINGS INC",
+    "ric": "BPG.A",
+    "cusip": "055934103",
+    "price": "0.57"
+  },
+  {
+    "ticker": "LAUR",
+    "sedol": "2867689",
+    "name": "LAUREATE EDUCATION INC",
+    "ric": "LAUR.OQ",
+    "cusip": "518613104",
+    "price": "47.07"
+  },
+  {
+    "ticker": "NLY",
+    "sedol": "2113456",
+    "name": "ANNALY MORTGAGE MANAGEMENT",
+    "ric": "NLY.N",
+    "cusip": "035710409",
+    "price": "13.89"
+  },
+  {
+    "ticker": "CTV",
+    "sedol": "2042947",
+    "name": "COMMSCOPE INC",
+    "ric": "CTV.N",
+    "cusip": "203372107",
+    "price": "31.78"
+  },
+  {
+    "ticker": "BNK",
+    "sedol": "B05Q2D9",
+    "name": "TD BANKNORTH INC",
+    "ric": "BNK.N",
+    "cusip": "87235A101",
+    "price": "29.83"
+  },
+  {
+    "ticker": "INTX",
+    "sedol": "2238768",
+    "name": "INTERSECTIONS INC",
+    "ric": "INTX.OQ",
+    "cusip": "460981301",
+    "price": "10.38"
+  },
+  {
+    "ticker": "RIG",
+    "sedol": "2821287",
+    "name": "TRANSOCEAN INC",
+    "ric": "RIG.N",
+    "cusip": "G90078109",
+    "price": "74.33"
+  },
+  {
+    "ticker": "BUD",
+    "sedol": "2033004",
+    "name": "ANHEUSER-BUSCH COS INC.",
+    "ric": "BUD.N",
+    "cusip": "035229103",
+    "price": "46.97"
+  },
+  {
+    "ticker": "PLD",
+    "sedol": "2790611",
+    "name": "PROLOGIS",
+    "ric": "PLD.N",
+    "cusip": "743410102",
+    "price": "60.26"
+  },
+  {
+    "ticker": "CL",
+    "sedol": "2209106",
+    "name": "COLGATE-PALMOLIVE CO",
+    "ric": "CL.N",
+    "cusip": "194162103",
+    "price": "64.87"
+  },
+  {
+    "ticker": "ING",
+    "sedol": "2452643",
+    "name": "ING GROEP N.V.-SPONSORED ADR",
+    "ric": "ING.N",
+    "cusip": "456837103",
+    "price": "43.39"
+  },
+  {
+    "ticker": "HR",
+    "sedol": "2417921",
+    "name": "HEALTHCARE REALTY TRUST INC",
+    "ric": "HR.N",
+    "cusip": "421946104",
+    "price": "37.43"
+  },
+  {
+    "ticker": "NHP",
+    "sedol": "2095361",
+    "name": "NATIONWIDE HEALTH PPTYS INC",
+    "ric": "NHP.N",
+    "cusip": "638620104",
+    "price": "27.30"
+  },
+  {
+    "ticker": "ADBE",
+    "sedol": "2008154",
+    "name": "ADOBE SYSTEMS INC",
+    "ric": "ADBE.OQ",
+    "cusip": "00724F101",
+    "price": "33.38"
+  },
+  {
+    "ticker": "ITC",
+    "sedol": "B0F7FR7",
+    "name": "ITC HOLDINGS CORP",
+    "ric": "ITC.N",
+    "cusip": "465685105",
+    "price": "35.40"
+  },
+  {
+    "ticker": "CCU",
+    "sedol": "2202536",
+    "name": "CLEAR CHANNEL COMMUNICATIONS",
+    "ric": "CCU.N",
+    "cusip": "184502102",
+    "price": "34.38"
+  },
+  {
+    "ticker": "CERN",
+    "sedol": "2185284",
+    "name": "CERNER CORP",
+    "ric": "CERN.OQ",
+    "cusip": "156782104",
+    "price": "39.81"
+  },
+  {
+    "ticker": "HON",
+    "sedol": "2020459",
+    "name": "HONEYWELL INTERNATIONAL INC",
+    "ric": "HON.N",
+    "cusip": "438516106",
+    "price": "42.97"
+  },
+  {
+    "ticker": "APC",
+    "sedol": "2032380",
+    "name": "ANADARKO PETROLEUM CORP",
+    "ric": "APC.N",
+    "cusip": "032511107",
+    "price": "46.80"
+  },
+  {
+    "ticker": "R",
+    "sedol": "2760669",
+    "name": "RYDER SYSTEM INC",
+    "ric": "R.N",
+    "cusip": "783549108",
+    "price": "53.01"
+  },
+  {
+    "ticker": "RX",
+    "sedol": "2256511",
+    "name": "IMS HEALTH INC",
+    "ric": "RX.N",
+    "cusip": "449934108",
+    "price": "29.11"
+  },
+  {
+    "ticker": "KPA",
+    "sedol": "2453646",
+    "name": "INNKEEPERS USA TRUST",
+    "ric": "KPA.N",
+    "cusip": "4576J0104",
+    "price": "16.01"
+  },
+  {
+    "ticker": "TROW",
+    "sedol": "2702337",
+    "name": "T ROWE PRICE GROUP INC",
+    "ric": "TROW.OQ",
+    "cusip": "74144T108",
+    "price": "82.55"
+  },
+  {
+    "ticker": "PG",
+    "sedol": "2704407",
+    "name": "PROCTER & GAMBLE CO",
+    "ric": "PG.N",
+    "cusip": "742718109",
+    "price": "63.25"
+  },
+  {
+    "ticker": "KRC",
+    "sedol": "2495529",
+    "name": "KILROY REALTY CORP",
+    "ric": "KRC.N",
+    "cusip": "49427F108",
+    "price": "72.94"
+  },
+  {
+    "ticker": "SNDK",
+    "sedol": "2765802",
+    "name": "SANDISK CORP",
+    "ric": "SNDK.OQ",
+    "cusip": "80004C101",
+    "price": "63.17"
+  },
+  {
+    "ticker": "ALKS",
+    "sedol": "2015176",
+    "name": "ALKERMES INC",
+    "ric": "ALKS.OQ",
+    "cusip": "01642T108",
+    "price": "21.16"
+  },
+  {
+    "ticker": "CE",
+    "sedol": "B05MZT4",
+    "name": "CELANESE CORP-SERIES A",
+    "ric": "CE.N",
+    "cusip": "150870103",
+    "price": "20.07"
+  },
+  {
+    "ticker": "LEN",
+    "sedol": "2511920",
+    "name": "LENNAR CORP-CL A",
+    "ric": "LEN.N",
+    "cusip": "526057104",
+    "price": "46.26"
+  },
+  {
+    "ticker": "HWAY",
+    "sedol": "2026059",
+    "name": "HEALTHWAYS INC",
+    "ric": "HWAY.OQ",
+    "cusip": "422245100",
+    "price": "48.02"
+  },
+  {
+    "ticker": "FCN",
+    "sedol": "2351449",
+    "name": "FTI CONSULTING INC",
+    "ric": "FCN.N",
+    "cusip": "302941109",
+    "price": "29.15"
+  },
+  {
+    "ticker": "NYX",
+    "sedol": "B10CG04",
+    "name": "NYSE GROUP INC",
+    "ric": "NYX.N",
+    "cusip": "62949W103",
+    "price": "94.69"
+  },
+  {
+    "ticker": "ENDP",
+    "sedol": "2612287",
+    "name": "ENDO PHARMACEUT HLDGS INC",
+    "ric": "ENDP.OQ",
+    "cusip": "29264F205",
+    "price": "31.26"
+  },
+  {
+    "ticker": "AA",
+    "sedol": "2021805",
+    "name": "ALCOA INC",
+    "ric": "AA.N",
+    "cusip": "013817101",
+    "price": "28.49"
+  },
+  {
+    "ticker": "FLIR",
+    "sedol": "2344717",
+    "name": "FLIR SYSTEMS INC",
+    "ric": "FLIR.OQ",
+    "cusip": "302445101",
+    "price": "24.94"
+  },
+  {
+    "ticker": "BBW",
+    "sedol": "B034L50",
+    "name": "BUILD-A-BEAR WORKSHOP INC",
+    "ric": "BBW.N",
+    "cusip": "120076104",
+    "price": "28.99"
+  },
+  {
+    "ticker": "JNPR",
+    "sedol": "2431846",
+    "name": "JUNIPER NETWORKS INC",
+    "ric": "JNPR.OQ",
+    "cusip": "48203R104",
+    "price": "17.70"
+  },
+  {
+    "ticker": "ASML",
+    "sedol": "2242253",
+    "name": "ASML HOLDING NV-NY REG SHS",
+    "ric": "ASML.OQ",
+    "cusip": "N07059111",
+    "price": "21.50"
+  },
+  {
+    "ticker": "CMG",
+    "sedol": "B0X7DZ3",
+    "name": "CHIPOTLE MEXICAN GRILL-CL A",
+    "ric": "CMG.N",
+    "cusip": "169656105",
+    "price": "56.65"
+  },
+  {
+    "ticker": "BBI",
+    "sedol": "2441771",
+    "name": "BLOCKBUSTER INC-CL A",
+    "ric": "BBI.N",
+    "cusip": "093679108",
+    "price": "4.62"
+  },
+  {
+    "ticker": "SCHL",
+    "sedol": "2779234",
+    "name": "SCHOLASTIC CORP",
+    "ric": "SCHL.OQ",
+    "cusip": "807066105",
+    "price": "26.33"
+  },
+  {
+    "ticker": "HNZ",
+    "sedol": "2419240",
+    "name": "HJ HEINZ CO",
+    "ric": "HNZ.N",
+    "cusip": "423074103",
+    "price": "43.29"
+  },
+  {
+    "ticker": "NETP",
+    "sedol": "2411923",
+    "name": "NET PERCEPTIONS INC",
+    "ric": "NETP.PK",
+    "cusip": "64107U101",
+    "price": "2.06"
+  },
+  {
+    "ticker": "PPL",
+    "sedol": "2680905",
+    "name": "PPL CORPORATION",
+    "ric": "PPL.N",
+    "cusip": "69351T106",
+    "price": "34.10"
+  },
+  {
+    "ticker": "NKT",
+    "sedol": "B0NNWX2",
+    "name": "NEWKIRK REALTY TRUST INC",
+    "ric": "NKT.N",
+    "cusip": "651497109",
+    "price": "16.70"
+  },
+  {
+    "ticker": "GI",
+    "sedol": "2368193",
+    "name": "GIANT INDUSTRIES INC",
+    "ric": "GI.N",
+    "cusip": "374508109",
+    "price": "76.25"
+  },
+  {
+    "ticker": "LXP",
+    "sedol": "2139151",
+    "name": "LEXINGTON CORPORATE PPTYS TR",
+    "ric": "LXP.N",
+    "cusip": "529043101",
+    "price": "21.04"
+  },
+  {
+    "ticker": "SVNT",
+    "sedol": "2098519",
+    "name": "SAVIENT PHARMACEUTICALS INC",
+    "ric": "SVNT.OQ",
+    "cusip": "80517Q100",
+    "price": "9.46"
+  },
+  {
+    "ticker": "MSCC",
+    "sedol": "2588140",
+    "name": "MICROSEMI CORP",
+    "ric": "MSCC.OQ",
+    "cusip": "595137100",
+    "price": "26.73"
+  },
+  {
+    "ticker": "WPI",
+    "sedol": "2943545",
+    "name": "WATSON PHARMACEUTICALS INC",
+    "ric": "WPI.N",
+    "cusip": "942683103",
+    "price": "24.71"
+  },
+  {
+    "ticker": "ANPI",
+    "sedol": "2565325",
+    "name": "ANGIOTECH PHARMACEUTICALS IN",
+    "ric": "ANPI.OQ",
+    "cusip": "034918102",
+    "price": "15.24"
+  },
+  {
+    "ticker": "ANF",
+    "sedol": "2004185",
+    "name": "ABERCROMBIE & FITCH CO-CL A",
+    "ric": "ANF.N",
+    "cusip": "002896207",
+    "price": "74.37"
+  },
+  {
+    "ticker": "ENWV",
+    "sedol": "2962119",
+    "name": "ENDWAVE CORPORATION",
+    "ric": "ENWV.OQ",
+    "cusip": "29264A206",
+    "price": "12.55"
+  },
+  {
+    "ticker": "SO",
+    "sedol": "2829601",
+    "name": "SOUTHERN CO",
+    "ric": "SO.N",
+    "cusip": "842587107",
+    "price": "36.03"
+  },
+  {
+    "ticker": "MLS",
+    "sedol": "2887858",
+    "name": "MILLS CORP/THE",
+    "ric": "MLS.N",
+    "cusip": "601148109",
+    "price": "19.01"
+  },
+  {
+    "ticker": "SPSN",
+    "sedol": "B0TM8H9",
+    "name": "SPANSION INC-CLASS A",
+    "ric": "SPSN.OQ",
+    "cusip": "84649R101",
+    "price": "17.99"
+  },
+  {
+    "ticker": "EXC",
+    "sedol": "2670519",
+    "name": "EXELON CORP",
+    "ric": "EXC.N",
+    "cusip": "30161N101",
+    "price": "58.89"
+  },
+  {
+    "ticker": "JDO",
+    "sedol": "2304238",
+    "name": "JED OIL INC",
+    "ric": "JDO.A",
+    "cusip": "472310101",
+    "price": "3.22"
+  },
+  {
+    "ticker": "EWS",
+    "sedol": "2373830",
+    "name": "ISHARES MSCI SINGAPORE",
+    "ric": "EWS.N",
+    "cusip": "464286673",
+    "price": "10.44"
+  },
+  {
+    "ticker": "CCL",
+    "sedol": "2523044",
+    "name": "CARNIVAL CORP",
+    "ric": "CCL.N",
+    "cusip": "143658300",
+    "price": "48.73"
+  },
+  {
+    "ticker": "XLE",
+    "sedol": "2402466",
+    "name": "ENERGY SELECT SECTOR SPDR",
+    "ric": "XLE.A",
+    "cusip": "81369Y506",
+    "price": "57.35"
+  },
+  {
+    "ticker": "SAFC",
+    "sedol": "2766805",
+    "name": "SAFECO CORP",
+    "ric": "SAFC.OQ",
+    "cusip": "786429100",
+    "price": "56.48"
+  },
+  {
+    "ticker": "PNCL",
+    "sedol": "2170848",
+    "name": "PINNACLE AIRLINES CORP",
+    "ric": "PNCL.OQ",
+    "cusip": "723443107",
+    "price": "9.48"
+  },
+  {
+    "ticker": "LCC",
+    "sedol": "B0LGKM8",
+    "name": "US AIRWAYS GROUP INC",
+    "ric": "LCC.N",
+    "cusip": "90341W108",
+    "price": "51.53"
+  },
+  {
+    "ticker": "QGEN",
+    "sedol": "2437907",
+    "name": "QIAGEN N.V.",
+    "ric": "QGEN.OQ",
+    "cusip": "N72482107",
+    "price": "15.04"
+  },
+  {
+    "ticker": "A",
+    "sedol": "2520153",
+    "name": "AGILENT TECHNOLOGIES INC",
+    "ric": "A.N",
+    "cusip": "00846U101",
+    "price": "35.00"
+  },
+  {
+    "ticker": "FBR",
+    "sedol": "2516817",
+    "name": "FRIEDMAN BILLINGS RAMSEY-A",
+    "ric": "FBR.N",
+    "cusip": "358434108",
+    "price": "7.28"
+  },
+  {
+    "ticker": "CNSL",
+    "sedol": "B07LSQ7",
+    "name": "CONSOLIDATED COMMUNICATIONS",
+    "ric": "CNSL.OQ",
+    "cusip": "209034107",
+    "price": "18.05"
+  },
+  {
+    "ticker": "CNO",
+    "sedol": "2657750",
+    "name": "CONSECO INC",
+    "ric": "CNO.N",
+    "cusip": "208464883",
+    "price": "19.93"
+  },
+  {
+    "ticker": "ADM",
+    "sedol": "2047317",
+    "name": "ARCHER-DANIELS-MIDLAND CO",
+    "ric": "ADM.N",
+    "cusip": "039483102",
+    "price": "35.06"
+  },
+  {
+    "ticker": "ARRS",
+    "sedol": "2036434",
+    "name": "ARRIS GROUP INC",
+    "ric": "ARRS.OQ",
+    "cusip": "04269Q100",
+    "price": "12.84"
+  },
+  {
+    "ticker": "STO",
+    "sedol": "2763129",
+    "name": "STATOIL ASA-SPON ADR",
+    "ric": "STO.N",
+    "cusip": "85771P102",
+    "price": "27.29"
+  },
+  {
+    "ticker": "AET",
+    "sedol": "2695921",
+    "name": "AETNA INC",
+    "ric": "AET.N",
+    "cusip": "00817Y108",
+    "price": "40.76"
+  },
+  {
+    "ticker": "DBRN",
+    "sedol": "2280565",
+    "name": "DRESS BARN INC",
+    "ric": "DBRN.OQ",
+    "cusip": "261570105",
+    "price": "26.47"
+  },
+  {
+    "ticker": "SNY",
+    "sedol": "2964557",
+    "name": "SANOFI-AVENTIS-ADR",
+    "ric": "SNY.N",
+    "cusip": "80105N105",
+    "price": "42.64"
+  },
+  {
+    "ticker": "HCP",
+    "sedol": "2417578",
+    "name": "HEALTH CARE PPTYS INVEST INC",
+    "ric": "HCP.N",
+    "cusip": "421915109",
+    "price": "32.17"
+  },
+  {
+    "ticker": "WYE",
+    "sedol": "2027104",
+    "name": "WYETH",
+    "ric": "WYE.N",
+    "cusip": "983024100",
+    "price": "48.85"
+  },
+  {
+    "ticker": "JCP",
+    "sedol": "2680303",
+    "name": "J.C. PENNEY CO INC",
+    "ric": "JCP.N",
+    "cusip": "708160106",
+    "price": "78.74"
+  },
+  {
+    "ticker": "TRA",
+    "sedol": "2462619",
+    "name": "TERRA INDUSTRIES INC",
+    "ric": "TRA.N",
+    "cusip": "880915103",
+    "price": "9.35"
+  },
+  {
+    "ticker": "CSE",
+    "sedol": "2930246",
+    "name": "CAPITALSOURCE INC",
+    "ric": "CSE.N",
+    "cusip": "14055X102",
+    "price": "26.42"
+  },
+  {
+    "ticker": "TOA",
+    "sedol": "2207489",
+    "name": "TECHNICAL OLYMPIC USA INC",
+    "ric": "TOA.N",
+    "cusip": "878483106",
+    "price": "8.41"
+  },
+  {
+    "ticker": "SIRI",
+    "sedol": "2159698",
+    "name": "SIRIUS SATELLITE RADIO INC",
+    "ric": "SIRI.OQ",
+    "cusip": "82966U103",
+    "price": "4.54"
+  },
+  {
+    "ticker": "RECN",
+    "sedol": "2697853",
+    "name": "RESOURCES CONNECTION INC",
+    "ric": "RECN.OQ",
+    "cusip": "76122Q105",
+    "price": "28.46"
+  },
+  {
+    "ticker": "CCI",
+    "sedol": "2285991",
+    "name": "CROWN CASTLE INTL CORP",
+    "ric": "CCI.N",
+    "cusip": "228227104",
+    "price": "32.77"
+  },
+  {
+    "ticker": "SON",
+    "sedol": "2821395",
+    "name": "SONOCO PRODUCTS CO",
+    "ric": "SON.N",
+    "cusip": "835495102",
+    "price": "36.70"
+  },
+  {
+    "ticker": "EAT",
+    "sedol": "2193544",
+    "name": "BRINKER INTERNATIONAL INC",
+    "ric": "EAT.N",
+    "cusip": "109641100",
+    "price": "46.79"
+  },
+  {
+    "ticker": "GSL",
+    "sedol": "B01C1Z6",
+    "name": "GLOBAL SIGNAL INC",
+    "ric": "GSL.N",
+    "cusip": "37944Q103",
+    "price": "52.86"
+  },
+  {
+    "ticker": "MU",
+    "sedol": "2588184",
+    "name": "MICRON TECHNOLOGY INC",
+    "ric": "MU.N",
+    "cusip": "595112103",
+    "price": "14.21"
+  },
+  {
+    "ticker": "BRVO",
+    "sedol": "2249878",
+    "name": "BRAVO!FOODS INTERNATIONAL CP",
+    "ric": "BRVO.OB",
+    "cusip": "105666101",
+    "price": "0.38"
+  },
+  {
+    "ticker": "IFSIA",
+    "sedol": "2462910",
+    "name": "INTERFACE INC-CL A",
+    "ric": "IFSIA.OQ",
+    "cusip": "458665106",
+    "price": "14.79"
+  },
+  {
+    "ticker": "HCA",
+    "sedol": "2212193",
+    "name": "HCA INC",
+    "ric": "HCA.N",
+    "cusip": "404119109",
+    "price": "50.85"
+  },
+  {
+    "ticker": "LAYN",
+    "sedol": "2508018",
+    "name": "LAYNE CHRISTENSEN COMPANY",
+    "ric": "LAYN.OQ",
+    "cusip": "521050104",
+    "price": "29.30"
+  },
+  {
+    "ticker": "GENZ",
+    "sedol": "2367598",
+    "name": "GENZYME CORP",
+    "ric": "GENZ.OQ",
+    "cusip": "372917104",
+    "price": "56.28"
+  },
+  {
+    "ticker": "SIRF",
+    "sedol": "2712002",
+    "name": "SIRF TECHNOLOGY HOLDINGS INC",
+    "ric": "SIRF.OQ",
+    "cusip": "82967H101",
+    "price": "33.02"
+  },
+  {
+    "ticker": "MON",
+    "sedol": "2654320",
+    "name": "MONSANTO CO",
+    "ric": "MON.N",
+    "cusip": "61166W101",
+    "price": "46.86"
+  },
+  {
+    "ticker": "BAY",
+    "sedol": "2085652",
+    "name": "BAYER AG-SPONSORED ADR",
+    "ric": "BAY.N",
+    "cusip": "072730302",
+    "price": "51.38"
+  },
+  {
+    "ticker": "UNH",
+    "sedol": "2917766",
+    "name": "UNITEDHEALTH GROUP INC",
+    "ric": "UNH.N",
+    "cusip": "91324P102",
+    "price": "46.75"
+  },
+  {
+    "ticker": "MEOH",
+    "sedol": "2578378",
+    "name": "METHANEX CORP",
+    "ric": "MEOH.OQ",
+    "cusip": "59151K108",
+    "price": "24.10"
+  },
+  {
+    "ticker": "PCAR",
+    "sedol": "2665861",
+    "name": "PACCAR INC",
+    "ric": "PCAR.OQ",
+    "cusip": "693718108",
+    "price": "80.26"
+  },
+  {
+    "ticker": "Q",
+    "sedol": "2034494",
+    "name": "QWEST COMMUNICATIONS INTL",
+    "ric": "Q.N",
+    "cusip": "749121109",
+    "price": "8.20"
+  },
+  {
+    "ticker": "IP",
+    "sedol": "2465254",
+    "name": "INTERNATIONAL PAPER CO",
+    "ric": "IP.N",
+    "cusip": "460146103",
+    "price": "32.50"
+  },
+  {
+    "ticker": "ITT",
+    "sedol": "2465760",
+    "name": "ITT CORP",
+    "ric": "ITT.N",
+    "cusip": "450911102",
+    "price": "53.95"
+  },
+  {
+    "ticker": "IJR",
+    "sedol": "2678869",
+    "name": "ISHARES S&P SMALLCAP 600",
+    "ric": "IJR.N",
+    "cusip": "464287804",
+    "price": "64.90"
+  },
+  {
+    "ticker": "ORCL",
+    "sedol": "2661568",
+    "name": "ORACLE CORP",
+    "ric": "ORCL.OQ",
+    "cusip": "68389X105",
+    "price": "14.24"
+  },
+  {
+    "ticker": "AHL",
+    "sedol": "2172372",
+    "name": "ASPEN INSURANCE HOLDINGS LTD",
+    "ric": "AHL.N",
+    "cusip": "G05384105",
+    "price": "26.25"
+  },
+  {
+    "ticker": "HNT",
+    "sedol": "2418623",
+    "name": "HEALTH NET INC",
+    "ric": "HNT.N",
+    "cusip": "42222G108",
+    "price": "43.01"
+  },
+  {
+    "ticker": "VLCM",
+    "sedol": "B0CCS09",
+    "name": "VOLCOM INC",
+    "ric": "VLCM.OQ",
+    "cusip": "92864N101",
+    "price": "37.22"
+  },
+  {
+    "ticker": "WEC",
+    "sedol": "2973995",
+    "name": "WISCONSIN ENERGY CORP",
+    "ric": "WEC.N",
+    "cusip": "976657106",
+    "price": "46.09"
+  },
+  {
+    "ticker": "PDC",
+    "sedol": "2288075",
+    "name": "PIONEER DRILLING COMPANY",
+    "ric": "PDC.A",
+    "cusip": "723655106",
+    "price": "13.56"
+  },
+  {
+    "ticker": "XLNX",
+    "sedol": "2985677",
+    "name": "XILINX INC",
+    "ric": "XLNX.OQ",
+    "cusip": "983919101",
+    "price": "28.50"
+  },
+  {
+    "ticker": "GKIS",
+    "sedol": "B02LX34",
+    "name": "GOLD KIST INC",
+    "ric": "GKIS.OQ",
+    "cusip": "380614107",
+    "price": "13.66"
+  },
+  {
+    "ticker": "AOI",
+    "sedol": "2269865",
+    "name": "ALLIANCE ONE INTERNATIONAL I",
+    "ric": "AOI.N",
+    "cusip": "018772103",
+    "price": "5.62"
+  },
+  {
+    "ticker": "HCBK",
+    "sedol": "2437952",
+    "name": "HUDSON CITY BANCORP INC",
+    "ric": "HCBK.OQ",
+    "cusip": "443683107",
+    "price": "13.67"
+  },
+  {
+    "ticker": "BGP",
+    "sedol": "2081326",
+    "name": "BORDERS GROUP INC",
+    "ric": "BGP.N",
+    "cusip": "099709107",
+    "price": "23.96"
+  },
+  {
+    "ticker": "C",
+    "sedol": "2297907",
+    "name": "CITIGROUP INC",
+    "ric": "C.N",
+    "cusip": "172967101",
+    "price": "50.69"
+  },
+  {
+    "ticker": "ANN",
+    "sedol": "2038537",
+    "name": "ANNTAYLOR STORES CORP",
+    "ric": "ANN.N",
+    "cusip": "036115103",
+    "price": "38.81"
+  },
+  {
+    "ticker": "RF",
+    "sedol": "B01R311",
+    "name": "REGIONS FINANCIAL CORP",
+    "ric": "RF.N",
+    "cusip": "7591EP100",
+    "price": "37.02"
+  },
+  {
+    "ticker": "XTO",
+    "sedol": "2236911",
+    "name": "XTO ENERGY INC",
+    "ric": "XTO.N",
+    "cusip": "98385X106",
+    "price": "45.84"
+  },
+  {
+    "ticker": "ASO",
+    "sedol": "2012070",
+    "name": "AMSOUTH BANCORPORATION",
+    "ric": "ASO.N",
+    "cusip": "032165102",
+    "price": "28.73"
+  },
+  {
+    "ticker": "DOV",
+    "sedol": "2278407",
+    "name": "DOVER CORP",
+    "ric": "DOV.N",
+    "cusip": "260003108",
+    "price": "49.92"
+  },
+  {
+    "ticker": "SFE",
+    "sedol": "2766902",
+    "name": "SAFEGUARD SCIENTIFICS INC",
+    "ric": "SFE.N",
+    "cusip": "786449108",
+    "price": "2.47"
+  },
+  {
+    "ticker": "BOW",
+    "sedol": "2115537",
+    "name": "BOWATER INC",
+    "ric": "BOW.N",
+    "cusip": "102183100",
+    "price": "21.04"
+  },
+  {
+    "ticker": "PFE",
+    "sedol": "2684703",
+    "name": "PFIZER INC",
+    "ric": "PFE.N",
+    "cusip": "717081103",
+    "price": "25.89"
+  },
+  {
+    "ticker": "CMCSA",
+    "sedol": "2044545",
+    "name": "COMCAST CORP-CL A",
+    "ric": "CMCSA.OQ",
+    "cusip": "20030N101",
+    "price": "32.28"
+  },
+  {
+    "ticker": "CORS",
+    "sedol": "2739034",
+    "name": "CORUS BANKSHARES INC",
+    "ric": "CORS.OQ",
+    "cusip": "220873103",
+    "price": "65.52"
+  },
+  {
+    "ticker": "FPL",
+    "sedol": "2328915",
+    "name": "FPL GROUP INC",
+    "ric": "FPL.N",
+    "cusip": "302571104",
+    "price": "53.31"
+  },
+  {
+    "ticker": "PBG",
+    "sedol": "2404569",
+    "name": "PEPSI BOTTLING GROUP INC",
+    "ric": "PBG.N",
+    "cusip": "713409100",
+    "price": "31.94"
+  },
+  {
+    "ticker": "SPIL",
+    "sedol": "2577502",
+    "name": "SILICONWARE PRECISION -ADR",
+    "ric": "SPIL.OQ",
+    "cusip": "827084864",
+    "price": "7.03"
+  },
+  {
+    "ticker": "SIGM",
+    "sedol": "2807555",
+    "name": "SIGMA DESIGNS INC",
+    "ric": "SIGM.OQ",
+    "cusip": "826565103",
+    "price": "22.06"
+  },
+  {
+    "ticker": "USB",
+    "sedol": "2736035",
+    "name": "US BANCORP",
+    "ric": "USB.N",
+    "cusip": "902973304",
+    "price": "33.70"
+  },
+  {
+    "ticker": "RSH",
+    "sedol": "2871505",
+    "name": "RADIOSHACK CORP",
+    "ric": "RSH.N",
+    "cusip": "750438103",
+    "price": "17.24"
+  },
+  {
+    "ticker": "ACTC",
+    "sedol": "2988159",
+    "name": "ADVANCED CELL TECHNOLOGY INC",
+    "ric": "ACTC.OB",
+    "cusip": "00752K105",
+    "price": "0.85"
+  },
+  {
+    "ticker": "CAT",
+    "sedol": "2180201",
+    "name": "CATERPILLAR INC",
+    "ric": "CAT.N",
+    "cusip": "149123101",
+    "price": "59.52"
+  },
+  {
+    "ticker": "CMCSK",
+    "sedol": "2089687",
+    "name": "COMCAST CORP-SPECIAL CL A",
+    "ric": "CMCSK.OQ",
+    "cusip": "20030N200",
+    "price": "32.16"
+  },
+  {
+    "ticker": "HE",
+    "sedol": "2415204",
+    "name": "HAWAIIAN ELECTRIC INDS",
+    "ric": "HE.N",
+    "cusip": "419870100",
+    "price": "26.95"
+  },
+  {
+    "ticker": "ABT",
+    "sedol": "2002305",
+    "name": "ABBOTT LABORATORIES",
+    "ric": "ABT.N",
+    "cusip": "002824100",
+    "price": "45.65"
+  },
+  {
+    "ticker": "ASH",
+    "sedol": "B0BVFJ5",
+    "name": "ASHLAND INC",
+    "ric": "ASH.N",
+    "cusip": "044209104",
+    "price": "65.85"
+  },
+  {
+    "ticker": "UCO",
+    "sedol": "2591869",
+    "name": "UNIVERSAL COMPRESSION HLDGS",
+    "ric": "UCO.N",
+    "cusip": "913431102",
+    "price": "60.79"
+  },
+  {
+    "ticker": "STJ",
+    "sedol": "2767381",
+    "name": "ST JUDE MEDICAL INC",
+    "ric": "STJ.N",
+    "cusip": "790849103",
+    "price": "33.48"
+  },
+  {
+    "ticker": "KUL",
+    "sedol": "B0BCDT4",
+    "name": "KUHLMAN COMPANY INC",
+    "ric": "KUL.A",
+    "cusip": "501197107",
+    "price": "0.10"
+  },
+  {
+    "ticker": "ENZN",
+    "sedol": "2318660",
+    "name": "ENZON PHARMACEUTICALS INC",
+    "ric": "ENZN.OQ",
+    "cusip": "293904108",
+    "price": "8.03"
+  },
+  {
+    "ticker": "IRC",
+    "sedol": "B03WNC5",
+    "name": "INLAND REAL ESTATE CORP",
+    "ric": "IRC.N",
+    "cusip": "457461200",
+    "price": "18.32"
+  },
+  {
+    "ticker": "AV",
+    "sedol": "2624356",
+    "name": "AVAYA INC",
+    "ric": "AV.N",
+    "cusip": "053499109",
+    "price": "13.17"
+  }
+]
