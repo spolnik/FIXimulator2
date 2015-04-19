@@ -21,7 +21,7 @@ public class InstrumentsApplication extends Application<InstrumentsConfiguration
     ) throws Exception {
 
 
-        final InstrumentsApi instrumentsApi = new InstrumentRepository(configuration);
+        final InstrumentsApi instrumentsApi = new InMemoryInstrumentRepository(configuration);
         final InstrumentResource instrumentResource = new InstrumentResource(instrumentsApi);
         final InstrumentsFileHealthCheck healthCheck =
                 new InstrumentsFileHealthCheck(configuration.getDefaultInputFilePath());

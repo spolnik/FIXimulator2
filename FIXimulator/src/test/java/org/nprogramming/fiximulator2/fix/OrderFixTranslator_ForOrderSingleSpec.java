@@ -10,7 +10,7 @@ import quickfix.fix42.NewOrderSingle;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-public class OrderFixTranslator_ForOrderSingleScenarios {
+public class OrderFixTranslator_ForOrderSingleSpec {
 
     private OrderFixTranslator orderFixTranslator;
     private NewOrderSingle newOrderSingle;

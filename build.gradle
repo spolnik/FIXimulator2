@@ -19,7 +19,8 @@ subprojects {
                 libs.logback
 
         testCompile libs.test.junit,
-                libs.test.assertj
+                libs.test.assertj,
+                libs.test.mockito
     }
 
     apply plugin: 'jacoco'

@@ -9,22 +9,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class InstrumentRepository implements InstrumentsApi {
+public final class InMemoryInstrumentRepository implements InstrumentsApi {
 
-    private static final Logger LOG = LoggerFactory.getLogger(InstrumentRepository.class);
+    private static final Logger LOG = LoggerFactory.getLogger(
+            InMemoryInstrumentRepository.class
+    );
 
     private final List<Instrument> instruments = new ArrayList<>();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public InstrumentRepository(InstrumentsConfiguration configuration) {
+    public InMemoryInstrumentRepository(InstrumentsConfiguration configuration) {
 
         URL instrumentsJson =
-                InstrumentRepository.class.getClassLoader().getResource(
+                InMemoryInstrumentRepository.class.getClassLoader().getResource(
                         configuration.getDefaultInputFilePath()
                 );
 
@@ -50,7 +53,7 @@ public final class InstrumentRepository implements InstrumentsApi {
         }
     }
 
-    private List<Instrument> instruments(File file) throws java.io.IOException {
+    private List<Instrument> instruments(File file) throws IOException {
         return objectMapper.readValue(
                 file, new TypeReference<List<Instrument>>() {
                 });

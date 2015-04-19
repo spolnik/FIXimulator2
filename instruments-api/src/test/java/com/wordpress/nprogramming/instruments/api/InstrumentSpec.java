@@ -12,7 +12,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class InstrumentScenarios {
+public class InstrumentSpec {
 
     public static final String IBM_TICKER = "IBM";
     public static final String IBM_SEDOL = "2005973";

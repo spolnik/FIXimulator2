@@ -6,21 +6,21 @@ import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;
 import org.nprogramming.fiximulator2.domain.Order;
 import quickfix.field.*;
 import quickfix.fix42.NewOrderSingle;
-import quickfix.fix42.OrderCancelRequest;
+import quickfix.fix42.OrderCancelReplaceRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class OrderFixTranslator_ForOrderCancelRequestScenarios {
+public class OrderFixTranslator_ForOrderCancelReplaceRequestSpec {
 
     private OrderFixTranslator orderFixTranslator;
-    private OrderCancelRequest orderCancelRequest;
+    private OrderCancelReplaceRequest orderCancelReplaceRequest;
     private Order oldOrder;
 
     @Before
     public void setUp() throws Exception {
-        orderCancelRequest = orderCancelRequest();
+        orderCancelReplaceRequest = orderCancelReplaceRequest();
 
         OrderRepositoryWithCallback orderRepository =
                 mock(OrderRepositoryWithCallback.class);
@@ -37,57 +37,47 @@ public class OrderFixTranslator_ForOrderCancelRequestScenarios {
     @Test
     public void consumesProperlyClientOrderIdField() throws Exception {
 
-        Order order = orderFixTranslator.from(orderCancelRequest);
+        Order order = orderFixTranslator.from(orderCancelReplaceRequest);
 
         assertThat(order.getClientOrderID())
                 .isEqualTo(
-                        orderCancelRequest.getClOrdID().getValue());
+                        orderCancelReplaceRequest.getClOrdID().getValue());
     }
 
     @Test
     public void consumesProperlySideField() throws Exception {
 
-        Order order = orderFixTranslator.from(orderCancelRequest);
+        Order order = orderFixTranslator.from(orderCancelReplaceRequest);
 
         assertThat(order.getFIXSide())
                 .isEqualTo(
-                        orderCancelRequest.getSide().getValue());
+                        orderCancelReplaceRequest.getSide().getValue());
     }
 
     @Test
     public void consumesProperlySymbolField() throws Exception {
 
-        Order order = orderFixTranslator.from(orderCancelRequest);
+        Order order = orderFixTranslator.from(orderCancelReplaceRequest);
 
         assertThat(order.getSymbol())
                 .isEqualTo(
-                        orderCancelRequest.getSymbol().getValue());
+                        orderCancelReplaceRequest.getSymbol().getValue());
     }
 
     @Test
     public void consumesProperlyOrderQuantityField() throws Exception {
 
-        Order order = orderFixTranslator.from(orderCancelRequest);
+        Order order = orderFixTranslator.from(orderCancelReplaceRequest);
 
         assertThat(order.getQuantity())
                 .isEqualTo(
-                        orderCancelRequest.getOrderQty().getValue());
-    }
-
-    @Test
-    public void consumesProperlyPriceField() throws Exception {
-
-        Order order = orderFixTranslator.from(orderCancelRequest);
-
-        assertThat(order.getPriceLimit())
-                .isEqualTo(
-                        oldOrder.getPriceLimit());
+                        orderCancelReplaceRequest.getOrderQty().getValue());
     }
 
     @Test
     public void consumesProperlyOpenField() throws Exception {
 
-        Order order = orderFixTranslator.from(orderCancelRequest);
+        Order order = orderFixTranslator.from(orderCancelReplaceRequest);
 
         assertThat(order.getOpen())
                 .isEqualTo(
@@ -97,7 +87,7 @@ public class OrderFixTranslator_ForOrderCancelRequestScenarios {
     @Test
     public void consumesProperlyExecutedField() throws Exception {
 
-        Order order = orderFixTranslator.from(orderCancelRequest);
+        Order order = orderFixTranslator.from(orderCancelReplaceRequest);
 
         assertThat(order.getExecuted())
                 .isEqualTo(
@@ -107,7 +97,7 @@ public class OrderFixTranslator_ForOrderCancelRequestScenarios {
     @Test
     public void consumesProperlyStatusField() throws Exception {
 
-        Order order = orderFixTranslator.from(orderCancelRequest);
+        Order order = orderFixTranslator.from(orderCancelReplaceRequest);
 
         assertThat(order.getFIXStatus())
                 .isEqualTo(
@@ -115,9 +105,39 @@ public class OrderFixTranslator_ForOrderCancelRequestScenarios {
     }
 
     @Test
+    public void consumesProperlyTimeInForceField() throws Exception {
+
+        Order order = orderFixTranslator.from(orderCancelReplaceRequest);
+
+        assertThat(order.getFIXTimeInForce())
+                .isEqualTo(
+                        orderCancelReplaceRequest.getTimeInForce().getValue());
+    }
+
+    @Test
+    public void consumesProperlyPriceField() throws Exception {
+
+        Order order = orderFixTranslator.from(orderCancelReplaceRequest);
+
+        assertThat(order.getPriceLimit())
+                .isEqualTo(
+                        orderCancelReplaceRequest.getPrice().getValue());
+    }
+
+    @Test
+    public void consumesProperlyOrderTypeField() throws Exception {
+
+        Order order = orderFixTranslator.from(orderCancelReplaceRequest);
+
+        assertThat(order.getFIXOrderType())
+                .isEqualTo(
+                        orderCancelReplaceRequest.getOrdType().getValue());
+    }
+
+    @Test
     public void consumesProperlyAvgPxField() throws Exception {
 
-        Order order = orderFixTranslator.from(orderCancelRequest);
+        Order order = orderFixTranslator.from(orderCancelReplaceRequest);
 
         assertThat(order.getAvgPx())
                 .isEqualTo(
@@ -127,32 +147,35 @@ public class OrderFixTranslator_ForOrderCancelRequestScenarios {
     @Test
     public void consumesProperlySecurityIDField() throws Exception {
 
-        Order order = orderFixTranslator.from(orderCancelRequest);
+        Order order = orderFixTranslator.from(orderCancelReplaceRequest);
 
         assertThat(order.getSecurityID())
                 .isEqualTo(
-                        orderCancelRequest.getSecurityID().getValue());
+                        orderCancelReplaceRequest.getSecurityID().getValue());
     }
 
     @Test
     public void consumesProperlyIDSourceField() throws Exception {
 
-        Order order = orderFixTranslator.from(orderCancelRequest);
+        Order order = orderFixTranslator.from(orderCancelReplaceRequest);
 
         assertThat(order.getIdSource())
                 .isEqualTo(
-                        orderCancelRequest.getIDSource().getValue());
+                        orderCancelReplaceRequest.getIDSource().getValue());
     }
     
-    private OrderCancelRequest orderCancelRequest() {
+    private OrderCancelReplaceRequest orderCancelReplaceRequest() {
 
-        OrderCancelRequest order = new OrderCancelRequest();
+        OrderCancelReplaceRequest order = new OrderCancelReplaceRequest();
 
         order.set(new OrigClOrdID("ABC"));
         order.set(new ClOrdID("CDE"));
         order.set(new Side(Side.BUY));
         order.set(new Symbol("IBM"));
+        order.set(new OrdType(OrdType.MARKET));
         order.set(new OrderQty(12.0));
+        order.set(new TimeInForce(TimeInForce.DAY));
+        order.set(new Price(33.3));
         order.set(new SecurityID("IBM.N"));
         order.set(new IDSource(IDSource.RIC_CODE));
 
