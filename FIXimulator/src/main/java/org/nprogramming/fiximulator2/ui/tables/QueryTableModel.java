@@ -8,7 +8,7 @@
  * 
  */
 
-package org.nprogramming.fiximulator2.ui;
+package org.nprogramming.fiximulator2.ui.tables;
 
 import java.sql.*;
 import org.nprogramming.fiximulator2.fix.FIXimulator;
@@ -18,9 +18,10 @@ import org.slf4j.LoggerFactory;
 import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
 
-class QueryTableModel extends AbstractTableModel {
+public class QueryTableModel extends AbstractTableModel {
 
     private transient Vector results = new Vector();
+
     private static String[] columns = {"Results"};
     private transient Connection connection;
     private transient String url;
@@ -45,10 +46,12 @@ class QueryTableModel extends AbstractTableModel {
         }
     }
 
+    @Override
     public int getRowCount() {
         return results.size();
     }
 
+    @Override
     public int getColumnCount() {
         return columns.length;
     }
@@ -58,6 +61,7 @@ class QueryTableModel extends AbstractTableModel {
         return columns[column];
     }
 
+    @Override
     public Object getValueAt(int row, int column) {
         return ((String[])results.elementAt(row))[column];
     }

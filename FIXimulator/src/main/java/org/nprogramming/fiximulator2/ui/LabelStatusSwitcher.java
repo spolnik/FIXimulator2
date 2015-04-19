@@ -4,7 +4,7 @@ import org.nprogramming.fiximulator2.core.StatusSwitcher;
 
 import javax.swing.*;
 
-public final class JLabelStatusSwitcher implements StatusSwitcher {
+public final class LabelStatusSwitcher implements StatusSwitcher {
 
     private final JLabel label;
 
@@ -14,7 +14,7 @@ public final class JLabelStatusSwitcher implements StatusSwitcher {
     private final ImageIcon red = new ImageIcon(getClass()
         .getResource("/img/red.gif"));
 
-    public JLabelStatusSwitcher(JLabel label) {
+    public LabelStatusSwitcher(JLabel label) {
 
         this.label = label;
     }

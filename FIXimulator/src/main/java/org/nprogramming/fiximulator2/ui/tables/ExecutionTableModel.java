@@ -76,6 +76,8 @@ public class ExecutionTableModel extends AbstractTableModel implements NotifyApi
             case AVG_PX:
             case OPEN:
                 return Double.class;
+            case DKD:
+                return Boolean.class;
             default:
                 return String.class;
         }

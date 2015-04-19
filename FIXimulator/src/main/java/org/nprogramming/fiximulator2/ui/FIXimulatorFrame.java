@@ -10,6 +10,8 @@ import org.nprogramming.fiximulator2.domain.Execution;
 import org.nprogramming.fiximulator2.domain.IOI;
 import org.nprogramming.fiximulator2.domain.Order;
 import org.nprogramming.fiximulator2.fix.FIXimulator;
+import org.nprogramming.fiximulator2.ui.renderers.ExecutionCellRenderer;
+import org.nprogramming.fiximulator2.ui.renderers.IOICellRenderer;
 import org.nprogramming.fiximulator2.ui.tables.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -397,9 +399,9 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         executorRunningLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/red.gif"))); // NOI18N
         executorRunningLabel.setText("Executor status");
         FIXimulator.getApplication().addStatusCallbacks(
-                new JLabelStatusSwitcher(clientConnectedLabel),
-                new JLabelStatusSwitcher(ioiSenderRunningLabel),
-                new JLabelStatusSwitcher(executorRunningLabel)
+                new LabelStatusSwitcher(clientConnectedLabel),
+                new LabelStatusSwitcher(ioiSenderRunningLabel),
+                new LabelStatusSwitcher(executorRunningLabel)
         );
 
         ioiSenderRunningLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/red.gif"))); // NOI18N
