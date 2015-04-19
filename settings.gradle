@@ -2,3 +2,7 @@ rootProject.name = 'FIXimulator2'
 include 'Banzai'
 include 'FIXimulator'
 
+include 'instruments-service'
+include 'instruments-api'
+include 'instruments-client'
+

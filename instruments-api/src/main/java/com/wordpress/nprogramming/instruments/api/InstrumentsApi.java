@@ -1,6 +1,7 @@
-package org.nprogramming.fiximulator2.api;
+package com.wordpress.nprogramming.instruments.api;
 
-import org.nprogramming.fiximulator2.domain.Instrument;
+
+import com.wordpress.nprogramming.instruments.api.Instrument;
 
 import java.util.List;
 

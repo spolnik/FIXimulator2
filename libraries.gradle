@@ -1,12 +1,19 @@
 ext {
     fixmlVersion = '1.3.1'
+    dropwizardVersion = '0.8.1'
 
     libs = libsMap(
             slf4j_api: 'org.slf4j:slf4j-api:1.7.10',
-            log4j: 'log4j:log4j:1.2.17',
-            slf4j_log4j12: 'org.slf4j:slf4j-log4j12:1.7.10',
+            logback: 'ch.qos.logback:logback-classic:1.1.3',
             mina: 'org.apache.mina:mina-core:1.1.0',
             jdesktop: 'org.jdesktop:beansbinding:1.2.1',
+            apache: [
+                httpclient: 'org.apache.httpcomponents:httpclient:4.4.1'
+            ],
+            dropwizard: [
+                    core: "io.dropwizard:dropwizard-core:$dropwizardVersion",
+                    client: "io.dropwizard:dropwizard-client:$dropwizardVersion"
+            ],
             quickfixj_old: 'org.apache.servicemix.bundles:org.apache.servicemix.bundles.quickfix:1.5.0_1',
             quickfixj: [
                 core: "quickfixj:quickfixj-core:$fixmlVersion",

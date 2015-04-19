@@ -1,7 +1,7 @@
 package org.nprogramming.fiximulator2.ui.tables;
 
-import org.nprogramming.fiximulator2.api.InstrumentsApi;
-import org.nprogramming.fiximulator2.domain.Instrument;
+import com.wordpress.nprogramming.instruments.api.Instrument;
+import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.HashMap;

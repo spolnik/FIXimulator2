@@ -1,13 +1,13 @@
 package org.nprogramming.fiximulator2.fix;
 
-import org.nprogramming.fiximulator2.api.InstrumentsApi;
+import com.wordpress.nprogramming.instruments.api.Instrument;
+import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
 import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;
 import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
 import org.nprogramming.fiximulator2.log4fix.LogMessageSet;
 import org.nprogramming.fiximulator2.core.StatusSwitcher;
 import org.nprogramming.fiximulator2.domain.Execution;
 import org.nprogramming.fiximulator2.domain.IOI;
-import org.nprogramming.fiximulator2.domain.Instrument;
 import org.nprogramming.fiximulator2.domain.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

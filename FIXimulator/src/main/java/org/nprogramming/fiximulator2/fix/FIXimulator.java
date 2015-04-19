@@ -1,6 +1,6 @@
 package org.nprogramming.fiximulator2.fix;
 
-import org.nprogramming.fiximulator2.api.InstrumentsApi;
+import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
 import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
 import org.nprogramming.fiximulator2.log4fix.LogMessageSet;
 import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;

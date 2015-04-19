@@ -1,11 +1,11 @@
 package org.nprogramming.fiximulator2.ui;
 
-import org.nprogramming.fiximulator2.api.InstrumentsApi;
+import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
+import com.wordpress.nprogramming.instruments.client.InstrumentsHttpClient;
 import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;
 import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
 import org.nprogramming.fiximulator2.data.InMemoryOrderRepository;
 import org.nprogramming.fiximulator2.data.InMemoryRepository;
-import org.nprogramming.fiximulator2.data.InstrumentRepository;
 import org.nprogramming.fiximulator2.domain.Execution;
 import org.nprogramming.fiximulator2.domain.IOI;
 import org.nprogramming.fiximulator2.domain.Order;
@@ -15,9 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URL;
 
 public class FIXimulatorFrame extends javax.swing.JFrame {
 
@@ -1883,10 +1881,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
             RepositoryWithCallback<Execution> executionRepository = new InMemoryRepository<>();
             RepositoryWithCallback<IOI> ioiRepository = new InMemoryRepository<>();
 
-            URL instrumentsXml = FIXimulatorFrame.class.getClassLoader().getResource("config/instruments.xml");
-
-            assert instrumentsXml != null;
-            InstrumentsApi instrumentsApi = new InstrumentRepository(new File(instrumentsXml.getPath()));
+            InstrumentsApi instrumentsApi = new InstrumentsHttpClient();
 
             try {
                 fiximulator = new FIXimulator(orderRepository, executionRepository, ioiRepository, instrumentsApi);

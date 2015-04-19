@@ -1,16 +1,4 @@
 apply plugin: 'application'
-apply plugin: "sonar-runner"
-
-sonarRunner {
-    sonarProperties {
-        property "sonar.host.url", "http://localhost:9000"
-        property "sonar.jdbc.url", "jdbc:h2:tcp://localhost:9092/sonar"
-        property "sonar.jdbc.driverClassName", "org.h2.Driver"
-        property "sonar.jdbc.username", "sonar"
-        property "sonar.jdbc.password", "sonar"
-    }
-}
-
 
 mainClassName = 'org.nprogramming.fiximulator2.ui.FIXimulatorFrame'
 
@@ -18,7 +6,9 @@ mainClassName = 'org.nprogramming.fiximulator2.ui.FIXimulatorFrame'
 dependencies {
     runtime libs.mina
 
-    compile libs.quickfixj_old,
+    compile project(':instruments-api'),
+            project(':instruments-client'),
+            libs.quickfixj_old,
             libs.quickfixj.fix42,
             libs.jdesktop
 

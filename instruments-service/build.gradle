@@ -1,0 +1,12 @@
+apply plugin: 'application'
+
+mainClassName = "com.wordpress.nprogramming.instruments.service.InstrumentsApplication"
+
+dependencies {
+    compile project(':instruments-api'),
+            libs.dropwizard.core
+}
+
+run {
+    args 'server', 'config.yml'
+}

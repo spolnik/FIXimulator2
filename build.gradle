@@ -16,11 +16,22 @@ subprojects {
 
     dependencies {
         compile libs.slf4j_api,
-                libs.log4j,
-                libs.slf4j_log4j12
+                libs.logback
 
         testCompile libs.test.junit,
                 libs.test.assertj
+    }
+
+    apply plugin: "sonar-runner"
+
+    sonarRunner {
+        sonarProperties {
+            property "sonar.host.url", "http://localhost:9000"
+            property "sonar.jdbc.url", "jdbc:h2:tcp://localhost:9092/sonar"
+            property "sonar.jdbc.driverClassName", "org.h2.Driver"
+            property "sonar.jdbc.username", "sonar"
+            property "sonar.jdbc.password", "sonar"
+        }
     }
 }
 

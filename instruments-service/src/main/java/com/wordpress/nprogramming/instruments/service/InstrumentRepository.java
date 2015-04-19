@@ -1,7 +1,7 @@
-package org.nprogramming.fiximulator2.data;
+package com.wordpress.nprogramming.instruments.service;
 
-import org.nprogramming.fiximulator2.api.InstrumentsApi;
-import org.nprogramming.fiximulator2.domain.Instrument;
+import com.wordpress.nprogramming.instruments.api.Instrument;
+import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
@@ -60,7 +60,8 @@ public final class InstrumentRepository extends DefaultHandler implements Instru
             if (instrument.getTicker().equals(identifier) ||
                     instrument.getSedol().equals(identifier) ||
                     instrument.getCusip().equals(identifier) ||
-                    instrument.getName().equals(identifier))
+                    instrument.getName().equals(identifier) ||
+                    instrument.getRIC().equals(identifier))
                 return instrument;
         }
 
