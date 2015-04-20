@@ -1,7 +1,8 @@
 package org.nprogramming.fiximulator2.ui.tables;
 
-import org.nprogramming.fiximulator2.api.NotifyApi;
-import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
+import org.nprogramming.fiximulator2.api.MessageHandler;
+import org.nprogramming.fiximulator2.api.NotifyService;
+import org.nprogramming.fiximulator2.api.Repository;
 import org.nprogramming.fiximulator2.domain.Execution;
 import org.nprogramming.fiximulator2.domain.Order;
 
@@ -9,7 +10,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ExecutionTableModel extends AbstractTableModel implements NotifyApi {
+public class ExecutionTableModel extends AbstractTableModel implements MessageHandler {
 
     private static final int ID = 0;
     private static final int CLIENT_ORDER_ID = 1;
@@ -32,19 +33,19 @@ public class ExecutionTableModel extends AbstractTableModel implements NotifyApi
     private final transient Map<Integer, Execution> rowToExecution;
     private final transient Map<String, Integer> idToRow;
 
-    private final transient RepositoryWithCallback<Execution> executionsRepository;
+    private final transient Repository<Execution> executionsRepository;
 
-    public ExecutionTableModel(RepositoryWithCallback<Execution> executionsRepository) {
+    public ExecutionTableModel(Repository<Execution> executionsRepository, NotifyService notifyService) {
         this.executionsRepository = executionsRepository;
 
         rowToExecution = new HashMap<>();
         idToRow = new HashMap<>();
 
         executionsRepository.getAll().forEach(
-                this::addAndRefresh
+                this::addOrReplaceAndRefresh
         );
 
-        executionsRepository.addCallback(this);
+        notifyService.addExecutionMessageHandler(this);
     }
 
     @Override
@@ -127,16 +128,8 @@ public class ExecutionTableModel extends AbstractTableModel implements NotifyApi
     }
 
     @Override
-    public void added(String id) {
-
-        addAndRefresh(
-                executionsRepository.get(id)
-        );
-    }
-
-    @Override
-    public void updated(String id) {
-        replaceAndRefresh(
+    public void onMessage(String id) {
+        addOrReplaceAndRefresh(
                 executionsRepository.get(id)
         );
     }
@@ -154,11 +147,14 @@ public class ExecutionTableModel extends AbstractTableModel implements NotifyApi
         fireTableRowsInserted(row, row);
     }
 
-    private void replaceAndRefresh(Execution execution) {
+    private void addOrReplaceAndRefresh(Execution execution) {
 
         Integer row = idToRow.get(execution.id());
-        if (row == null)
+
+        if (row == null) {
+            addAndRefresh(execution);
             return;
+        }
 
         rowToExecution.put(row, execution);
         idToRow.put(execution.id(), row);

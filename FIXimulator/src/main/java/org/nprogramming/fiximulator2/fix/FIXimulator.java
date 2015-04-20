@@ -1,9 +1,10 @@
 package org.nprogramming.fiximulator2.fix;
 
 import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
-import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
+import org.nprogramming.fiximulator2.api.NotifyService;
+import org.nprogramming.fiximulator2.api.Repository;
 import org.nprogramming.fiximulator2.log4fix.LogMessageSet;
-import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;
+import org.nprogramming.fiximulator2.api.OrderRepository;
 import org.nprogramming.fiximulator2.domain.Execution;
 import org.nprogramming.fiximulator2.domain.IOI;
 import org.slf4j.Logger;
@@ -22,11 +23,11 @@ public final class FIXimulator {
     private static LogMessageSet messages = null;
 
     public FIXimulator(
-            OrderRepositoryWithCallback ordersRepository,
-            RepositoryWithCallback<Execution> executionRepository,
-            RepositoryWithCallback<IOI> ioiRepository,
-            InstrumentsApi instrumentsApi
-    ) throws FileNotFoundException {
+            OrderRepository ordersRepository,
+            Repository<Execution> executionRepository,
+            Repository<IOI> ioiRepository,
+            InstrumentsApi instrumentsApi,
+            NotifyService notifyService) throws FileNotFoundException {
         InputStream inputStream;
         ClassLoader classLoader = FIXimulator.class.getClassLoader();
 
@@ -53,7 +54,8 @@ public final class FIXimulator {
                     executionRepository,
                     ioiRepository,
                     instrumentsApi,
-                    new OrderFixTranslator(ordersRepository)
+                    new OrderFixTranslator(ordersRepository),
+                    notifyService
             );
 
             MessageStoreFactory messageStoreFactory =

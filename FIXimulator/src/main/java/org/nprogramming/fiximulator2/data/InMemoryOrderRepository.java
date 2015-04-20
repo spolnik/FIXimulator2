@@ -1,6 +1,6 @@
 package org.nprogramming.fiximulator2.data;
 
-import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;
+import org.nprogramming.fiximulator2.api.OrderRepository;
 import org.nprogramming.fiximulator2.domain.Order;
 
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.List;
 
 public final class InMemoryOrderRepository
         extends InMemoryRepository<Order>
-        implements OrderRepositoryWithCallback {
+        implements OrderRepository {
 
     private final List<Order> ordersToFill = new ArrayList<>();
 
@@ -17,8 +17,6 @@ public final class InMemoryOrderRepository
         items.put(orderToFill.id(), orderToFill);
 
         ordersToFill.add(orderToFill);
-
-        callback.updated(orderToFill.id());
     }
 
     @Override

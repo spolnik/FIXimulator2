@@ -1,14 +1,15 @@
 package org.nprogramming.fiximulator2.ui.tables;
 
-import org.nprogramming.fiximulator2.api.NotifyApi;
-import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
+import org.nprogramming.fiximulator2.api.MessageHandler;
+import org.nprogramming.fiximulator2.api.NotifyService;
+import org.nprogramming.fiximulator2.api.Repository;
 import org.nprogramming.fiximulator2.domain.IOI;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.HashMap;
 import java.util.Map;
 
-public class IOITableModel extends AbstractTableModel implements NotifyApi {
+public class IOITableModel extends AbstractTableModel implements MessageHandler {
 
     private static final int ID = 0;
     private static final int TYPE = 1;
@@ -28,20 +29,20 @@ public class IOITableModel extends AbstractTableModel implements NotifyApi {
     private final transient Map<Integer, IOI> rowToIOI;
     private final transient Map<String, Integer> idToRow;
 
-    private final transient RepositoryWithCallback<IOI> ioiRepository;
+    private final transient Repository<IOI> ioiRepository;
 
 
-    public IOITableModel(RepositoryWithCallback<IOI> ioiRepository){
+    public IOITableModel(Repository<IOI> ioiRepository, NotifyService notifyService){
         this.ioiRepository = ioiRepository;
 
         rowToIOI = new HashMap<>();
         idToRow = new HashMap<>();
 
         ioiRepository.getAll().forEach(
-                this::addAndRefresh
+                this::addOrReplaceAndRefresh
         );
 
-        ioiRepository.addCallback(this);
+        notifyService.addIOIMessageHandler(this);
     }
 
     @Override
@@ -111,16 +112,8 @@ public class IOITableModel extends AbstractTableModel implements NotifyApi {
     }
 
     @Override
-    public void added(String id) {
-
-        addAndRefresh(
-                ioiRepository.get(id)
-        );
-    }
-
-    @Override
-    public void updated(String id) {
-        replaceAndRefresh(
+    public void onMessage(String id) {
+        addOrReplaceAndRefresh(
                 ioiRepository.get(id)
         );
     }
@@ -138,11 +131,14 @@ public class IOITableModel extends AbstractTableModel implements NotifyApi {
         fireTableRowsInserted(row, row);
     }
 
-    private void replaceAndRefresh(IOI ioi) {
+    private void addOrReplaceAndRefresh(IOI ioi) {
 
         Integer row = idToRow.get(ioi.id());
-        if (row == null)
+
+        if (row == null) {
+            addAndRefresh(ioi);
             return;
+        }
 
         rowToIOI.put(row, ioi);
         idToRow.put(ioi.id(), row);

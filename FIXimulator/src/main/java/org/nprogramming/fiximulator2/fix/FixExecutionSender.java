@@ -1,6 +1,7 @@
 package org.nprogramming.fiximulator2.fix;
 
-import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
+import org.nprogramming.fiximulator2.api.NotifyService;
+import org.nprogramming.fiximulator2.api.Repository;
 import org.nprogramming.fiximulator2.domain.Execution;
 import org.nprogramming.fiximulator2.domain.Order;
 import org.slf4j.Logger;
@@ -11,15 +12,19 @@ import quickfix.fix42.ExecutionReport;
 final class FixExecutionSender {
 
     private final FixMessageSender fixMessageSender;
-    private final RepositoryWithCallback<Execution> repository;
+    private final Repository<Execution> repository;
+    private final NotifyService notifyService;
 
     private static final Logger LOG = LoggerFactory.getLogger(FixExecutionSender.class);
 
     public FixExecutionSender(
             FixMessageSender fixMessageSender,
-            RepositoryWithCallback<Execution> repository) {
+            Repository<Execution> repository,
+            NotifyService notifyService
+    ) {
         this.fixMessageSender = fixMessageSender;
         this.repository = repository;
+        this.notifyService = notifyService;
     }
 
     public void send(Execution execution) {
@@ -100,5 +105,6 @@ final class FixExecutionSender {
     private void sendAndSave(Execution execution, ExecutionReport executionReport) {
         fixMessageSender.send(executionReport);
         repository.save(execution);
+        notifyService.sendChangedExecutionId(execution.id());
     }
 }

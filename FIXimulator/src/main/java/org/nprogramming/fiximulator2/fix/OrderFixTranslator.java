@@ -1,6 +1,6 @@
 package org.nprogramming.fiximulator2.fix;
 
-import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;
+import org.nprogramming.fiximulator2.api.OrderRepository;
 import org.nprogramming.fiximulator2.domain.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +14,11 @@ import java.util.concurrent.Callable;
 
 public final class OrderFixTranslator {
 
-    private final OrderRepositoryWithCallback orderRepository;
+    private final OrderRepository orderRepository;
 
     private static final Logger LOG = LoggerFactory.getLogger(OrderFixTranslator.class);
 
-    public OrderFixTranslator(OrderRepositoryWithCallback orderRepository) {
+    public OrderFixTranslator(OrderRepository orderRepository) {
 
         this.orderRepository = orderRepository;
     }

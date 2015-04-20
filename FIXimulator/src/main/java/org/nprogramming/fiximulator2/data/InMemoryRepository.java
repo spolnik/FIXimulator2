@@ -1,27 +1,18 @@
 package org.nprogramming.fiximulator2.data;
 
+import org.nprogramming.fiximulator2.api.Repository;
 import org.nprogramming.fiximulator2.domain.ItemWithId;
-import org.nprogramming.fiximulator2.api.NotifyApi;
-import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
 
 import java.util.*;
 
-public class InMemoryRepository<TItem extends ItemWithId> implements RepositoryWithCallback<TItem> {
+public class InMemoryRepository<TItem extends ItemWithId>
+        implements Repository<TItem> {
 
     protected final Map<String, TItem> items = new HashMap<>();
-    protected NotifyApi callback = null;
 
     @Override
     public void save(TItem item) {
         items.put(item.id(), item);
-
-        if (callback != null)
-            callback.added(item.id());
-    }
-
-    @Override
-    public void addCallback(NotifyApi callback) {
-        this.callback = callback;
     }
 
     @Override
@@ -35,14 +26,10 @@ public class InMemoryRepository<TItem extends ItemWithId> implements RepositoryW
     }
 
     @Override
-    public void update(String id) {
-        callback.updated(id);
-    }
-
-    @Override
     public List<TItem> getAll() {
         return Collections.unmodifiableList(
                 new ArrayList<>(items.values())
         );
     }
 }
+

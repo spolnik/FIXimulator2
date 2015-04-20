@@ -2,7 +2,7 @@ package org.nprogramming.fiximulator2.fix;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;
+import org.nprogramming.fiximulator2.api.OrderRepository;
 import org.nprogramming.fiximulator2.domain.Order;
 import quickfix.field.*;
 import quickfix.fix42.NewOrderSingle;
@@ -22,8 +22,8 @@ public class OrderFixTranslator_ForOrderCancelReplaceRequestSpec {
     public void setUp() throws Exception {
         orderCancelReplaceRequest = orderCancelReplaceRequest();
 
-        OrderRepositoryWithCallback orderRepository =
-                mock(OrderRepositoryWithCallback.class);
+        OrderRepository orderRepository =
+                mock(OrderRepository.class);
 
         orderFixTranslator =
                 new OrderFixTranslator(orderRepository);

@@ -2,7 +2,8 @@ package org.nprogramming.fiximulator2.fix;
 
 import com.wordpress.nprogramming.instruments.api.Instrument;
 import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
-import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
+import org.nprogramming.fiximulator2.api.NotifyService;
+import org.nprogramming.fiximulator2.api.Repository;
 import org.nprogramming.fiximulator2.domain.IOI;
 import quickfix.field.*;
 
@@ -12,16 +13,20 @@ final class FixIOISender {
 
     private FixMessageSender fixMessageSender;
     private InstrumentsApi instrumentsApi;
-    private RepositoryWithCallback<IOI> ioiRepository;
+    private Repository<IOI> ioiRepository;
+    private final NotifyService notifyService;
 
     public FixIOISender(
             FixMessageSender fixMessageSender,
             InstrumentsApi instrumentsApi,
-            RepositoryWithCallback<IOI> ioiRepository) {
+            Repository<IOI> ioiRepository,
+            NotifyService notifyService
+    ) {
 
         this.fixMessageSender = fixMessageSender;
         this.instrumentsApi = instrumentsApi;
         this.ioiRepository = ioiRepository;
+        this.notifyService = notifyService;
     }
 
     public void send(IOI ioi) {
@@ -120,5 +125,6 @@ final class FixIOISender {
         // *** Send message ***
         fixMessageSender.send(fixIOI);
         ioiRepository.save(ioi);
+        notifyService.sendChangedIOIId(ioi.id());
     }
 }

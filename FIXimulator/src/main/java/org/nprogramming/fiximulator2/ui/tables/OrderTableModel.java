@@ -1,14 +1,15 @@
 package org.nprogramming.fiximulator2.ui.tables;
 
-import org.nprogramming.fiximulator2.api.NotifyApi;
-import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;
+import org.nprogramming.fiximulator2.api.MessageHandler;
+import org.nprogramming.fiximulator2.api.NotifyService;
+import org.nprogramming.fiximulator2.api.OrderRepository;
 import org.nprogramming.fiximulator2.domain.Order;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OrderTableModel extends AbstractTableModel implements NotifyApi {
+public class OrderTableModel extends AbstractTableModel implements MessageHandler {
 
     private static final int ID = 0;
     private static final int STATUS = 1;
@@ -31,19 +32,19 @@ public class OrderTableModel extends AbstractTableModel implements NotifyApi {
     private final transient Map<Integer, Order> rowToOrder;
     private final transient Map<String, Integer> idToRow;
 
-    private final transient OrderRepositoryWithCallback orderRepository;
+    private final transient OrderRepository orderRepository;
 
-    public OrderTableModel(OrderRepositoryWithCallback orderRepository) {
+    public OrderTableModel(OrderRepository orderRepository, NotifyService notifyService) {
         this.orderRepository = orderRepository;
 
         rowToOrder = new HashMap<>();
         idToRow = new HashMap<>();
 
         orderRepository.getAll().forEach(
-                this::addAndRefresh
+                this::addOrReplaceAndRefresh
         );
 
-        orderRepository.addCallback(this);
+        notifyService.addOrderMessageHandler(this);
     }
 
     @Override
@@ -123,15 +124,8 @@ public class OrderTableModel extends AbstractTableModel implements NotifyApi {
     }
 
     @Override
-    public void added(String id) {
-        addAndRefresh(
-                orderRepository.get(id)
-        );
-    }
-
-    @Override
-    public void updated(String id) {
-        replaceAndRefresh(
+    public void onMessage(String id) {
+        addOrReplaceAndRefresh(
                 orderRepository.get(id)
         );
     }
@@ -149,11 +143,14 @@ public class OrderTableModel extends AbstractTableModel implements NotifyApi {
         fireTableRowsInserted(row, row);
     }
 
-    private void replaceAndRefresh(Order order) {
+    private void addOrReplaceAndRefresh(Order order) {
 
         Integer row = idToRow.get(order.id());
-        if (row == null)
+
+        if (row == null) {
+            addAndRefresh(order);
             return;
+        }
 
         rowToOrder.put(row, order);
         idToRow.put(order.id(), row);

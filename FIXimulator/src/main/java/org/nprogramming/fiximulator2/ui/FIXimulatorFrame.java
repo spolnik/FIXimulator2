@@ -2,8 +2,10 @@ package org.nprogramming.fiximulator2.ui;
 
 import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
 import com.wordpress.nprogramming.instruments.client.InstrumentsHttpClient;
-import org.nprogramming.fiximulator2.api.OrderRepositoryWithCallback;
-import org.nprogramming.fiximulator2.api.RepositoryWithCallback;
+import org.nprogramming.fiximulator2.api.NotifyService;
+import org.nprogramming.fiximulator2.api.OrderRepository;
+import org.nprogramming.fiximulator2.api.Repository;
+import org.nprogramming.fiximulator2.data.InMemoryNotificationService;
 import org.nprogramming.fiximulator2.data.InMemoryOrderRepository;
 import org.nprogramming.fiximulator2.data.InMemoryRepository;
 import org.nprogramming.fiximulator2.domain.Execution;
@@ -23,10 +25,11 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
 
     private static FIXimulator fiximulator;
 
-    private final transient OrderRepositoryWithCallback orderRepository;
-    private final transient RepositoryWithCallback<Execution> executionRepository;
-    private final transient RepositoryWithCallback<IOI> ioiRepository;
+    private final transient OrderRepository orderRepository;
+    private final transient Repository<Execution> executionRepository;
+    private final transient Repository<IOI> ioiRepository;
     private final transient InstrumentsApi instrumentsApi;
+    private final transient NotifyService notifyService;
 
     private transient IOI dialogIOI = null;
     private transient Execution dialogExecution = null;
@@ -38,15 +41,16 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
     private static Logger LOG = LoggerFactory.getLogger(FIXimulatorFrame.class);
 
     public FIXimulatorFrame(
-            OrderRepositoryWithCallback orderRepository,
-            RepositoryWithCallback<Execution> executionRepository,
-            RepositoryWithCallback<IOI> ioiRepository,
-            InstrumentsApi instrumentsApi
-    ) {
+            OrderRepository orderRepository,
+            Repository<Execution> executionRepository,
+            Repository<IOI> ioiRepository,
+            InstrumentsApi instrumentsApi,
+            NotifyService notifyService) {
         this.orderRepository = orderRepository;
         this.executionRepository = executionRepository;
         this.ioiRepository = ioiRepository;
         this.instrumentsApi = instrumentsApi;
+        this.notifyService = notifyService;
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
@@ -675,7 +679,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
 
         ioiTable.setDefaultRenderer(Object.class, new IOICellRenderer());
         ioiTable.setAutoCreateRowSorter(true);
-        ioiDataModel = new IOITableModel(ioiRepository);
+        ioiDataModel = new IOITableModel(ioiRepository, notifyService);
         ioiTable.setModel(ioiDataModel);
         ioiTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         //Set initial column widths
@@ -840,7 +844,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         );
 
         orderTable.setAutoCreateRowSorter(true);
-        orderTableModel = new OrderTableModel(orderRepository);
+        orderTableModel = new OrderTableModel(orderRepository, notifyService);
         orderTable.setModel(orderTableModel);
         orderTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         //Set initial column widths
@@ -934,7 +938,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
 
         executionTable.setDefaultRenderer(Object.class, new ExecutionCellRenderer());
         executionTable.setAutoCreateRowSorter(true);
-        executionTableModel = new ExecutionTableModel(executionRepository);
+        executionTableModel = new ExecutionTableModel(executionRepository, notifyService);
         executionTable.setModel(executionTableModel);
         executionTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         //Set initial column widths
@@ -1865,20 +1869,34 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
-            OrderRepositoryWithCallback orderRepository = new InMemoryOrderRepository();
-            RepositoryWithCallback<Execution> executionRepository = new InMemoryRepository<>();
-            RepositoryWithCallback<IOI> ioiRepository = new InMemoryRepository<>();
+            OrderRepository orderRepository = new InMemoryOrderRepository();
+            Repository<Execution> executionRepository = new InMemoryRepository<>();
+            Repository<IOI> ioiRepository = new InMemoryRepository<>();
 
             InstrumentsApi instrumentsApi = new InstrumentsHttpClient();
 
+            NotifyService notifyService = new InMemoryNotificationService();
+
             try {
-                fiximulator = new FIXimulator(orderRepository, executionRepository, ioiRepository, instrumentsApi);
+                fiximulator = new FIXimulator(
+                        orderRepository,
+                        executionRepository,
+                        ioiRepository,
+                        instrumentsApi,
+                        notifyService);
             } catch (FileNotFoundException e) {
                 LOG.error("Error: ", e);
                 return;
             }
             fiximulator.start();
-            new FIXimulatorFrame(orderRepository, executionRepository, ioiRepository, instrumentsApi).setVisible(true);
+
+            new FIXimulatorFrame(
+                    orderRepository,
+                    executionRepository,
+                    ioiRepository,
+                    instrumentsApi,
+                    notifyService
+            ).setVisible(true);
         });
     }
 
