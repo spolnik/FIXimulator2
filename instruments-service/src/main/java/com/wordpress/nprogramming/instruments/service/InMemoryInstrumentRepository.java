@@ -27,9 +27,7 @@ public final class InMemoryInstrumentRepository implements InstrumentsApi {
     public InMemoryInstrumentRepository(InstrumentsConfiguration configuration) {
 
         URL instrumentsJson =
-                InMemoryInstrumentRepository.class.getClassLoader().getResource(
-                        configuration.getDefaultInputFilePath()
-                );
+                readInstruments(configuration);
 
         Preconditions.checkNotNull(
                 instrumentsJson,
@@ -37,6 +35,13 @@ public final class InMemoryInstrumentRepository implements InstrumentsApi {
         );
 
         loadInstruments(instrumentsJson);
+    }
+
+    private URL readInstruments(InstrumentsConfiguration configuration) {
+
+        return InMemoryInstrumentRepository.class.getClassLoader().getResource(
+                configuration.getDefaultInputFilePath()
+        );
     }
 
     private void loadInstruments(URL instrumentsJson) {

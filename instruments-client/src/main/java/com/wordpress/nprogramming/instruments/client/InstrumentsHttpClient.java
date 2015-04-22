@@ -44,6 +44,7 @@ public class InstrumentsHttpClient implements InstrumentsApi {
     }
 
     public static void main(String[] args) {
+
         InstrumentsHttpClient httpClient = new InstrumentsHttpClient();
 
         Instrument instrument = httpClient.getInstrument("IBM");
@@ -52,7 +53,12 @@ public class InstrumentsHttpClient implements InstrumentsApi {
         LOG.info(instrument.toString());
 
         LOG.info("getInstruments()");
-        Stream<Instrument> instruments = httpClient.getAll().stream().limit(10);
-        instruments.forEach(x -> LOG.info(x.toString()));
+        Stream<Instrument> instruments = httpClient.getAll()
+                .stream()
+                .limit(10);
+
+        instruments.forEach(
+                x -> LOG.info(x.toString())
+        );
     }
 }

@@ -17,16 +17,19 @@ public class InstrumentsFileHealthCheck extends HealthCheck {
     @Override
     protected Result check() throws Exception {
 
-        URL resource =
-                InstrumentsFileHealthCheck.class.getClassLoader().getResource(
-                        inputFilePath
-                );
+        URL instrumentsFile = readInstruments();
 
-        if (doesNotExist(resource)) {
+        if (doesNotExist(instrumentsFile)) {
             return Result.unhealthy("File does not exist: " + inputFilePath);
         }
 
         return Result.healthy();
+    }
+
+    private URL readInstruments() {
+        return InstrumentsFileHealthCheck.class.getClassLoader().getResource(
+                inputFilePath
+        );
     }
 
     private boolean doesNotExist(URL resource) throws URISyntaxException {
