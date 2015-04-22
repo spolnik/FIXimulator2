@@ -21,11 +21,10 @@ public class ExecutionCellRenderer extends DefaultTableCellRenderer {
         Boolean dontKnowTrade = (Boolean) table.getModel()
                 .getValueAt(myRow, DKD);
 
-        if (dontKnowTrade) {
-            component.setForeground(Color.RED);
-        } else {
-            component.setForeground(Color.BLACK);
-        }
+        component.setForeground(dontKnowTrade
+                ? Color.RED
+                : Color.BLACK
+        );
 
         return component;
     }

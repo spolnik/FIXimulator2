@@ -133,23 +133,17 @@ public class BanzaiApplication implements Application {
         public void run() {
             try {
                 MsgType msgType = new MsgType();
-                if (isAvailable) {
-                    if (isMissingField) {
-                        // For OpenFIX certification testing
-                        sendBusinessReject(message, BusinessRejectReason.CONDITIONALLY_REQUIRED_FIELD_MISSING, "Conditionally required field missing");                        
-                    }
-                    else if (message.getHeader().isSetField(DeliverToCompID.FIELD)) {
-                        // This is here to support OpenFIX certification
-                        sendSessionReject(message, SessionRejectReason.COMPID_PROBLEM);
-                    } else if (message.getHeader().getField(msgType).valueEquals("8")) {
-                        executionReport(message, sessionID);
-                    } else if (message.getHeader().getField(msgType).valueEquals("9")) {
-                        cancelReject(message, sessionID);
-                    } else {
-                        //sendBusinessReject(message, BusinessRejectReason.UNSUPPORTED_MESSAGE_TYPE,
-                          //      "Unsupported Message Type");
-                    }
-                } else {
+                if (isAvailable) if (isMissingField) {
+                    // For OpenFIX certification testing
+                    sendBusinessReject(message, BusinessRejectReason.CONDITIONALLY_REQUIRED_FIELD_MISSING, "Conditionally required field missing");
+                } else if (message.getHeader().isSetField(DeliverToCompID.FIELD)) {
+                    // This is here to support OpenFIX certification
+                    sendSessionReject(message, SessionRejectReason.COMPID_PROBLEM);
+                } else if (message.getHeader().getField(msgType).valueEquals("8")) {
+                    executionReport(message, sessionID);
+                } else if (message.getHeader().getField(msgType).valueEquals("9")) {
+                    cancelReject(message, sessionID);
+                }  else {
                     sendBusinessReject(message, BusinessRejectReason.APPLICATION_NOT_AVAILABLE,
                             "Application not available");
                 }
@@ -306,18 +300,21 @@ public class BanzaiApplication implements Application {
     }
 
     private boolean alreadyProcessed(ExecID execID, SessionID sessionID) {
+
         HashSet<ExecID> set = execIDs.get(sessionID);
+
         if (set == null) {
-            set = new HashSet<ExecID>();
+            set = new HashSet<>();
             set.add(execID);
             execIDs.put(sessionID, set);
             return false;
-        } else {
-            if (set.contains(execID))
-                return true;
-            set.add(execID);
-            return false;
         }
+
+        if (set.contains(execID))
+            return true;
+        set.add(execID);
+        return false;
+
     }
 
     private void send(quickfix.Message message, SessionID sessionID) {
@@ -330,17 +327,24 @@ public class BanzaiApplication implements Application {
 
     public void send(Order order) {
         String beginString = order.getSessionID().getBeginString();
-        if (beginString.equals("FIX.4.0"))
-            send40(order);
-        else if (beginString.equals("FIX.4.1"))
-            send41(order);
-        else if (beginString.equals("FIX.4.2"))
-            send42(order);
-        else if (beginString.equals("FIX.4.3"))
-            send43(order);
-        else if (beginString.equals("FIX.4.4"))
-            send44(order);
-        return;
+
+        switch (beginString) {
+            case "FIX.4.0":
+                send40(order);
+                break;
+            case "FIX.4.1":
+                send41(order);
+                break;
+            case "FIX.4.2":
+                send42(order);
+                break;
+            case "FIX.4.3":
+                send43(order);
+                break;
+            case "FIX.4.4":
+                send44(order);
+                break;
+        }
     }
 
     public void send40(Order order) {
@@ -413,13 +417,18 @@ public class BanzaiApplication implements Application {
 
     public void cancel(Order order) {
         String beginString = order.getSessionID().getBeginString();
-        if (beginString.equals("FIX.4.0"))
-            cancel40(order);
-        else if (beginString.equals("FIX.4.1"))
-            cancel41(order);
-        else if (beginString.equals("FIX.4.2"))
-            cancel42(order);
-        return;
+
+        switch (beginString) {
+            case "FIX.4.0":
+                cancel40(order);
+                break;
+            case "FIX.4.1":
+                cancel41(order);
+                break;
+            case "FIX.4.2":
+                cancel42(order);
+                break;
+        }
     }
 
     public void cancel40(Order order) {
@@ -457,13 +466,17 @@ public class BanzaiApplication implements Application {
 
     public void replace(Order order, Order newOrder) {
         String beginString = order.getSessionID().getBeginString();
-        if (beginString.equals("FIX.4.0"))
-            replace40(order, newOrder);
-        else if (beginString.equals("FIX.4.1"))
-            replace41(order, newOrder);
-        else if (beginString.equals("FIX.4.2"))
-            replace42(order, newOrder);
-        return;
+        switch (beginString) {
+            case "FIX.4.0":
+                replace40(order, newOrder);
+                break;
+            case "FIX.4.1":
+                replace41(order, newOrder);
+                break;
+            case "FIX.4.2":
+                replace42(order, newOrder);
+                break;
+        }
     }
 
     public void replace40(Order order, Order newOrder) {

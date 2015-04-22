@@ -31,7 +31,8 @@ public class DoubleNumberTextField extends JTextField {
             super.processKeyEvent(e);
         } else if(keyChar == '.') {
             String text = getText();
-            if(text.indexOf(".") == -1) {
+
+            if(!text.contains(".")) {
                 super.processKeyEvent(e);
             }
         }

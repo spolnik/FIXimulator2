@@ -1,21 +1,23 @@
-/*******************************************************************************
- * Copyright (c) quickfixengine.org  All rights reserved. 
- * 
- * This file is part of the QuickFIX FIX Engine 
- * 
- * This file may be distributed under the terms of the quickfixengine.org 
- * license as defined by quickfixengine.org and appearing in the file 
- * LICENSE included in the packaging of this file. 
- * 
- * This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING 
- * THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A 
- * PARTICULAR PURPOSE. 
- * 
- * See http://www.quickfixengine.org/LICENSE for licensing information. 
- * 
- * Contact ask@quickfixengine.org if any conditions of this licensing 
+/**
+ * ****************************************************************************
+ * Copyright (c) quickfixengine.org  All rights reserved.
+ * <p>
+ * This file is part of the QuickFIX FIX Engine
+ * <p>
+ * This file may be distributed under the terms of the quickfixengine.org
+ * license as defined by quickfixengine.org and appearing in the file
+ * LICENSE included in the packaging of this file.
+ * <p>
+ * This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING
+ * THE WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A
+ * PARTICULAR PURPOSE.
+ * <p>
+ * See http://www.quickfixengine.org/LICENSE for licensing information.
+ * <p>
+ * Contact ask@quickfixengine.org if any conditions of this licensing
  * are not clear to you.
- ******************************************************************************/
+ * ****************************************************************************
+ */
 
 package quickfix.banzai;
 
@@ -46,40 +48,28 @@ import quickfix.SessionSettings;
 import quickfix.SocketInitiator;
 import quickfix.banzai.ui.BanzaiFrame;
 
-/**
- * Entry point for the Banzai application.
- */
 public class Banzai {
     private static final CountDownLatch shutdownLatch = new CountDownLatch(1);
 
-    /** enable logging for this class */
     private static Logger log = LoggerFactory.getLogger(Banzai.class);
     private static Banzai banzai;
     private boolean initiatorStarted = false;
     private Initiator initiator = null;
     private JFrame frame = null;
-    
+
     public Banzai(String[] args) throws Exception {
-        InputStream inputStream = null;
 
         URL configUrl = Banzai.class.getClassLoader().getResource("config/banzai.cfg");
 
-        if (args.length == 0) {
-            inputStream = new BufferedInputStream(
-                            new FileInputStream( 
-                            new File(configUrl.getPath())));
-        } else if (args.length == 1) {
-            inputStream = new FileInputStream(args[0]);
-        }
-        if (inputStream == null) {
-            System.out.println("usage: " + Banzai.class.getName() + " [configFile].");
-            return;
-        }
+        InputStream inputStream = new BufferedInputStream(
+                new FileInputStream(
+                        new File(configUrl.getPath())));
+
         SessionSettings settings = new SessionSettings(inputStream);
         inputStream.close();
-        
-        boolean logHeartbeats = Boolean.valueOf(System.getProperty("logHeartbeats", "true")).booleanValue();
-        
+
+        boolean logHeartbeats = Boolean.valueOf(System.getProperty("logHeartbeats", "true"));
+
         OrderTableModel orderTableModel = new OrderTableModel();
         ExecutionTableModel executionTableModel = new ExecutionTableModel();
         BanzaiApplication application = new BanzaiApplication(orderTableModel, executionTableModel);
@@ -92,39 +82,6 @@ public class Banzai {
 
         frame = new BanzaiFrame(orderTableModel, executionTableModel, application);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-    public synchronized void logon() {
-        if (!initiatorStarted) {
-            try {
-                initiator.start();
-                initiatorStarted = true;
-            } catch (Exception e) {
-                log.error("Logon failed", e);
-            }
-        } else {
-            Iterator<SessionID> sessionIds = initiator.getSessions().iterator();
-            while (sessionIds.hasNext()) {
-                SessionID sessionId = (SessionID) sessionIds.next();
-                Session.lookupSession(sessionId).logon();
-            }
-        }
-    }
-
-    public void logout() {
-        Iterator<SessionID> sessionIds = initiator.getSessions().iterator();
-        while (sessionIds.hasNext()) {
-            SessionID sessionId = (SessionID) sessionIds.next();
-            Session.lookupSession(sessionId).logout("user requested");
-        }
-    }
-
-    public void stop() {
-        shutdownLatch.countDown();
-    }
-
-    public JFrame getFrame() {
-        return frame;
     }
 
     public static Banzai get() {
@@ -142,6 +99,44 @@ public class Banzai {
             banzai.logon();
         }
         shutdownLatch.await();
+    }
+
+    public synchronized void logon() {
+        if (!initiatorStarted) {
+            startInitiator();
+            return;
+        }
+
+        for (SessionID sessionId : initiator.getSessions()) {
+            Session.lookupSession(sessionId).logon();
+        }
+
+    }
+
+    private void startInitiator() {
+        try {
+            initiator.start();
+            initiatorStarted = true;
+
+        } catch (Exception e) {
+            log.error("Logon failed", e);
+        }
+    }
+
+    public void logout() {
+        Iterator<SessionID> sessionIds = initiator.getSessions().iterator();
+        while (sessionIds.hasNext()) {
+            SessionID sessionId = (SessionID) sessionIds.next();
+            Session.lookupSession(sessionId).logout("user requested");
+        }
+    }
+
+    public void stop() {
+        shutdownLatch.countDown();
+    }
+
+    public JFrame getFrame() {
+        return frame;
     }
 
 }

@@ -124,7 +124,7 @@ public class BanzaiPanel extends JPanel
             if(numSelected > 1)
                 orderEntryPanel.clearMessage();
             else {
-                Order order = (Order)orderTableModel.getOrder(selectedRow);
+                Order order = orderTableModel.getOrder(selectedRow);
                 if(order != null) {
                     orderEntryPanel.setMessage(order.getMessage());
                     cancelReplacePanel.setOrder(order);

@@ -101,10 +101,9 @@ public class IOI implements Cloneable, ItemWithId {
     }
 
     public void setSecurityID(String securityID) {
-        if (securityID.equals(""))
-            this.securityID = "<MISSING>";
-        else
-            this.securityID = securityID;
+        this.securityID = securityID.equals("")
+                ? "<MISSING>"
+                : securityID;
     }
     
     public String getIDSource() {
@@ -113,10 +112,14 @@ public class IOI implements Cloneable, ItemWithId {
 
     public void setIDSource(String iDSource) {
         this.iDSource = "UNKNOWN";
-        if (iDSource.toUpperCase().startsWith("C")) this.iDSource = "CUSIP";
-        if (iDSource.toUpperCase().startsWith("S")) this.iDSource = "SEDOL";
-        if (iDSource.toUpperCase().startsWith("T")) this.iDSource = "TICKER";
-        if (iDSource.toUpperCase().startsWith("R")) this.iDSource = "RIC";
+        if (iDSource.toUpperCase().startsWith("C"))
+            this.iDSource = "CUSIP";
+        if (iDSource.toUpperCase().startsWith("S"))
+            this.iDSource = "SEDOL";
+        if (iDSource.toUpperCase().startsWith("T"))
+            this.iDSource = "TICKER";
+        if (iDSource.toUpperCase().startsWith("R"))
+            this.iDSource = "RIC";
     }
     
     public String getSide() {
