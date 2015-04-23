@@ -1,6 +1,7 @@
 apply from: "$rootDir/libraries.gradle"
 
-subprojects {
+allprojects {
+
     repositories {
         mavenCentral()
 
@@ -22,6 +23,9 @@ subprojects {
                 libs.test.assertj,
                 libs.test.mockito
     }
+}
+
+subprojects {
 
     apply plugin: 'jacoco'
 
