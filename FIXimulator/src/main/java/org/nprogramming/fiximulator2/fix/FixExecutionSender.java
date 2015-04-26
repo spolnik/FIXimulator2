@@ -1,9 +1,8 @@
 package org.nprogramming.fiximulator2.fix;
 
+import com.wordpress.nprogramming.oms.api.Execution;
 import org.nprogramming.fiximulator2.api.NotifyService;
 import org.nprogramming.fiximulator2.api.Repository;
-import com.wordpress.nprogramming.oms.api.Execution;
-import com.wordpress.nprogramming.oms.api.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import quickfix.field.*;
@@ -28,11 +27,10 @@ final class FixExecutionSender {
     }
 
     public void send(Execution execution) {
-        Order order = execution.getOrder();
 
         // *** Required fields ***
         // OrderID (37)
-        OrderID orderID = new OrderID(order.id());
+        OrderID orderID = new OrderID(execution.getOrderId());
 
         // ExecID (17)
         ExecID execID = new ExecID(execution.id());
@@ -46,13 +44,13 @@ final class FixExecutionSender {
 
         // OrdStatus (39) Status as a result of this report
         OrdStatus ordStatus =
-                new OrdStatus(execution.getOrder().getFIXStatus());
+                new OrdStatus(execution.getFIXStatus());
 
         // Symbol (55)
-        Symbol symbol = new Symbol(execution.getOrder().getSymbol());
+        Symbol symbol = new Symbol(execution.getSymbol());
 
         //  Side (54)
-        Side side = new Side(execution.getOrder().getFIXSide());
+        Side side = new Side(execution.getFIXSide());
 
         // LeavesQty ()
         LeavesQty leavesQty = new LeavesQty(execution.getLeavesQty());
@@ -84,19 +82,19 @@ final class FixExecutionSender {
         }
 
         // *** Optional fields ***
-        executionReport.set(new ClOrdID(execution.getOrder().getClientOrderID()));
-        executionReport.set(new OrderQty(execution.getOrder().getQuantity()));
+        executionReport.set(new ClOrdID(execution.getClientOrderID()));
+        executionReport.set(new OrderQty(execution.getOrderQuantity()));
         executionReport.set(new LastShares(execution.getLastShares()));
         executionReport.set(new LastPx(execution.getLastPx()));
 
         LOG.debug("Setting...");
-        LOG.debug("SecurityID: " + order.getSecurityID());
-        LOG.debug("IDSource: " + order.getIdSource());
+        LOG.debug("SecurityID: " + execution.getSecurityID());
+        LOG.debug("IDSource: " + execution.getIdSource());
 
-        if (order.getSecurityID() != null
-                && order.getIdSource() != null) {
-            executionReport.set(new SecurityID(order.getSecurityID()));
-            executionReport.set(new IDSource(order.getIdSource()));
+        if (execution.getSecurityID() != null
+                && execution.getIdSource() != null) {
+            executionReport.set(new SecurityID(execution.getSecurityID()));
+            executionReport.set(new IDSource(execution.getIdSource()));
         }
 
         sendAndSave(execution, executionReport);

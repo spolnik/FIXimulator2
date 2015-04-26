@@ -38,10 +38,10 @@ public class ExecutionTableModel extends AbstractTableModel {
     private String[] headers;
 
     public ExecutionTableModel() {
-        rowToExecution = new HashMap<Integer, Execution>();
-        idToRow = new HashMap<String, Integer>();
-        idToExecution = new HashMap<String, Execution>();
-        exchangeIdToExecution = new HashMap<String, Execution>();
+        rowToExecution = new HashMap<>();
+        idToRow = new HashMap<>();
+        idToExecution = new HashMap<>();
+        exchangeIdToExecution = new HashMap<>();
 
         headers = new String[]
                   {"Symbol", "Quantity", "Side", "Price"};
@@ -57,8 +57,8 @@ public class ExecutionTableModel extends AbstractTableModel {
         if(exchangeIdToExecution.get(execution.getExchangeID()) != null)
             return;
 
-        rowToExecution.put(Integer.valueOf(row), execution);
-        idToRow.put(execution.getID(), Integer.valueOf(row));
+        rowToExecution.put(row, execution);
+        idToRow.put(execution.getID(), row);
         idToExecution.put(execution.getID(), execution);
         exchangeIdToExecution.put(execution.getExchangeID(), execution);
 
@@ -100,11 +100,11 @@ public class ExecutionTableModel extends AbstractTableModel {
         case SYMBOL:
             return execution.getSymbol();
         case QUANTITY:
-            return Integer.valueOf(execution.getQuantity());
+            return execution.getQuantity();
         case SIDE:
             return execution.getSide();
         case PRICE:
-            return new Double(execution.getPrice());
+            return execution.getPrice();
         }
         return "";
     }

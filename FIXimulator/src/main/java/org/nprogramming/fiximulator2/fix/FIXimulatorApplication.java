@@ -249,7 +249,7 @@ public class FIXimulatorApplication extends MessageCracker
     }
 
     public void acknowledge(Order order) {
-        Execution acknowledgement = new Execution(order);
+        Execution acknowledgement = Execution.createFrom(order);
         order.setStatus(OrdStatus.NEW);
         acknowledgement.setExecType(ExecType.NEW);
         acknowledgement.setExecTranType(ExecTransType.NEW);
@@ -260,7 +260,7 @@ public class FIXimulatorApplication extends MessageCracker
     }
 
     public void reject(Order order) {
-        Execution reject = new Execution(order);
+        Execution reject = Execution.createFrom(order);
         order.setStatus(OrdStatus.REJECTED);
         reject.setExecType(ExecType.REJECTED);
         reject.setExecTranType(ExecTransType.NEW);
@@ -271,7 +271,7 @@ public class FIXimulatorApplication extends MessageCracker
     }
 
     public void dfd(Order order) {
-        Execution dfd = new Execution(order);
+        Execution dfd = Execution.createFrom(order);
         order.setStatus(OrdStatus.DONE_FOR_DAY);
         dfd.setExecType(ExecType.DONE_FOR_DAY);
         dfd.setExecTranType(ExecTransType.NEW);
@@ -283,7 +283,7 @@ public class FIXimulatorApplication extends MessageCracker
     }
 
     public void pendingCancel(Order order) {
-        Execution pending = new Execution(order);
+        Execution pending = Execution.createFrom(order);
         order.setStatus(OrdStatus.PENDING_CANCEL);
         pending.setExecType(ExecType.PENDING_CANCEL);
         pending.setExecTranType(ExecTransType.NEW);
@@ -296,7 +296,7 @@ public class FIXimulatorApplication extends MessageCracker
     }
 
     public void cancel(Order order) {
-        Execution cancel = new Execution(order);
+        Execution cancel = Execution.createFrom(order);
         order.setStatus(OrdStatus.CANCELED);
         cancel.setExecType(ExecType.CANCELED);
         cancel.setExecTranType(ExecTransType.NEW);
@@ -348,7 +348,7 @@ public class FIXimulatorApplication extends MessageCracker
     }
 
     public void pendingReplace(Order order) {
-        Execution pending = new Execution(order);
+        Execution pending = Execution.createFrom(order);
         order.setStatus(OrdStatus.PENDING_REPLACE);
         pending.setExecType(ExecType.PENDING_REPLACE);
         pending.setExecTranType(ExecTransType.NEW);
@@ -361,7 +361,7 @@ public class FIXimulatorApplication extends MessageCracker
     }
 
     public void replace(Order order) {
-        Execution replace = new Execution(order);
+        Execution replace = Execution.createFrom(order);
         order.setStatus(OrdStatus.REPLACED);
         replace.setExecType(ExecType.REPLACE);
         replace.setExecTranType(ExecTransType.NEW);
@@ -374,68 +374,67 @@ public class FIXimulatorApplication extends MessageCracker
     }
 
     public void execute(Execution execution) {
-        Order order = execution.getOrder();
         double fillQty = execution.getLastShares();
         double fillPrice = execution.getLastPx();
-        double open = order.getOpen();
+        double open = execution.getOpen();
         // partial fill
         if (fillQty < open) {
-            order.setOpen(open - fillQty);
-            order.setStatus(OrdStatus.PARTIALLY_FILLED);
+            execution.setOpen(open - fillQty);
+            execution.setStatus(OrdStatus.PARTIALLY_FILLED);
             execution.setExecType(ExecType.PARTIAL_FILL);
             // full or over execution
         } else {
-            order.setOpen(0);
-            order.setStatus(OrdStatus.FILLED);
+            execution.setOpen(0);
+            execution.setStatus(OrdStatus.FILLED);
             execution.setExecType(ExecType.FILL);
         }
-        double avgPx = (order.getAvgPx() * order.getExecuted()
+        double avgPx = (execution.getAvgPx() * execution.getExecuted()
                 + fillPrice * fillQty)
-                / (order.getExecuted() + fillQty);
-        order.setAvgPx(avgPx);
-        order.setExecuted(order.getExecuted() + fillQty);
-        notifyService.sendChangedOrderId(order.id());
+                / (execution.getExecuted() + fillQty);
+        execution.setAvgPx(avgPx);
+        execution.setExecuted(execution.getExecuted() + fillQty);
+        notifyService.sendChangedOrderId(execution.getOrderId());
         // update execution
         execution.setExecTranType(ExecTransType.NEW);
-        execution.setLeavesQty(order.getOpen());
-        execution.setCumQty(order.getExecuted());
+        execution.setLeavesQty(execution.getOpen());
+        execution.setCumQty(execution.getExecuted());
         execution.setAvgPx(avgPx);
         fixExecutionSender.send(execution);
     }
 
     public void bust(Execution execution) {
         Execution bust = execution.clone();
-        Order order = execution.getOrder();
+
         double fillQty = execution.getLastShares();
         double fillPrice = execution.getLastPx();
-        double executed = order.getExecuted();
+        double executed = execution.getExecuted();
+
         // partial fill
         if (fillQty < executed) {
-            order.setOpen(executed - fillQty);
-            order.setStatus(OrdStatus.PARTIALLY_FILLED);
-            double avgPx = (order.getAvgPx() * executed
+            execution.setOpen(executed - fillQty);
+            execution.setStatus(OrdStatus.PARTIALLY_FILLED);
+            double avgPx = (execution.getAvgPx() * executed
                     - fillPrice * fillQty)
-                    / (order.getExecuted() - fillQty);
-            order.setAvgPx(avgPx);
-            order.setExecuted(order.getExecuted() - fillQty);
+                    / (execution.getExecuted() - fillQty);
+            execution.setAvgPx(avgPx);
+            execution.setExecuted(execution.getExecuted() - fillQty);
             // full or over execution
         } else {
-            order.setOpen(order.getQuantity());
-            order.setStatus(OrdStatus.NEW);
-            order.setAvgPx(0);
-            order.setExecuted(0);
+            execution.setOpen(execution.getOrderQuantity());
+            execution.setStatus(OrdStatus.NEW);
+            execution.setAvgPx(0);
+            execution.setExecuted(0);
         }
-        notifyService.sendChangedOrderId(order.id());
+        notifyService.sendChangedOrderId(execution.getOrderId());
         // update execution
         bust.setExecTranType(ExecTransType.CANCEL);
-        bust.setLeavesQty(order.getOpen());
-        bust.setCumQty(order.getExecuted());
-        bust.setAvgPx(order.getAvgPx());
+        bust.setLeavesQty(execution.getOpen());
+        bust.setCumQty(execution.getExecuted());
+        bust.setAvgPx(execution.getAvgPx());
         fixExecutionSender.send(bust);
     }
 
     public void correct(Execution correction) {
-        Order order = correction.getOrder();
         Execution original = executionRepository.get(correction.getRefID());
 
         double fillQty = correction.getLastShares();
@@ -444,34 +443,34 @@ public class FIXimulatorApplication extends MessageCracker
         double fillPrice = correction.getLastPx();
         double oldPrice = original.getLastPx();
 
-        double executed = order.getExecuted();
-        double ordered = order.getQuantity();
+        double executed = original.getExecuted();
+        double ordered = original.getOrderQuantity();
 
         double newCumQty = executed - oldQty + fillQty;
-        double avgPx = (order.getAvgPx() * executed
+        double avgPx = (original.getAvgPx() * executed
                 - oldPrice * oldQty
                 + fillPrice * fillQty)
                 / newCumQty;
 
         // partial fill
         if (newCumQty < ordered) {
-            order.setOpen(ordered - newCumQty);
-            order.setStatus(OrdStatus.PARTIALLY_FILLED);
+            original.setOpen(ordered - newCumQty);
+            original.setStatus(OrdStatus.PARTIALLY_FILLED);
             // full or over execution
         } else {
-            order.setOpen(0);
-            order.setStatus(OrdStatus.FILLED);
+            original.setOpen(0);
+            original.setStatus(OrdStatus.FILLED);
         }
 
-        order.setAvgPx(avgPx);
-        order.setExecuted(newCumQty);
-        notifyService.sendChangedOrderId(order.id());
+        original.setAvgPx(avgPx);
+        original.setExecuted(newCumQty);
+        notifyService.sendChangedOrderId(original.getOrderId());
 
         // update execution
         correction.setExecTranType(ExecTransType.CORRECT);
-        correction.setLeavesQty(order.getOpen());
-        correction.setCumQty(order.getExecuted());
-        correction.setAvgPx(order.getAvgPx());
+        correction.setLeavesQty(original.getOpen());
+        correction.setCumQty(original.getExecuted());
+        correction.setAvgPx(original.getAvgPx());
         fixExecutionSender.send(correction);
     }
 
@@ -761,7 +760,7 @@ public class FIXimulatorApplication extends MessageCracker
                         order.setAvgPx(thisAvg);
                         notifyService.sendChangedOrderId(order.id());
                         // create execution
-                        Execution partial = new Execution(order);
+                        Execution partial = Execution.createFrom(order);
                         partial.setExecType(ExecType.PARTIAL_FILL);
                         partial.setExecTranType(ExecTransType.NEW);
                         partial.setLeavesQty(order.getOpen());
@@ -800,7 +799,7 @@ public class FIXimulatorApplication extends MessageCracker
                         order.setAvgPx(thisAvg);
                         notifyService.sendChangedOrderId(order.id());
                         // create execution
-                        Execution partial = new Execution(order);
+                        Execution partial = Execution.createFrom(order);
                         partial.setExecType(ExecType.FILL);
                         partial.setExecTranType(ExecTransType.NEW);
                         partial.setLeavesQty(order.getOpen());

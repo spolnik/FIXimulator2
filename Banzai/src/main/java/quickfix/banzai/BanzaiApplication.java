@@ -84,7 +84,7 @@ public class BanzaiApplication implements Application {
     static private TwoWayMap sideMap = new TwoWayMap();
     static private TwoWayMap typeMap = new TwoWayMap();
     static private TwoWayMap tifMap = new TwoWayMap();
-    static private HashMap<SessionID, HashSet<ExecID>> execIDs = new HashMap<SessionID, HashSet<ExecID>>();
+    static private HashMap<SessionID, HashSet<ExecID>> execIDs = new HashMap<>();
 
     public BanzaiApplication(OrderTableModel orderTableModel,
             ExecutionTableModel executionTableModel) {
@@ -133,22 +133,28 @@ public class BanzaiApplication implements Application {
         public void run() {
             try {
                 MsgType msgType = new MsgType();
-                if (isAvailable) if (isMissingField) {
-                    // For OpenFIX certification testing
-                    sendBusinessReject(message, BusinessRejectReason.CONDITIONALLY_REQUIRED_FIELD_MISSING, "Conditionally required field missing");
-                } else if (message.getHeader().isSetField(DeliverToCompID.FIELD)) {
-                    // This is here to support OpenFIX certification
-                    sendSessionReject(message, SessionRejectReason.COMPID_PROBLEM);
-                } else if (message.getHeader().getField(msgType).valueEquals("8")) {
-                    executionReport(message, sessionID);
-                } else if (message.getHeader().getField(msgType).valueEquals("9")) {
-                    cancelReject(message, sessionID);
-                }  else {
+                if (isAvailable) {
+                    if (isMissingField) {
+                        // For OpenFIX certification testing
+                        sendBusinessReject(message, BusinessRejectReason.CONDITIONALLY_REQUIRED_FIELD_MISSING, "Conditionally required field missing");
+                    }
+                    else if (message.getHeader().isSetField(DeliverToCompID.FIELD)) {
+                        // This is here to support OpenFIX certification
+                        sendSessionReject(message, SessionRejectReason.COMPID_PROBLEM);
+                    } else if (message.getHeader().getField(msgType).valueEquals("8")) {
+                        executionReport(message, sessionID);
+                    } else if (message.getHeader().getField(msgType).valueEquals("9")) {
+                        cancelReject(message, sessionID);
+                    } else {
+                        sendBusinessReject(message, BusinessRejectReason.UNSUPPORTED_MESSAGE_TYPE,
+                                "Unsupported Message Type");
+                    }
+                } else {
                     sendBusinessReject(message, BusinessRejectReason.APPLICATION_NOT_AVAILABLE,
                             "Application not available");
                 }
             } catch (Exception e) {
-                System.out.println(e);
+                e.printStackTrace();
             }
 
         }
@@ -199,7 +205,7 @@ public class BanzaiApplication implements Application {
             return;
         }
 
-        double fillSize = 0;
+        double fillSize;
 
         try {
             LastShares lastShares = new LastShares();
@@ -567,7 +573,7 @@ public class BanzaiApplication implements Application {
     }
 
     private static class ObservableLogon extends Observable {
-        private HashSet<SessionID> set = new HashSet<SessionID>();
+        private HashSet<SessionID> set = new HashSet<>();
 
         public void logon(SessionID sessionID) {
             set.add(sessionID);

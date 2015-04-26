@@ -114,32 +114,6 @@ public class Order implements Cloneable, ItemWithId {
     public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
-
-    public String getSide() {
-
-        switch (side) {
-            case '1':
-                return "Buy";
-            case '2':
-                return "Sell";
-            case '3':
-                return "Buy minus";
-            case '4':
-                return "Sell plus";
-            case '5':
-                return "Sell short";
-            case '6':
-                return "Sell short exempt";
-            case '7':
-                return "Undisclosed";
-            case '8':
-                return "Cross";
-            case '9':
-                return "Cross short";
-            default:
-                return "<UNKNOWN>";
-        }
-    }
     
     public char getFIXSide() {
         return side;

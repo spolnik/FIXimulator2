@@ -1780,7 +1780,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
         if (row != -1) {
             row = orderTable.convertRowIndexToModel(row);
             Order order = orderTableModel.get(row);
-            dialogExecution = new Execution(order);
+            dialogExecution = Execution.createFrom(order);
             executionDialogShares.setValue(0);
             executionDialogPrice.setValue(0.0);
             executionDialog.pack();

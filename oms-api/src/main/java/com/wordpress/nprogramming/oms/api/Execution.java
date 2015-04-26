@@ -7,7 +7,8 @@ import java.util.UUID;
 
 public class Execution implements Cloneable, ItemWithId {
 
-    private Order order;
+    private static final Logger LOG = LoggerFactory.getLogger(Execution.class);
+
     private boolean dkd = false;
     private String id = null;
     private String refID = null;
@@ -18,23 +19,64 @@ public class Execution implements Cloneable, ItemWithId {
     private double leavesQty = 0.0;
     private double cumQty = 0.0;
     private double avgPx = 0.0;
+    private String clientOrderID;
+    private double orderQuantity;
+    private char fixStatus;
+    private String symbol;
+    private char fixSide;
+    private String securityID;
+    private String idSource;
+    private String orderId;
+    private double executed;
+    private double open;
 
-    private static final Logger LOG = LoggerFactory.getLogger(Execution.class);
-
-    public Execution( Order order ) {
+    private Execution(Order order) {
         id = generateID();
-        this.order = order;
+    }
+
+    public static Execution createFrom(Order order) {
+        Execution execution = new Execution(order);
+
+        execution.setClientOrderID(
+                order.getClientOrderID()
+        );
+        execution.setOrderQuantity(
+                order.getQuantity()
+        );
+        execution.setFixStatus(
+                order.getFIXStatus()
+        );
+        execution.setSymbol(
+                order.getSymbol()
+        );
+        execution.setFixSide(
+                order.getFIXSide()
+        );
+        execution.setSecurityID(
+                order.getSecurityID()
+        );
+        execution.setIdSource(
+                order.getIdSource()
+        );
+        execution.setOrderId(
+                order.id()
+        );
+        execution.setExecuted(
+                order.getExecuted()
+        );
+
+        return execution;
     }
 
     @Override
     public Execution clone() {
         try {
-            Execution execution = (Execution)super.clone();
+            Execution execution = (Execution) super.clone();
             execution.setRefID(id());
             execution.setId(generateID());
             execution.setDKd(false);
             return execution;
-        } catch(CloneNotSupportedException e) {
+        } catch (CloneNotSupportedException e) {
             LOG.error("Error: ", e);
             return null;
         }
@@ -92,12 +134,12 @@ public class Execution implements Cloneable, ItemWithId {
         }
     }
 
-    public char getFIXExecTranType() {
-        return execTranType;
-    }
-    
     public void setExecTranType(char execTranType) {
         this.execTranType = execTranType;
+    }
+
+    public char getFIXExecTranType() {
+        return execTranType;
     }
 
     public String getExecType() {
@@ -136,13 +178,13 @@ public class Execution implements Cloneable, ItemWithId {
                 return "<UNKNOWN>";
         }
     }
-    
-    public char getFIXExecType() {
-        return execType;
-    }
 
     public void setExecType(char execType) {
         this.execType = execType;
+    }
+
+    public char getFIXExecType() {
+        return execType;
     }
 
     public double getLastPx() {
@@ -169,14 +211,6 @@ public class Execution implements Cloneable, ItemWithId {
         this.leavesQty = leavesQty;
     }
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
     public String getRefID() {
         return refID;
     }
@@ -184,4 +218,93 @@ public class Execution implements Cloneable, ItemWithId {
     public void setRefID(String refID) {
         this.refID = refID;
     }
+
+    public String getClientOrderID() {
+        return clientOrderID;
+    }
+
+    public void setClientOrderID(String clientOrderID) {
+        this.clientOrderID = clientOrderID;
+    }
+
+    public void setDkd(boolean dkd) {
+        this.dkd = dkd;
+    }
+
+    public void setFixStatus(char fixStatus) {
+        this.fixStatus = fixStatus;
+    }
+
+    public void setFixSide(char fixSide) {
+        this.fixSide = fixSide;
+    }
+
+    public double getOrderQuantity() {
+        return orderQuantity;
+    }
+
+    public void setOrderQuantity(double orderQuantity) {
+        this.orderQuantity = orderQuantity;
+    }
+
+    public char getFIXStatus() {
+        return fixStatus;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public char getFIXSide() {
+        return fixSide;
+    }
+
+    public String getSecurityID() {
+        return securityID;
+    }
+
+    public void setSecurityID(String securityID) {
+        this.securityID = securityID;
+    }
+
+    public String getIdSource() {
+        return idSource;
+    }
+
+    public void setIdSource(String idSource) {
+        this.idSource = idSource;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public double getExecuted() {
+        return executed;
+    }
+
+    public void setOpen(double open) {
+        this.open = open;
+    }
+
+    public void setStatus(char status) {
+        this.fixStatus = status;
+    }
+
+    public void setExecuted(double executed) {
+        this.executed = executed;
+    }
+
+    public double getOpen() {
+        return open;
+    }
+
 }

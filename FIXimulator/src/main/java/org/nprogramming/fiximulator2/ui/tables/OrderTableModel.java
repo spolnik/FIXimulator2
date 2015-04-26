@@ -9,6 +9,8 @@ import javax.swing.table.AbstractTableModel;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.nprogramming.fiximulator2.domain.OrderFieldMapper.expandSide;
+
 public class OrderTableModel extends AbstractTableModel implements MessageHandler {
 
     private static final int ID = 0;
@@ -97,7 +99,7 @@ public class OrderTableModel extends AbstractTableModel implements MessageHandle
             case STATUS:
                 return order.getStatus();
             case SIDE:
-                return order.getSide();
+                return expandSide(order.getFIXSide());
             case QUANTITY:
                 return order.getQuantity();
             case SYMBOL:

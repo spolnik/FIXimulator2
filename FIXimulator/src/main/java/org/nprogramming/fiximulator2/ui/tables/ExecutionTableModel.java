@@ -1,14 +1,15 @@
 package org.nprogramming.fiximulator2.ui.tables;
 
+import com.wordpress.nprogramming.oms.api.Execution;
 import org.nprogramming.fiximulator2.api.MessageHandler;
 import org.nprogramming.fiximulator2.api.NotifyService;
 import org.nprogramming.fiximulator2.api.Repository;
-import com.wordpress.nprogramming.oms.api.Execution;
-import com.wordpress.nprogramming.oms.api.Order;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.nprogramming.fiximulator2.domain.OrderFieldMapper.expandSide;
 
 public class ExecutionTableModel extends AbstractTableModel implements MessageHandler {
 
@@ -93,17 +94,16 @@ public class ExecutionTableModel extends AbstractTableModel implements MessageHa
     public Object getValueAt(int row, int column) {
 
         Execution execution = get(row);
-        Order order = execution.getOrder();
 
         switch (column) {
             case ID:
                 return execution.id();
             case CLIENT_ORDER_ID:
-                return order.getClientOrderID();
+                return execution.getClientOrderID();
             case SIDE:
-                return order.getSide();
+                return expandSide(execution.getFIXSide());
             case SYMBOL:
-                return order.getSymbol();
+                return execution.getSymbol();
             case LAST_QTY:
                 return execution.getLastShares();
             case LAST_PX:
@@ -113,7 +113,7 @@ public class ExecutionTableModel extends AbstractTableModel implements MessageHa
             case AVG_PX:
                 return execution.getAvgPx();
             case OPEN:
-                return order.getOpen();
+                return execution.getOpen();
             case EXEC_TYPE:
                 return execution.getExecType();
             case EXEC_TRAN_TYPE:
