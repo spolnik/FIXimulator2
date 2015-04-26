@@ -5,6 +5,8 @@ import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
 import org.nprogramming.fiximulator2.api.NotifyService;
 import org.nprogramming.fiximulator2.api.Repository;
 import com.wordpress.nprogramming.oms.api.IOI;
+import org.nprogramming.fiximulator2.api.event.ExecutionChanged;
+import org.nprogramming.fiximulator2.api.event.IOIChanged;
 import quickfix.field.*;
 
 import java.util.Date;
@@ -125,6 +127,6 @@ final class FixIOISender {
         // *** Send message ***
         fixMessageSender.send(fixIOI);
         ioiRepository.save(ioi);
-        notifyService.sendChangedIOIId(ioi.id());
+        notifyService.send(IOIChanged.class, IOIChanged.withId(ioi.id()));
     }
 }

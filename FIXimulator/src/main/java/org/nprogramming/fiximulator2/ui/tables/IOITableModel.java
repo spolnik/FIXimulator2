@@ -4,12 +4,13 @@ import org.nprogramming.fiximulator2.api.MessageHandler;
 import org.nprogramming.fiximulator2.api.NotifyService;
 import org.nprogramming.fiximulator2.api.Repository;
 import com.wordpress.nprogramming.oms.api.IOI;
+import org.nprogramming.fiximulator2.api.event.IOIChanged;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.HashMap;
 import java.util.Map;
 
-public class IOITableModel extends AbstractTableModel implements MessageHandler {
+public class IOITableModel extends AbstractTableModel implements MessageHandler<IOIChanged> {
 
     private static final int ID = 0;
     private static final int TYPE = 1;
@@ -42,7 +43,7 @@ public class IOITableModel extends AbstractTableModel implements MessageHandler 
                 this::addOrReplaceAndRefresh
         );
 
-        notifyService.addIOIMessageHandler(this);
+        notifyService.register(IOIChanged.class, this);
     }
 
     @Override
@@ -112,9 +113,9 @@ public class IOITableModel extends AbstractTableModel implements MessageHandler 
     }
 
     @Override
-    public void onMessage(String id) {
+    public void onMessage(IOIChanged ioiChanged) {
         addOrReplaceAndRefresh(
-                ioiRepository.get(id)
+                ioiRepository.get(ioiChanged.id())
         );
     }
 

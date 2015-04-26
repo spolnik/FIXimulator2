@@ -1,6 +1,6 @@
 package org.nprogramming.fiximulator2.api;
 
-public interface MessageHandler {
+public interface MessageHandler<TMessage> {
 
-    void onMessage(String id);
+    void onMessage(TMessage id);
 }

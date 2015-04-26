@@ -5,6 +5,8 @@ import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
 import org.nprogramming.fiximulator2.api.NotifyService;
 import org.nprogramming.fiximulator2.api.OrderRepository;
 import org.nprogramming.fiximulator2.api.Repository;
+import org.nprogramming.fiximulator2.api.event.ExecutionChanged;
+import org.nprogramming.fiximulator2.api.event.OrderChanged;
 import org.nprogramming.fiximulator2.log4fix.LogMessageSet;
 import org.nprogramming.fiximulator2.core.StatusSwitcher;
 import com.wordpress.nprogramming.oms.api.Execution;
@@ -107,11 +109,11 @@ public class FIXimulatorApplication extends MessageCracker
         order.setReceivedOrder(true);
         if (executorStarted) {
             orderRepository.addOrderToFill(order);
-            notifyService.sendChangedOrderId(order.id());
+            notifyService.send(OrderChanged.class, OrderChanged.withId(order.id()));
             executorThread.interrupt();
         } else {
             orderRepository.save(order);
-            notifyService.sendChangedOrderId(order.id());
+            notifyService.send(OrderChanged.class, OrderChanged.withId(order.id()));
             boolean autoAck = false;
             try {
                 autoAck = settings.getBool("FIXimulatorAutoAcknowledge");
@@ -130,7 +132,7 @@ public class FIXimulatorApplication extends MessageCracker
         Order order = orderFixTranslator.from(message);
         order.setReceivedCancel(true);
         orderRepository.save(order);
-        notifyService.sendChangedOrderId(order.id());
+        notifyService.send(OrderChanged.class, OrderChanged.withId(order.id()));
         boolean autoPending = false;
         boolean autoCancel = false;
         try {
@@ -153,7 +155,7 @@ public class FIXimulatorApplication extends MessageCracker
         Order order = orderFixTranslator.from(message);
         order.setReceivedReplace(true);
         orderRepository.save(order);
-        notifyService.sendChangedOrderId(order.id());
+        notifyService.send(OrderChanged.class, OrderChanged.withId(order.id()));
         boolean autoPending = false;
         boolean autoCancel = false;
         try {
@@ -190,7 +192,7 @@ public class FIXimulatorApplication extends MessageCracker
             Execution execution =
                     executionRepository.get(execID.getValue());
             execution.setDKd(true);
-            notifyService.sendChangedExecutionId(execution.id());
+            notifyService.send(ExecutionChanged.class, ExecutionChanged.withId(execution.id()));
         } catch (FieldNotFound ex) {
             LOG.error("Error: ", ex);
         }
@@ -256,7 +258,7 @@ public class FIXimulatorApplication extends MessageCracker
         acknowledgement.setLeavesQty(order.getOpen());
         fixExecutionSender.send(acknowledgement);
         order.setReceivedOrder(false);
-        notifyService.sendChangedOrderId(order.id());
+        notifyService.send(OrderChanged.class, OrderChanged.withId(order.id()));
     }
 
     public void reject(Order order) {
@@ -267,7 +269,7 @@ public class FIXimulatorApplication extends MessageCracker
         reject.setLeavesQty(order.getOpen());
         fixExecutionSender.send(reject);
         order.setReceivedOrder(false);
-        notifyService.sendChangedOrderId(order.id());
+        notifyService.send(OrderChanged.class, OrderChanged.withId(order.id()));
     }
 
     public void dfd(Order order) {
@@ -279,7 +281,7 @@ public class FIXimulatorApplication extends MessageCracker
         dfd.setCumQty(order.getExecuted());
         dfd.setAvgPx(order.getAvgPx());
         fixExecutionSender.send(dfd);
-        notifyService.sendChangedOrderId(order.id());
+        notifyService.send(OrderChanged.class, OrderChanged.withId(order.id()));
     }
 
     public void pendingCancel(Order order) {
@@ -292,7 +294,7 @@ public class FIXimulatorApplication extends MessageCracker
         pending.setAvgPx(order.getAvgPx());
         fixExecutionSender.send(pending);
         order.setReceivedCancel(false);
-        notifyService.sendChangedOrderId(order.id());
+        notifyService.send(OrderChanged.class, OrderChanged.withId(order.id()));
     }
 
     public void cancel(Order order) {
@@ -305,14 +307,14 @@ public class FIXimulatorApplication extends MessageCracker
         cancel.setAvgPx(order.getAvgPx());
         fixExecutionSender.send(cancel);
         order.setReceivedCancel(false);
-        notifyService.sendChangedOrderId(order.id());
+        notifyService.send(OrderChanged.class, OrderChanged.withId(order.id()));
     }
 
     public void rejectCancelReplace(Order order, boolean cancel) {
         quickfix.fix42.OrderCancelReject rejectMessage = rejectCancelReplaceOrder(order, cancel);
 
         fixMessageSender.send(rejectMessage);
-        notifyService.sendChangedOrderId(order.id());
+        notifyService.send(OrderChanged.class, OrderChanged.withId(order.id()));
     }
 
     private OrderCancelReject rejectCancelReplaceOrder(Order order, boolean cancel) {
@@ -357,7 +359,7 @@ public class FIXimulatorApplication extends MessageCracker
         pending.setAvgPx(order.getAvgPx());
         order.setReceivedReplace(false);
         fixExecutionSender.send(pending);
-        notifyService.sendChangedOrderId(order.id());
+        notifyService.send(OrderChanged.class, OrderChanged.withId(order.id()));
     }
 
     public void replace(Order order) {
@@ -370,7 +372,7 @@ public class FIXimulatorApplication extends MessageCracker
         replace.setAvgPx(order.getAvgPx());
         order.setReceivedReplace(false);
         fixExecutionSender.send(replace);
-        notifyService.sendChangedOrderId(order.id());
+        notifyService.send(OrderChanged.class, OrderChanged.withId(order.id()));
     }
 
     public void execute(Execution execution) {
@@ -393,7 +395,7 @@ public class FIXimulatorApplication extends MessageCracker
                 / (execution.getExecuted() + fillQty);
         execution.setAvgPx(avgPx);
         execution.setExecuted(execution.getExecuted() + fillQty);
-        notifyService.sendChangedOrderId(execution.getOrderId());
+        notifyService.send(OrderChanged.class, OrderChanged.withId(execution.getOrderId()));
         // update execution
         execution.setExecTranType(ExecTransType.NEW);
         execution.setLeavesQty(execution.getOpen());
@@ -425,7 +427,7 @@ public class FIXimulatorApplication extends MessageCracker
             execution.setAvgPx(0);
             execution.setExecuted(0);
         }
-        notifyService.sendChangedOrderId(execution.getOrderId());
+        notifyService.send(OrderChanged.class, OrderChanged.withId(execution.getOrderId()));
         // update execution
         bust.setExecTranType(ExecTransType.CANCEL);
         bust.setLeavesQty(execution.getOpen());
@@ -464,7 +466,7 @@ public class FIXimulatorApplication extends MessageCracker
 
         original.setAvgPx(avgPx);
         original.setExecuted(newCumQty);
-        notifyService.sendChangedOrderId(original.getOrderId());
+        notifyService.send(OrderChanged.class, OrderChanged.withId(original.getOrderId()));
 
         // update execution
         correction.setExecTranType(ExecTransType.CORRECT);
@@ -758,7 +760,7 @@ public class FIXimulatorApplication extends MessageCracker
                         order.setStatus(OrdStatus.PARTIALLY_FILLED);
                         order.setExecuted(order.getExecuted() + fillQty);
                         order.setAvgPx(thisAvg);
-                        notifyService.sendChangedOrderId(order.id());
+                        notifyService.send(OrderChanged.class, OrderChanged.withId(order.id()));
                         // create execution
                         Execution partial = Execution.createFrom(order);
                         partial.setExecType(ExecType.PARTIAL_FILL);
@@ -797,7 +799,7 @@ public class FIXimulatorApplication extends MessageCracker
                         order.setStatus(OrdStatus.FILLED);
                         order.setExecuted(order.getExecuted() + fillQty);
                         order.setAvgPx(thisAvg);
-                        notifyService.sendChangedOrderId(order.id());
+                        notifyService.send(OrderChanged.class, OrderChanged.withId(order.id()));
                         // create execution
                         Execution partial = Execution.createFrom(order);
                         partial.setExecType(ExecType.FILL);

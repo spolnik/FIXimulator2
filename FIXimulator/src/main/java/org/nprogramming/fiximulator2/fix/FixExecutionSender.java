@@ -3,6 +3,7 @@ package org.nprogramming.fiximulator2.fix;
 import com.wordpress.nprogramming.oms.api.Execution;
 import org.nprogramming.fiximulator2.api.NotifyService;
 import org.nprogramming.fiximulator2.api.Repository;
+import org.nprogramming.fiximulator2.api.event.ExecutionChanged;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import quickfix.field.*;
@@ -103,6 +104,6 @@ final class FixExecutionSender {
     private void sendAndSave(Execution execution, ExecutionReport executionReport) {
         fixMessageSender.send(executionReport);
         repository.save(execution);
-        notifyService.sendChangedExecutionId(execution.id());
+        notifyService.send(ExecutionChanged.class, ExecutionChanged.withId(execution.id()));
     }
 }

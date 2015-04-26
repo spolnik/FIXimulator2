@@ -2,15 +2,7 @@ package org.nprogramming.fiximulator2.api;
 
 public interface NotifyService {
 
-    void addExecutionMessageHandler(MessageHandler messageHandler);
+    <TMessage> void register(Class<TMessage> clazz, MessageHandler<TMessage> message);
 
-    void addOrderMessageHandler(MessageHandler messageHandler);
-
-    void addIOIMessageHandler(MessageHandler messageHandler);
-
-    void sendChangedExecutionId(String id);
-
-    void sendChangedOrderId(String id);
-
-    void sendChangedIOIId(String id);
+    <TMessage> void send(Class<TMessage> clazz, TMessage tMessage);
 }

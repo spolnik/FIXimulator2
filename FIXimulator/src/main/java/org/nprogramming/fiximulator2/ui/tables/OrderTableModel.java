@@ -4,6 +4,7 @@ import org.nprogramming.fiximulator2.api.MessageHandler;
 import org.nprogramming.fiximulator2.api.NotifyService;
 import org.nprogramming.fiximulator2.api.OrderRepository;
 import com.wordpress.nprogramming.oms.api.Order;
+import org.nprogramming.fiximulator2.api.event.OrderChanged;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.HashMap;
@@ -11,7 +12,7 @@ import java.util.Map;
 
 import static org.nprogramming.fiximulator2.domain.OrderFieldMapper.expandSide;
 
-public class OrderTableModel extends AbstractTableModel implements MessageHandler {
+public class OrderTableModel extends AbstractTableModel implements MessageHandler<OrderChanged> {
 
     private static final int ID = 0;
     private static final int STATUS = 1;
@@ -46,7 +47,7 @@ public class OrderTableModel extends AbstractTableModel implements MessageHandle
                 this::addOrReplaceAndRefresh
         );
 
-        notifyService.addOrderMessageHandler(this);
+        notifyService.register(OrderChanged.class, this);
     }
 
     @Override
@@ -126,9 +127,9 @@ public class OrderTableModel extends AbstractTableModel implements MessageHandle
     }
 
     @Override
-    public void onMessage(String id) {
+    public void onMessage(OrderChanged orderChanged) {
         addOrReplaceAndRefresh(
-                orderRepository.get(id)
+                orderRepository.get(orderChanged.id())
         );
     }
 

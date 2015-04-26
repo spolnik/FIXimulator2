@@ -4,6 +4,7 @@ import com.wordpress.nprogramming.oms.api.Execution;
 import org.nprogramming.fiximulator2.api.MessageHandler;
 import org.nprogramming.fiximulator2.api.NotifyService;
 import org.nprogramming.fiximulator2.api.Repository;
+import org.nprogramming.fiximulator2.api.event.ExecutionChanged;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.HashMap;
@@ -12,7 +13,7 @@ import java.util.Map;
 import static org.nprogramming.fiximulator2.domain.ExecutionFieldMapper.expandExecType;
 import static org.nprogramming.fiximulator2.domain.OrderFieldMapper.expandSide;
 
-public class ExecutionTableModel extends AbstractTableModel implements MessageHandler {
+public class ExecutionTableModel extends AbstractTableModel implements MessageHandler<ExecutionChanged> {
 
     private static final int ID = 0;
     private static final int CLIENT_ORDER_ID = 1;
@@ -47,7 +48,7 @@ public class ExecutionTableModel extends AbstractTableModel implements MessageHa
                 this::addOrReplaceAndRefresh
         );
 
-        notifyService.addExecutionMessageHandler(this);
+        notifyService.register(ExecutionChanged.class, this);
     }
 
     @Override
@@ -129,9 +130,9 @@ public class ExecutionTableModel extends AbstractTableModel implements MessageHa
     }
 
     @Override
-    public void onMessage(String id) {
+    public void onMessage(ExecutionChanged executionChanged) {
         addOrReplaceAndRefresh(
-                executionsRepository.get(id)
+                executionsRepository.get(executionChanged.id())
         );
     }
 
