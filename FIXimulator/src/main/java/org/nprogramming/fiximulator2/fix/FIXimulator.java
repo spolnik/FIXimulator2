@@ -1,10 +1,11 @@
 package org.nprogramming.fiximulator2.fix;
 
-import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
+import com.google.common.base.Preconditions;
+import com.wordpress.nprogramming.instruments.api.InstrumentsRepository;
 import org.nprogramming.fiximulator2.api.NotifyService;
-import org.nprogramming.fiximulator2.api.Repository;
+import com.wordpress.nprogramming.oms.api.Repository;
 import org.nprogramming.fiximulator2.log4fix.LogMessageSet;
-import org.nprogramming.fiximulator2.api.OrderRepository;
+import org.nprogramming.fiximulator2.data.OrdersRepository;
 import com.wordpress.nprogramming.oms.api.Execution;
 import com.wordpress.nprogramming.oms.api.IOI;
 import org.slf4j.Logger;
@@ -23,10 +24,10 @@ public final class FIXimulator {
     private static LogMessageSet messages = null;
 
     public FIXimulator(
-            OrderRepository ordersRepository,
+            OrdersRepository ordersRepository,
             Repository<Execution> executionRepository,
             Repository<IOI> ioiRepository,
-            InstrumentsApi instrumentsApi,
+            InstrumentsRepository instrumentsRepository,
             NotifyService notifyService) throws FileNotFoundException {
         InputStream inputStream;
         ClassLoader classLoader = FIXimulator.class.getClassLoader();
@@ -34,6 +35,8 @@ public final class FIXimulator {
         try {
 
             URL configUrl = classLoader.getResource("config/FIXimulator.cfg");
+
+            Preconditions.checkNotNull(configUrl);
 
             inputStream = new BufferedInputStream(
                     new FileInputStream(
@@ -53,7 +56,7 @@ public final class FIXimulator {
                     ordersRepository,
                     executionRepository,
                     ioiRepository,
-                    instrumentsApi,
+                    instrumentsRepository,
                     new OrderFixTranslator(ordersRepository),
                     notifyService
             );

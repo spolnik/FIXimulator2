@@ -2,7 +2,7 @@ package org.nprogramming.fiximulator2.fix;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.nprogramming.fiximulator2.api.OrderRepository;
+import org.nprogramming.fiximulator2.data.OrdersRepository;
 import com.wordpress.nprogramming.oms.api.Order;
 import quickfix.field.*;
 import quickfix.fix42.NewOrderSingle;
@@ -18,7 +18,7 @@ public class OrderFixTranslator_ForOrderSingleSpec {
     @Before
     public void setUp() throws Exception {
         orderFixTranslator =
-                new OrderFixTranslator(mock(OrderRepository.class));
+                new OrderFixTranslator(mock(OrdersRepository.class));
         newOrderSingle = newOrderSingle();
     }
 
@@ -37,7 +37,7 @@ public class OrderFixTranslator_ForOrderSingleSpec {
 
         Order order = orderFixTranslator.from(newOrderSingle);
 
-        assertThat(order.getFIXSide())
+        assertThat(order.getFixSide())
                 .isEqualTo(
                         newOrderSingle.getSide().getValue());
     }
@@ -57,7 +57,7 @@ public class OrderFixTranslator_ForOrderSingleSpec {
 
         Order order = orderFixTranslator.from(newOrderSingle);
 
-        assertThat(order.getFIXOrderType())
+        assertThat(order.getFixOrderType())
                 .isEqualTo(
                         newOrderSingle.getOrdType().getValue());
     }
@@ -77,7 +77,7 @@ public class OrderFixTranslator_ForOrderSingleSpec {
 
         Order order = orderFixTranslator.from(newOrderSingle);
 
-        assertThat(order.getFIXTimeInForce())
+        assertThat(order.getFixTimeInForce())
                 .isEqualTo(
                         newOrderSingle.getTimeInForce().getValue());
     }

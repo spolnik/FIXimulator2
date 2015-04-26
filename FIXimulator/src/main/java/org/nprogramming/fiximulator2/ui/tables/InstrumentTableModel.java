@@ -1,7 +1,7 @@
 package org.nprogramming.fiximulator2.ui.tables;
 
 import com.wordpress.nprogramming.instruments.api.Instrument;
-import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
+import com.wordpress.nprogramming.instruments.api.InstrumentsRepository;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.HashMap;
@@ -21,11 +21,11 @@ public class InstrumentTableModel extends AbstractTableModel {
 
     private final transient Map<Integer, Instrument> rowToInstrument;
 
-    public InstrumentTableModel(InstrumentsApi instrumentsApi) {
+    public InstrumentTableModel(InstrumentsRepository instrumentsRepository) {
 
         rowToInstrument = new HashMap<>();
 
-        instrumentsApi.getAll().forEach(
+        instrumentsRepository.getAll().forEach(
                 this::addAndRefresh
         );
     }

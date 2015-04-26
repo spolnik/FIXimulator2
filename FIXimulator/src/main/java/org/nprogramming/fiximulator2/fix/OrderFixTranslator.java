@@ -1,6 +1,6 @@
 package org.nprogramming.fiximulator2.fix;
 
-import org.nprogramming.fiximulator2.api.OrderRepository;
+import org.nprogramming.fiximulator2.data.OrdersRepository;
 import com.wordpress.nprogramming.oms.api.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,17 +14,17 @@ import java.util.concurrent.Callable;
 
 public final class OrderFixTranslator {
 
-    private final OrderRepository orderRepository;
+    private final OrdersRepository ordersRepository;
 
     private static final Logger LOG = LoggerFactory.getLogger(OrderFixTranslator.class);
 
-    public OrderFixTranslator(OrderRepository orderRepository) {
+    public OrderFixTranslator(OrdersRepository ordersRepository) {
 
-        this.orderRepository = orderRepository;
+        this.ordersRepository = ordersRepository;
     }
 
     public Order from(OrderCancelReplaceRequest message) {
-        Order order = new Order();
+        Order order = new Order(Order.generateID());
 
         logIfException(() -> {
             ClOrdID clOrdID = new ClOrdID();
@@ -40,18 +40,18 @@ public final class OrderFixTranslator {
             return null;
         });
 
-        Order oldOrder = orderRepository.get(order.getOrigClientID());
+        Order oldOrder = ordersRepository.queryById(order.getOrigClientID());
         if (oldOrder != null) {
             order.setOpen(oldOrder.getOpen());
             order.setExecuted(oldOrder.getExecuted());
             order.setAvgPx(oldOrder.getAvgPx());
-            order.setStatus(oldOrder.getFIXStatus());
+            order.setFixStatus(oldOrder.getFixStatus());
         }
 
         logIfException(() -> {
             Side msgSide = new Side();
             message.get(msgSide);
-            order.setSide(msgSide.getValue());
+            order.setFixSide(msgSide.getValue());
             return null;
         });
 
@@ -65,7 +65,7 @@ public final class OrderFixTranslator {
         logIfException(() -> {
             OrdType msgType = new OrdType();
             message.get(msgType);
-            order.setOrderType(msgType.getValue());
+            order.setFixOrderType(msgType.getValue());
             return null;
         });
 
@@ -80,7 +80,7 @@ public final class OrderFixTranslator {
         logIfException(() -> {
             TimeInForce msgTIF = new TimeInForce();
             message.get(msgTIF);
-            order.setTimeInForce(msgTIF.getValue());
+            order.setFixTimeInForce(msgTIF.getValue());
             return null;
         });
 
@@ -109,7 +109,7 @@ public final class OrderFixTranslator {
     }
 
     public Order from(OrderCancelRequest message) {
-        Order order = new Order();
+        Order order = new Order(Order.generateID());
 
         logIfException(() -> {
             ClOrdID clOrdID = new ClOrdID();
@@ -125,19 +125,19 @@ public final class OrderFixTranslator {
             return null;
         });
 
-        Order oldOrder = orderRepository.get(order.getOrigClientID());
+        Order oldOrder = ordersRepository.queryById(order.getOrigClientID());
         if (oldOrder != null) {
             order.setOpen(oldOrder.getOpen());
             order.setExecuted(oldOrder.getExecuted());
             order.setPriceLimit(oldOrder.getPriceLimit());
             order.setAvgPx(oldOrder.getAvgPx());
-            order.setStatus(oldOrder.getFIXStatus());
+            order.setFixStatus(oldOrder.getFixStatus());
         }
 
         logIfException(() -> {
             Side msgSide = new Side();
             message.get(msgSide);
-            order.setSide(msgSide.getValue());
+            order.setFixSide(msgSide.getValue());
             return null;
         });
 
@@ -177,7 +177,7 @@ public final class OrderFixTranslator {
 
     public Order from(NewOrderSingle message) {
 
-        Order order = new Order();
+        Order order = new Order(Order.generateID());
 
         logIfException(() -> {
             ClOrdID clOrdID = new ClOrdID();
@@ -189,7 +189,7 @@ public final class OrderFixTranslator {
         logIfException(() -> {
             Side msgSide = new Side();
             message.get(msgSide);
-            order.setSide(msgSide.getValue());
+            order.setFixSide(msgSide.getValue());
             return null;
         });
 
@@ -203,7 +203,7 @@ public final class OrderFixTranslator {
         logIfException(() -> {
             OrdType msgType = new OrdType();
             message.get(msgType);
-            order.setOrderType(msgType.getValue());
+            order.setFixOrderType(msgType.getValue());
             return null;
         });
 
@@ -218,7 +218,7 @@ public final class OrderFixTranslator {
         logIfException(() -> {
             TimeInForce msgTIF = new TimeInForce();
             message.get(msgTIF);
-            order.setTimeInForce(msgTIF.getValue());
+            order.setFixTimeInForce(msgTIF.getValue());
             return null;
         });
 
@@ -250,8 +250,8 @@ public final class OrderFixTranslator {
         try {
             callable.call();
         } catch (FieldNotFound ex) {
-            LOG.error("Field Not Found: {}", ex.field);
-            LOG.error("Error: ", ex);
+            LOG.debug("Field Not Found: {}", ex.field);
+            LOG.debug("Error: ", ex);
         } catch (Exception e) {
             LOG.error("Error: ", e);
         }

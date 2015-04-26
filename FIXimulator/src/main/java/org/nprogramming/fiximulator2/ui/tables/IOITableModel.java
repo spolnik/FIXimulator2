@@ -2,7 +2,7 @@ package org.nprogramming.fiximulator2.ui.tables;
 
 import org.nprogramming.fiximulator2.api.MessageHandler;
 import org.nprogramming.fiximulator2.api.NotifyService;
-import org.nprogramming.fiximulator2.api.Repository;
+import com.wordpress.nprogramming.oms.api.Repository;
 import com.wordpress.nprogramming.oms.api.IOI;
 import org.nprogramming.fiximulator2.api.event.IOIChanged;
 
@@ -115,7 +115,7 @@ public class IOITableModel extends AbstractTableModel implements MessageHandler<
     @Override
     public void onMessage(IOIChanged message) {
         addOrReplaceAndRefresh(
-                ioiRepository.get(message.id())
+                ioiRepository.queryById(message.id())
         );
     }
 

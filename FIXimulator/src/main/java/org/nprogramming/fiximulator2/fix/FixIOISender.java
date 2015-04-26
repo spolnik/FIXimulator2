@@ -1,11 +1,10 @@
 package org.nprogramming.fiximulator2.fix;
 
 import com.wordpress.nprogramming.instruments.api.Instrument;
-import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
+import com.wordpress.nprogramming.instruments.api.InstrumentsRepository;
 import org.nprogramming.fiximulator2.api.NotifyService;
-import org.nprogramming.fiximulator2.api.Repository;
+import com.wordpress.nprogramming.oms.api.Repository;
 import com.wordpress.nprogramming.oms.api.IOI;
-import org.nprogramming.fiximulator2.api.event.ExecutionChanged;
 import org.nprogramming.fiximulator2.api.event.IOIChanged;
 import quickfix.field.*;
 
@@ -14,19 +13,19 @@ import java.util.Date;
 final class FixIOISender {
 
     private FixMessageSender fixMessageSender;
-    private InstrumentsApi instrumentsApi;
+    private InstrumentsRepository instrumentsRepository;
     private Repository<IOI> ioiRepository;
     private final NotifyService notifyService;
 
     public FixIOISender(
             FixMessageSender fixMessageSender,
-            InstrumentsApi instrumentsApi,
+            InstrumentsRepository instrumentsRepository,
             Repository<IOI> ioiRepository,
             NotifyService notifyService
     ) {
 
         this.fixMessageSender = fixMessageSender;
-        this.instrumentsApi = instrumentsApi;
+        this.instrumentsRepository = instrumentsRepository;
         this.ioiRepository = ioiRepository;
         this.notifyService = notifyService;
     }
@@ -106,7 +105,7 @@ final class FixIOISender {
 
         // SecurityDesc
         Instrument instrument =
-                instrumentsApi.getInstrument(ioi.getSymbol());
+                instrumentsRepository.queryById(ioi.getSymbol());
         String name = "Unknown security";
         if (instrument != null)
             name = instrument.getName();

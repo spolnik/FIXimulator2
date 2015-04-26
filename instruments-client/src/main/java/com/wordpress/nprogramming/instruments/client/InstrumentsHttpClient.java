@@ -1,7 +1,7 @@
 package com.wordpress.nprogramming.instruments.client;
 
 import com.wordpress.nprogramming.instruments.api.Instrument;
-import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
+import com.wordpress.nprogramming.instruments.api.InstrumentsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class InstrumentsHttpClient implements InstrumentsApi {
+public class InstrumentsHttpClient implements InstrumentsRepository {
 
     private final Client client;
 
@@ -24,10 +24,10 @@ public class InstrumentsHttpClient implements InstrumentsApi {
     }
 
     @Override
-    public Instrument getInstrument(String symbol) {
+    public Instrument queryById(String id) {
 
         WebTarget target = client.target("http://localhost:8080")
-                .path("api/instruments/" + symbol);
+                .path("api/instruments/" + id);
 
         return target.request(MediaType.APPLICATION_JSON).get(Instrument.class);
     }
@@ -47,12 +47,12 @@ public class InstrumentsHttpClient implements InstrumentsApi {
 
         InstrumentsHttpClient httpClient = new InstrumentsHttpClient();
 
-        Instrument instrument = httpClient.getInstrument("IBM");
+        Instrument instrument = httpClient.queryById("IBM");
 
-        LOG.info("getInstrument('IBM')");
+        LOG.info("instrument('IBM')");
         LOG.info(instrument.toString());
 
-        LOG.info("getInstruments()");
+        LOG.info("listInstruments()");
         Stream<Instrument> instruments = httpClient.getAll()
                 .stream()
                 .limit(10);

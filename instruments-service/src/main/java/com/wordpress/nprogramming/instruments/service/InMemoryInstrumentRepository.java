@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
 import com.wordpress.nprogramming.instruments.api.Instrument;
-import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
+import com.wordpress.nprogramming.instruments.api.InstrumentsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public final class InMemoryInstrumentRepository implements InstrumentsApi {
+public final class InMemoryInstrumentRepository implements InstrumentsRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(
             InMemoryInstrumentRepository.class
@@ -65,7 +65,7 @@ public final class InMemoryInstrumentRepository implements InstrumentsApi {
     }
 
     @Override
-    public Instrument getInstrument(String identifier) {
+    public Instrument queryById(String identifier) {
 
         return instruments.stream()
                 .filter(x -> x.canBeIdentifiedBy(identifier))

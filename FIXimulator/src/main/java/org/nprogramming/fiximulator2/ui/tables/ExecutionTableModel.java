@@ -3,7 +3,7 @@ package org.nprogramming.fiximulator2.ui.tables;
 import com.wordpress.nprogramming.oms.api.Execution;
 import org.nprogramming.fiximulator2.api.MessageHandler;
 import org.nprogramming.fiximulator2.api.NotifyService;
-import org.nprogramming.fiximulator2.api.Repository;
+import com.wordpress.nprogramming.oms.api.Repository;
 import org.nprogramming.fiximulator2.api.event.ExecutionChanged;
 
 import javax.swing.table.AbstractTableModel;
@@ -103,7 +103,7 @@ public class ExecutionTableModel extends AbstractTableModel implements MessageHa
             case CLIENT_ORDER_ID:
                 return execution.getClientOrderID();
             case SIDE:
-                return expandSide(execution.getFIXSide());
+                return expandSide(execution.getFixSide());
             case SYMBOL:
                 return execution.getSymbol();
             case LAST_QTY:
@@ -117,7 +117,7 @@ public class ExecutionTableModel extends AbstractTableModel implements MessageHa
             case OPEN:
                 return execution.getOpen();
             case EXEC_TYPE:
-                return expandExecType(execution.getFIXExecType());
+                return expandExecType(execution.getFixExecType());
             case EXEC_TRAN_TYPE:
                 return execution.getExecTranType();
             case REF_ID:
@@ -132,7 +132,7 @@ public class ExecutionTableModel extends AbstractTableModel implements MessageHa
     @Override
     public void onMessage(ExecutionChanged message) {
         addOrReplaceAndRefresh(
-                executionsRepository.get(message.id())
+                executionsRepository.queryById(message.id())
         );
     }
 

@@ -1,7 +1,7 @@
-package org.nprogramming.fiximulator2.data;
+package com.wordpress.nprogramming.oms.service;
 
-import org.nprogramming.fiximulator2.api.Repository;
 import com.wordpress.nprogramming.oms.api.ItemWithId;
+import com.wordpress.nprogramming.oms.api.Repository;
 
 import java.util.*;
 
@@ -16,7 +16,7 @@ public class InMemoryRepository<TItem extends ItemWithId>
     }
 
     @Override
-    public TItem get(String id) {
+    public TItem queryById(String id) {
 
         if (items.containsKey(id)) {
             return items.get(id);

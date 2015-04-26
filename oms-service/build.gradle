@@ -1,0 +1,12 @@
+apply plugin: 'application'
+
+mainClassName = "com.wordpress.nprogramming.oms.service.OrderManagementSystemApplication"
+
+dependencies {
+    compile project(':oms-api'),
+            libs.dropwizard.core
+}
+
+run {
+    args 'server', 'config.yml'
+}

@@ -2,7 +2,7 @@ package org.nprogramming.fiximulator2.fix;
 
 import com.wordpress.nprogramming.oms.api.Execution;
 import org.nprogramming.fiximulator2.api.NotifyService;
-import org.nprogramming.fiximulator2.api.Repository;
+import com.wordpress.nprogramming.oms.api.Repository;
 import org.nprogramming.fiximulator2.api.event.ExecutionChanged;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,20 +38,20 @@ final class FixExecutionSender {
 
         // ExecTransType (20)
         ExecTransType execTransType =
-                new ExecTransType(execution.getFIXExecTranType());
+                new ExecTransType(execution.getFixExecTranType());
 
         // ExecType (150) Status of this report
-        ExecType execType = new ExecType(execution.getFIXExecType());
+        ExecType execType = new ExecType(execution.getFixExecType());
 
         // OrdStatus (39) Status as a result of this report
         OrdStatus ordStatus =
-                new OrdStatus(execution.getFIXStatus());
+                new OrdStatus(execution.getFixStatus());
 
         // Symbol (55)
         Symbol symbol = new Symbol(execution.getSymbol());
 
         //  Side (54)
-        Side side = new Side(execution.getFIXSide());
+        Side side = new Side(execution.getFixSide());
 
         // LeavesQty ()
         LeavesQty leavesQty = new LeavesQty(execution.getLeavesQty());

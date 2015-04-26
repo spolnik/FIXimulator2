@@ -2,7 +2,7 @@ package org.nprogramming.fiximulator2.ui.tables;
 
 import org.nprogramming.fiximulator2.api.MessageHandler;
 import org.nprogramming.fiximulator2.api.NotifyService;
-import org.nprogramming.fiximulator2.api.OrderRepository;
+import org.nprogramming.fiximulator2.data.OrdersRepository;
 import com.wordpress.nprogramming.oms.api.Order;
 import org.nprogramming.fiximulator2.api.event.OrderChanged;
 
@@ -35,15 +35,15 @@ public class OrderTableModel extends AbstractTableModel implements MessageHandle
     private final transient Map<Integer, Order> rowToOrder;
     private final transient Map<String, Integer> idToRow;
 
-    private final transient OrderRepository orderRepository;
+    private final transient OrdersRepository ordersRepository;
 
-    public OrderTableModel(OrderRepository orderRepository, NotifyService notifyService) {
-        this.orderRepository = orderRepository;
+    public OrderTableModel(OrdersRepository ordersRepository, NotifyService notifyService) {
+        this.ordersRepository = ordersRepository;
 
         rowToOrder = new HashMap<>();
         idToRow = new HashMap<>();
 
-        orderRepository.getAll().forEach(
+        ordersRepository.getAll().forEach(
                 this::addOrReplaceAndRefresh
         );
 
@@ -100,7 +100,7 @@ public class OrderTableModel extends AbstractTableModel implements MessageHandle
             case STATUS:
                 return order.getStatus();
             case SIDE:
-                return expandSide(order.getFIXSide());
+                return expandSide(order.getFixSide());
             case QUANTITY:
                 return order.getQuantity();
             case SYMBOL:
@@ -129,7 +129,7 @@ public class OrderTableModel extends AbstractTableModel implements MessageHandle
     @Override
     public void onMessage(OrderChanged message) {
         addOrReplaceAndRefresh(
-                orderRepository.get(message.id())
+                ordersRepository.queryById(message.id())
         );
     }
 

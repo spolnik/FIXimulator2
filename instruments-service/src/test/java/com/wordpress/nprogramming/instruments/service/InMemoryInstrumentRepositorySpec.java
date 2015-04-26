@@ -23,7 +23,7 @@ public class InMemoryInstrumentRepositorySpec {
 
     @Test
     public void allowsToQueryParticularInstrument() throws Exception {
-        Instrument instrument = repository.getInstrument("IBM");
+        Instrument instrument = repository.queryById("IBM");
 
         assertThat(instrument).isNotNull();
     }
@@ -37,7 +37,7 @@ public class InMemoryInstrumentRepositorySpec {
 
     @Test
     public void returnsEmptyInstrumentIfQueriedForNonExistingIdentifier() throws Exception {
-        Instrument emptyInstrument = repository.getInstrument("dummmy");
+        Instrument emptyInstrument = repository.queryById("dummmy");
 
         assertThat(emptyInstrument.getName()).isEmpty();
         assertThat(emptyInstrument.getCusip()).isEmpty();

@@ -9,6 +9,7 @@ dependencies {
     compile project(':instruments-api'),
             project(':instruments-client'),
             project(':oms-api'),
+            project(':oms-client'),
             libs.quickfixj,
             libs.jdesktop
 }

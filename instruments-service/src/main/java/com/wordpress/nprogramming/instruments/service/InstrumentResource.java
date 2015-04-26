@@ -1,7 +1,7 @@
 package com.wordpress.nprogramming.instruments.service;
 
 import com.wordpress.nprogramming.instruments.api.Instrument;
-import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
+import com.wordpress.nprogramming.instruments.api.InstrumentsRepository;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -14,20 +14,20 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class InstrumentResource {
 
-    private final InstrumentsApi instrumentsApi;
+    private final InstrumentsRepository instrumentsRepository;
 
-    public InstrumentResource(InstrumentsApi instrumentsApi) {
-        this.instrumentsApi = instrumentsApi;
+    public InstrumentResource(InstrumentsRepository instrumentsRepository) {
+        this.instrumentsRepository = instrumentsRepository;
     }
 
     @GET
     public List<Instrument> listInstruments() {
-        return instrumentsApi.getAll();
+        return instrumentsRepository.getAll();
     }
 
     @GET
     @Path("{instrumentId}")
-    public Instrument getInstrument(@PathParam("instrumentId") String instrumentId) {
-        return instrumentsApi.getInstrument(instrumentId);
+    public Instrument instrument(@PathParam("instrumentId") String instrumentId) {
+        return instrumentsRepository.queryById(instrumentId);
     }
 }

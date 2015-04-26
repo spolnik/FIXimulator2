@@ -8,3 +8,7 @@ include 'instruments-client'
 
 include 'oms-api'
 
+include 'oms-service'
+
+include 'oms-client'
+

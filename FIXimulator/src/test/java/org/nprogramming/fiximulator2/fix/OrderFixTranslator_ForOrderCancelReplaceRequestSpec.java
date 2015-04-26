@@ -2,7 +2,7 @@ package org.nprogramming.fiximulator2.fix;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.nprogramming.fiximulator2.api.OrderRepository;
+import org.nprogramming.fiximulator2.data.OrdersRepository;
 import com.wordpress.nprogramming.oms.api.Order;
 import quickfix.field.*;
 import quickfix.fix42.NewOrderSingle;
@@ -22,16 +22,16 @@ public class OrderFixTranslator_ForOrderCancelReplaceRequestSpec {
     public void setUp() throws Exception {
         orderCancelReplaceRequest = orderCancelReplaceRequest();
 
-        OrderRepository orderRepository =
-                mock(OrderRepository.class);
+        OrdersRepository ordersRepository =
+                mock(OrdersRepository.class);
 
         orderFixTranslator =
-                new OrderFixTranslator(orderRepository);
+                new OrderFixTranslator(ordersRepository);
 
         NewOrderSingle newOrderSingle = newOrderSingle();
         oldOrder = orderFixTranslator.from(newOrderSingle);
 
-        when(orderRepository.get("ABC")).thenReturn(oldOrder);
+        when(ordersRepository.queryById("ABC")).thenReturn(oldOrder);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class OrderFixTranslator_ForOrderCancelReplaceRequestSpec {
 
         Order order = orderFixTranslator.from(orderCancelReplaceRequest);
 
-        assertThat(order.getFIXSide())
+        assertThat(order.getFixSide())
                 .isEqualTo(
                         orderCancelReplaceRequest.getSide().getValue());
     }
@@ -99,9 +99,9 @@ public class OrderFixTranslator_ForOrderCancelReplaceRequestSpec {
 
         Order order = orderFixTranslator.from(orderCancelReplaceRequest);
 
-        assertThat(order.getFIXStatus())
+        assertThat(order.getFixStatus())
                 .isEqualTo(
-                        oldOrder.getFIXStatus());
+                        oldOrder.getFixStatus());
     }
 
     @Test
@@ -109,7 +109,7 @@ public class OrderFixTranslator_ForOrderCancelReplaceRequestSpec {
 
         Order order = orderFixTranslator.from(orderCancelReplaceRequest);
 
-        assertThat(order.getFIXTimeInForce())
+        assertThat(order.getFixTimeInForce())
                 .isEqualTo(
                         orderCancelReplaceRequest.getTimeInForce().getValue());
     }
@@ -129,7 +129,7 @@ public class OrderFixTranslator_ForOrderCancelReplaceRequestSpec {
 
         Order order = orderFixTranslator.from(orderCancelReplaceRequest);
 
-        assertThat(order.getFIXOrderType())
+        assertThat(order.getFixOrderType())
                 .isEqualTo(
                         orderCancelReplaceRequest.getOrdType().getValue());
     }
