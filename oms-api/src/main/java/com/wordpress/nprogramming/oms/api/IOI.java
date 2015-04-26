@@ -5,49 +5,51 @@ import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
+
 public class IOI implements Cloneable, ItemWithId {
 
-    private String ID = null;
+    private static final Logger LOG = LoggerFactory.getLogger(IOI.class);
+
+    private String id = null;
     private String refID = null;
     private String type = null;     // NEW, CANCEL, REPLACE
     private String side = "";       // BUY, SELL, UNDISCLOSED
     private Integer quantity = 0;
     private String symbol = "";
     private String securityID = "";
-    private String iDSource = "";   //
+    private String idSource = "";
     private double price = 0.0;
     private String natural = "";    // YES, NO
 
-    private static final Logger LOG = LoggerFactory.getLogger(IOI.class);
-
-    public IOI () {
-        ID = generateID();
+    public IOI() {
+        id = generateID();
     }
-    
+
     @Override
     public IOI clone() {
         try {
-            IOI ioi = (IOI)super.clone();
+            IOI ioi = (IOI) super.clone();
             ioi.setRefID(id());
-            ioi.setID(ioi.generateID());
+            ioi.setId(ioi.generateID());
             return ioi;
-        } catch(CloneNotSupportedException e) {
+        } catch (CloneNotSupportedException e) {
             LOG.error("Error: ", e);
             return null;
         }
     }
-    
+
     public String generateID() {
         return "I" + UUID.randomUUID();
     }
 
     @Override
     public String id() {
-        return ID;
+        return id;
     }
 
-    public void setID(String id) {
-        this.ID = id;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getRefID() {
@@ -69,7 +71,7 @@ public class IOI implements Cloneable, ItemWithId {
         if (type.toUpperCase().startsWith("R"))
             this.type = "REPLACE";
     }
-    
+
     public String getNatural() {
         return natural;
     }
@@ -101,35 +103,39 @@ public class IOI implements Cloneable, ItemWithId {
     }
 
     public void setSecurityID(String securityID) {
-        this.securityID = securityID.equals("")
+        this.securityID = isNullOrEmpty(securityID)
                 ? "<MISSING>"
                 : securityID;
     }
-    
+
     public String getIDSource() {
-        return iDSource;
+        return idSource;
     }
 
     public void setIDSource(String iDSource) {
-        this.iDSource = "UNKNOWN";
+        this.idSource = "UNKNOWN";
         if (iDSource.toUpperCase().startsWith("C"))
-            this.iDSource = "CUSIP";
+            this.idSource = "CUSIP";
         if (iDSource.toUpperCase().startsWith("S"))
-            this.iDSource = "SEDOL";
+            this.idSource = "SEDOL";
         if (iDSource.toUpperCase().startsWith("T"))
-            this.iDSource = "TICKER";
+            this.idSource = "TICKER";
         if (iDSource.toUpperCase().startsWith("R"))
-            this.iDSource = "RIC";
+            this.idSource = "RIC";
     }
-    
+
     public String getSide() {
         return side;
     }
 
     public void setSide(String side) {
         this.side = "BUY";
-        if (side.toUpperCase().startsWith("S")) this.side = "SELL";
-        if (side.toUpperCase().startsWith("U")) this.side = "UNDISCLOSED";
+
+        if (side.toUpperCase().startsWith("S"))
+            this.side = "SELL";
+
+        if (side.toUpperCase().startsWith("U"))
+            this.side = "UNDISCLOSED";
     }
 
     public String getSymbol() {
@@ -137,7 +143,7 @@ public class IOI implements Cloneable, ItemWithId {
     }
 
     public void setSymbol(String symbol) {
-        this.symbol = symbol.equals("")
+        this.symbol = isNullOrEmpty(symbol)
                 ? "<MISSING>"
                 : symbol;
     }

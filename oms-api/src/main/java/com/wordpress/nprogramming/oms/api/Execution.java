@@ -30,12 +30,12 @@ public class Execution implements Cloneable, ItemWithId {
     private double executed;
     private double open;
 
-    private Execution(Order order) {
+    private Execution() {
         id = generateID();
     }
 
     public static Execution createFrom(Order order) {
-        Execution execution = new Execution(order);
+        Execution execution = new Execution();
 
         execution.setClientOrderID(
                 order.getClientOrderID()
@@ -142,42 +142,7 @@ public class Execution implements Cloneable, ItemWithId {
         return execTranType;
     }
 
-    public String getExecType() {
-        switch (execType) {
-            case '0':
-                return "New";
-            case '1':
-                return "Partial fill";
-            case '2':
-                return "Fill";
-            case '3':
-                return "Done for day";
-            case '4':
-                return "Canceled";
-            case '5':
-                return "Replace";
-            case '6':
-                return "Pending Cancel";
-            case '7':
-                return "Stopped";
-            case '8':
-                return "Rejected";
-            case '9':
-                return "Suspended";
-            case 'A':
-                return "Pending New";
-            case 'B':
-                return "Calculated";
-            case 'C':
-                return "Expired";
-            case 'D':
-                return "Restated";
-            case 'E':
-                return "Pending Replace";
-            default:
-                return "<UNKNOWN>";
-        }
-    }
+
 
     public void setExecType(char execType) {
         this.execType = execType;
@@ -306,5 +271,4 @@ public class Execution implements Cloneable, ItemWithId {
     public double getOpen() {
         return open;
     }
-
 }

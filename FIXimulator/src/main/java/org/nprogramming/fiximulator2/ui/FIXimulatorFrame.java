@@ -21,6 +21,8 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.io.FileNotFoundException;
 
+import static org.nprogramming.fiximulator2.domain.ExecutionFieldMapper.expandExecType;
+
 public class FIXimulatorFrame extends javax.swing.JFrame {
 
     private static FIXimulator fiximulator;
@@ -1551,12 +1553,16 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
             Execution execution =
                     executionTableModel.get(row);
 
-            if (execution.getExecType().equals("Fill") ||
-                    execution.getExecType().equals("Partial fill")) {
+            String execType = expandExecType(
+                    execution.getFIXExecType()
+            );
+
+            if (execType.equals("Fill") ||
+                    execType.equals("Partial fill")) {
                 FIXimulator.getApplication().bust(execution);
             } else {
                 System.out.println(
-                        "\"" + execution.getExecType() + "\" " +
+                        "\"" + execType + "\" " +
                                 "executions cannot be busted...");
             }
 
@@ -1796,8 +1802,12 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
             Execution execution =
                     executionTableModel.get(row);
 
-            if (execution.getExecType().equals("Fill") ||
-                    execution.getExecType().equals("Partial fill")) {
+            String execType = expandExecType(
+                    execution.getFIXExecType()
+            );
+
+            if (execType.equals("Fill") ||
+                    execType.equals("Partial fill")) {
                 dialogExecution = execution.clone();
                 executionDialogShares.setValue(execution.getLastShares());
                 executionDialogPrice.setValue(execution.getLastPx());
@@ -1805,7 +1815,7 @@ public class FIXimulatorFrame extends javax.swing.JFrame {
                 executionDialog.setVisible(true);
             } else {
                 System.out.println(
-                        "\"" + execution.getExecType() + "\" " +
+                        "\"" + execType + "\" " +
                                 "executions cannot be corrected...");
             }
         }

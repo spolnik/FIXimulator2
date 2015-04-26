@@ -3,9 +3,37 @@ package com.wordpress.nprogramming.oms.api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class Order implements Cloneable, ItemWithId {
+
+    private static final String UNKNOWN = "<UNKNOWN>";
+
+    private static final Map<Character, String> orderTypeMappings = new HashMap<>();
+
+    static {
+        orderTypeMappings.put('1', "Market");
+        orderTypeMappings.put('2', "Limit");
+        orderTypeMappings.put('3', "Stop");
+        orderTypeMappings.put('4', "Stop limit");
+        orderTypeMappings.put('5', "Market on close");
+        orderTypeMappings.put('6', "With or without");
+        orderTypeMappings.put('7', "Limit or better");
+        orderTypeMappings.put('8', "Limit with or without");
+        orderTypeMappings.put('9', "On basis");
+        orderTypeMappings.put('A', "On close");
+        orderTypeMappings.put('B', "Limit on close");
+        orderTypeMappings.put('C', "Forex - Market");
+        orderTypeMappings.put('D', "Previously quoted");
+        orderTypeMappings.put('E', "Previously indicated");
+        orderTypeMappings.put('F', "Forex - Limit");
+        orderTypeMappings.put('G', "Forex - Swap");
+        orderTypeMappings.put('H', "Forex - Previously Quoted");
+        orderTypeMappings.put('I', "Funari");
+        orderTypeMappings.put('P', "Pegged");
+    }
 
     private boolean receivedOrder = false;
     private boolean receivedCancel = false;
@@ -124,10 +152,18 @@ public class Order implements Cloneable, ItemWithId {
     }
 
     public String getStatus() {
-        if (receivedOrder) return "Received";
-        if (receivedCancel) return "Cancel Received";
-        if (receivedReplace) return "Replace Received";
-        if (rejectedCancelReplace) return "Cancel/Replace Rejected";
+
+        if (receivedOrder)
+            return "Received";
+
+        if (receivedCancel)
+            return "Cancel Received";
+
+        if (receivedReplace)
+            return "Replace Received";
+
+        if (rejectedCancelReplace)
+            return "Cancel/Replace Rejected";
 
         return geStatusAsString();
     }
@@ -166,7 +202,7 @@ public class Order implements Cloneable, ItemWithId {
             case 'E':
                 return "Pending Replace";
             default:
-                return "<UNKNOWN>";
+                return UNKNOWN;
         }
     }
 
@@ -203,7 +239,7 @@ public class Order implements Cloneable, ItemWithId {
             case '6':
                 return "GTD";
             default:
-                return "<UNKNOWN>";
+                return UNKNOWN;
         }
     }
     
@@ -232,48 +268,10 @@ public class Order implements Cloneable, ItemWithId {
     }
 
     public String getOrderType() {
-        switch (orderType) {
-            case '1':
-                return "Market";
-            case '2':
-                return "Limit";
-            case '3':
-                return "Stop";
-            case '4':
-                return "Stop limit";
-            case '5':
-                return "Market on close";
-            case '6':
-                return "With or without";
-            case '7':
-                return "Limit or better";
-            case '8':
-                return "Limit with or without";
-            case '9':
-                return "On basis";
-            case 'A':
-                return "On close";
-            case 'B':
-                return "Limit on close";
-            case 'C':
-                return "Forex - Market";
-            case 'D':
-                return "Previously quoted";
-            case 'E':
-                return "Previously indicated";
-            case 'F':
-                return "Forex - Limit";
-            case 'G':
-                return "Forex - Swap";
-            case 'H':
-                return "Forex - Previously Quoted";
-            case 'I':
-                return "Funari";
-            case 'P':
-                return "Pegged";
-            default:
-                return "<UNKNOWN>";
-        }
+
+        return orderTypeMappings.containsKey(orderType)
+                ? orderTypeMappings.get(orderType)
+                : UNKNOWN;
     }
     
     public char getFIXOrderType() {

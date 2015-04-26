@@ -9,6 +9,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.nprogramming.fiximulator2.domain.ExecutionFieldMapper.expandExecType;
 import static org.nprogramming.fiximulator2.domain.OrderFieldMapper.expandSide;
 
 public class ExecutionTableModel extends AbstractTableModel implements MessageHandler {
@@ -115,7 +116,7 @@ public class ExecutionTableModel extends AbstractTableModel implements MessageHa
             case OPEN:
                 return execution.getOpen();
             case EXEC_TYPE:
-                return execution.getExecType();
+                return expandExecType(execution.getFIXExecType());
             case EXEC_TRAN_TYPE:
                 return execution.getExecTranType();
             case REF_ID:
