@@ -2,16 +2,17 @@ package org.nprogramming.fiximulator2.fix;
 
 import com.wordpress.nprogramming.instruments.api.Instrument;
 import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
-import org.nprogramming.fiximulator2.api.NotifyService;
-import org.nprogramming.fiximulator2.api.OrderRepository;
-import org.nprogramming.fiximulator2.api.Repository;
-import org.nprogramming.fiximulator2.api.event.ExecutionChanged;
-import org.nprogramming.fiximulator2.api.event.OrderChanged;
-import org.nprogramming.fiximulator2.log4fix.LogMessageSet;
-import org.nprogramming.fiximulator2.core.StatusSwitcher;
 import com.wordpress.nprogramming.oms.api.Execution;
 import com.wordpress.nprogramming.oms.api.IOI;
 import com.wordpress.nprogramming.oms.api.Order;
+import org.nprogramming.fiximulator2.api.MessageHandler;
+import org.nprogramming.fiximulator2.api.NotifyService;
+import org.nprogramming.fiximulator2.api.OrderRepository;
+import org.nprogramming.fiximulator2.api.Repository;
+import org.nprogramming.fiximulator2.api.event.ConnectionStatus;
+import org.nprogramming.fiximulator2.api.event.ExecutionChanged;
+import org.nprogramming.fiximulator2.api.event.OrderChanged;
+import org.nprogramming.fiximulator2.log4fix.LogMessageSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import quickfix.*;
@@ -30,9 +31,9 @@ public class FIXimulatorApplication extends MessageCracker
     private final NotifyService notifyService;
 
     private boolean connected;
-    private StatusSwitcher connectedStatus;
-    private StatusSwitcher ioiSenderStatus;
-    private StatusSwitcher executorStatus;
+    private MessageHandler<ConnectionStatus> connectedStatus;
+    private MessageHandler<ConnectionStatus> ioiSenderStatus;
+    private MessageHandler<ConnectionStatus> executorStatus;
     private boolean ioiSenderStarted;
     private boolean executorStarted;
     private IOISender ioiSender;
@@ -82,7 +83,7 @@ public class FIXimulatorApplication extends MessageCracker
         currentSession = sessionID;
         dictionary = Session.lookupSession(currentSession).getDataDictionary();
         if (connectedStatus != null)
-            connectedStatus.on();
+            connectedStatus.onMessage(ConnectionStatus.on());
 
         fixMessageSender = new FixMessageSender(settings, sessionID);
         fixExecutionSender = new FixExecutionSender(fixMessageSender, executionRepository, notifyService);
@@ -94,7 +95,7 @@ public class FIXimulatorApplication extends MessageCracker
         connected = false;
         currentSession = null;
         fixMessageSender = null;
-        connectedStatus.off();
+        connectedStatus.onMessage(ConnectionStatus.off());
     }
 
     public void onMessage(quickfix.fix42.IndicationofInterest message,
@@ -223,8 +224,11 @@ public class FIXimulatorApplication extends MessageCracker
     public void toAdmin(Message message, SessionID sessionID) {
     }
 
-    public void addStatusCallbacks(StatusSwitcher connectedStatus,
-                                   StatusSwitcher ioiSenderStatus, StatusSwitcher executorStatus) {
+    public void addStatusCallbacks(
+            MessageHandler<ConnectionStatus> connectedStatus,
+            MessageHandler<ConnectionStatus> ioiSenderStatus,
+            MessageHandler<ConnectionStatus> executorStatus
+    ) {
         this.connectedStatus = connectedStatus;
         this.ioiSenderStatus = ioiSenderStatus;
         this.executorStatus = executorStatus;
@@ -486,7 +490,7 @@ public class FIXimulatorApplication extends MessageCracker
             LOG.error("Error: ", e);
         }
         if (connected && ioiSenderStarted)
-            ioiSenderStatus.on();
+            ioiSenderStatus.onMessage(ConnectionStatus.on());
     }
 
     public void stopIOIsender() {
@@ -497,7 +501,7 @@ public class FIXimulatorApplication extends MessageCracker
         } catch (InterruptedException e) {
             LOG.error("Error: ", e);
         }
-        ioiSenderStatus.off();
+        ioiSenderStatus.onMessage(ConnectionStatus.off());
     }
 
     public void setNewDelay(Integer delay) {
@@ -553,7 +557,7 @@ public class FIXimulatorApplication extends MessageCracker
                     LOG.error("Error: ", e);
                 }
             }
-            ioiSenderStatus.off();
+            ioiSenderStatus.onMessage(ConnectionStatus.off());
         }
 
         private Instrument randomInstrument() {
@@ -644,7 +648,7 @@ public class FIXimulatorApplication extends MessageCracker
             LOG.error("Error: ", e);
         }
         if (connected && executorStarted)
-            executorStatus.on();
+            executorStatus.onMessage(ConnectionStatus.on());
     }
 
     public void stopExecutor() {
@@ -655,7 +659,7 @@ public class FIXimulatorApplication extends MessageCracker
         } catch (InterruptedException e) {
             LOG.error("Error: ", e);
         }
-        executorStatus.off();
+        executorStatus.onMessage(ConnectionStatus.off());
     }
 
     public void setNewExecutorDelay(Integer delay) {
@@ -690,7 +694,7 @@ public class FIXimulatorApplication extends MessageCracker
                     LOG.error("Error: ", e);
                 }
             }
-            executorStatus.off();
+            executorStatus.onMessage(ConnectionStatus.off());
         }
 
         public void stopExecutor() {

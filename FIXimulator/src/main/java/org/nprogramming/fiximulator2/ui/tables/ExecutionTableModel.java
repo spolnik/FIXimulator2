@@ -130,9 +130,9 @@ public class ExecutionTableModel extends AbstractTableModel implements MessageHa
     }
 
     @Override
-    public void onMessage(ExecutionChanged executionChanged) {
+    public void onMessage(ExecutionChanged message) {
         addOrReplaceAndRefresh(
-                executionsRepository.get(executionChanged.id())
+                executionsRepository.get(message.id())
         );
     }
 

@@ -127,9 +127,9 @@ public class OrderTableModel extends AbstractTableModel implements MessageHandle
     }
 
     @Override
-    public void onMessage(OrderChanged orderChanged) {
+    public void onMessage(OrderChanged message) {
         addOrReplaceAndRefresh(
-                orderRepository.get(orderChanged.id())
+                orderRepository.get(message.id())
         );
     }
 

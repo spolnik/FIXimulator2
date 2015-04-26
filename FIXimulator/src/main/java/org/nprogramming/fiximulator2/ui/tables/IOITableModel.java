@@ -113,9 +113,9 @@ public class IOITableModel extends AbstractTableModel implements MessageHandler<
     }
 
     @Override
-    public void onMessage(IOIChanged ioiChanged) {
+    public void onMessage(IOIChanged message) {
         addOrReplaceAndRefresh(
-                ioiRepository.get(ioiChanged.id())
+                ioiRepository.get(message.id())
         );
     }
 

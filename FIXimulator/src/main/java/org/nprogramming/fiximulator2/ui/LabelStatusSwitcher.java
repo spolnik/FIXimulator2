@@ -1,10 +1,11 @@
 package org.nprogramming.fiximulator2.ui;
 
-import org.nprogramming.fiximulator2.core.StatusSwitcher;
+import org.nprogramming.fiximulator2.api.MessageHandler;
+import org.nprogramming.fiximulator2.api.event.ConnectionStatus;
 
 import javax.swing.*;
 
-public final class LabelStatusSwitcher implements StatusSwitcher {
+public final class LabelStatusSwitcher implements MessageHandler<ConnectionStatus> {
 
     private final JLabel label;
 
@@ -20,12 +21,7 @@ public final class LabelStatusSwitcher implements StatusSwitcher {
     }
 
     @Override
-    public void on() {
-        label.setIcon(green);
-    }
-
-    @Override
-    public void off() {
-        label.setIcon(red);
+    public void onMessage(ConnectionStatus message) {
+        label.setIcon(message.isConnected() ? green : red);
     }
 }
