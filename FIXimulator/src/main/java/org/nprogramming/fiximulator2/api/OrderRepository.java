@@ -1,6 +1,6 @@
 package org.nprogramming.fiximulator2.api;
 
-import org.nprogramming.fiximulator2.domain.Order;
+import com.wordpress.nprogramming.oms.api.Order;
 
 public interface OrderRepository extends Repository<Order> {
 

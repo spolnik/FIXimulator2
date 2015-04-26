@@ -2,8 +2,8 @@ package org.nprogramming.fiximulator2.fix;
 
 import org.nprogramming.fiximulator2.api.NotifyService;
 import org.nprogramming.fiximulator2.api.Repository;
-import org.nprogramming.fiximulator2.domain.Execution;
-import org.nprogramming.fiximulator2.domain.Order;
+import com.wordpress.nprogramming.oms.api.Execution;
+import com.wordpress.nprogramming.oms.api.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import quickfix.field.*;

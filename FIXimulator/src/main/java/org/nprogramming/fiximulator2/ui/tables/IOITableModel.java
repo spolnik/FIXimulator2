@@ -3,7 +3,7 @@ package org.nprogramming.fiximulator2.ui.tables;
 import org.nprogramming.fiximulator2.api.MessageHandler;
 import org.nprogramming.fiximulator2.api.NotifyService;
 import org.nprogramming.fiximulator2.api.Repository;
-import org.nprogramming.fiximulator2.domain.IOI;
+import com.wordpress.nprogramming.oms.api.IOI;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.HashMap;

@@ -1,7 +1,7 @@
 package org.nprogramming.fiximulator2.data;
 
 import org.nprogramming.fiximulator2.api.OrderRepository;
-import org.nprogramming.fiximulator2.domain.Order;
+import com.wordpress.nprogramming.oms.api.Order;
 
 import java.util.ArrayList;
 import java.util.List;

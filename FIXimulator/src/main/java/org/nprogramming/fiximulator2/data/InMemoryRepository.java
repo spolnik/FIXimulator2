@@ -1,7 +1,7 @@
 package org.nprogramming.fiximulator2.data;
 
 import org.nprogramming.fiximulator2.api.Repository;
-import org.nprogramming.fiximulator2.domain.ItemWithId;
+import com.wordpress.nprogramming.oms.api.ItemWithId;
 
 import java.util.*;
 

@@ -6,3 +6,5 @@ include 'instruments-service'
 include 'instruments-api'
 include 'instruments-client'
 
+include 'oms-api'
+

@@ -4,7 +4,7 @@ import com.wordpress.nprogramming.instruments.api.Instrument;
 import com.wordpress.nprogramming.instruments.api.InstrumentsApi;
 import org.nprogramming.fiximulator2.api.NotifyService;
 import org.nprogramming.fiximulator2.api.Repository;
-import org.nprogramming.fiximulator2.domain.IOI;
+import com.wordpress.nprogramming.oms.api.IOI;
 import quickfix.field.*;
 
 import java.util.Date;

@@ -3,7 +3,7 @@ package org.nprogramming.fiximulator2.fix;
 import org.junit.Before;
 import org.junit.Test;
 import org.nprogramming.fiximulator2.api.OrderRepository;
-import org.nprogramming.fiximulator2.domain.Order;
+import com.wordpress.nprogramming.oms.api.Order;
 import quickfix.field.*;
 import quickfix.fix42.NewOrderSingle;
 import quickfix.fix42.OrderCancelReplaceRequest;
